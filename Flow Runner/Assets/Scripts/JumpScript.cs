@@ -11,6 +11,7 @@ public class JumpScript : MonoBehaviour
     [SerializeField] int jumpPower;
     [SerializeField] float fallMultiplier;
     [SerializeField] float jumpMultiplier;
+    [SerializeField] float playerSpeed;
 
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -29,10 +30,11 @@ public class JumpScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            //rb.velocity = Vector2.right * playerSpeed;
             isJumping = true;
             jumpCounter = 0;
         }
