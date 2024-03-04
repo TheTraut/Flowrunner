@@ -231,6 +231,57 @@ MonoBehaviour:
   target: {fileID: 2059761479}
   posOffset: {x: 6.5, y: 1, z: -10}
   smooth: 0.1
+--- !u!1 &1448474539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1448474541}
+  - component: {fileID: 1448474540}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1448474540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448474539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e41d003b1b9e041a8dd39ec52e6474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefabs:
+  - {fileID: 1427460290631870394, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+  - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
+  - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
+  - {fileID: 1815536521554734122, guid: 1cf8350f04f59fc4c962db7936061ef5, type: 3}
+  obstacleSpawnTime: 5
+  obstacleSpeed: 20
+--- !u!4 &1448474541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448474539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.25, y: -3.12, z: -0.074874654}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1650881346
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +326,6 @@ GameObject:
   - component: {fileID: 2059761480}
   - component: {fileID: 2059761481}
   - component: {fileID: 2059761482}
-  - component: {fileID: 2059761483}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -344,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 2059761477}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.32, y: -3.9, z: 0}
+  m_LocalPosition: {x: -6.32, y: 5.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -365,7 +415,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -377,7 +427,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!61 &2059761481
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -439,35 +489,15 @@ MonoBehaviour:
   jumpPower: 4
   fallMultiplier: 3
   jumpMultiplier: 3
+  playerSpeed: 1
   groundCheck: {fileID: 1650881347}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &2059761483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059761477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65e41d003b1b9e041a8dd39ec52e6474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstaclePrefabs:
-  - {fileID: 1427460290631870394, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
-  - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
-  - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
-  - {fileID: 1815536521554734122, guid: 1cf8350f04f59fc4c962db7936061ef5, type: 3}
-  spawnDistance: 10
-  despawnDistance: 20
-  yOffset: -3
-  obstacleSpeed: 10
-  obstacleSpawnTime: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 2059761479}
+  - {fileID: 1448474541}
