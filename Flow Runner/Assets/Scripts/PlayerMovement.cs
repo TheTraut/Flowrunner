@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
 
@@ -102,6 +102,12 @@ public class JumpScript : MonoBehaviour
     {
         return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1, 0.03f), CapsuleDirection2D.Horizontal, 0, groundLayer);
     }
+
+    public bool IsInWater
+{
+    get { return isInWater; }
+}
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
