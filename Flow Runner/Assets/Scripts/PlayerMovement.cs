@@ -24,8 +24,9 @@ public class JumpScript : MonoBehaviour
     private float originalJumpPower;
     private float originalGravityScale;
     private float originalfallMultiplier;
-    public float waterJumpPower = 0.5f;  // Adjust as needed
+    public float waterJumpPower = 2f;  // Adjust as needed
     public float waterGravityScale = 0.2f;  // Adjust as needed
+    private bool isInWater = false;  // Track if the player is in water
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +83,19 @@ public class JumpScript : MonoBehaviour
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
+
+        // Swimming controls
+        if (isInWater)
+        {
+            if (Input.GetKey(KeyCode.W))  // Swim up
+            {
+                rb.velocity = new Vector2(rb.velocity.x, waterJumpPower);
+            }
+            else if (Input.GetKey(KeyCode.S))  // Swim down
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -waterJumpPower);
+            }
+        }
     }
 
     bool isGrounded()
@@ -97,6 +111,7 @@ public class JumpScript : MonoBehaviour
             jumpPower = waterJumpPower;
             rb.gravityScale = waterGravityScale;
             fallMultiplier = fallMultiplier * waterGravityScale;
+            isInWater = true;  // Set the flag to indicate the player is in water
         }
     }
 
@@ -108,6 +123,7 @@ public class JumpScript : MonoBehaviour
             jumpPower = originalJumpPower;
             rb.gravityScale = originalGravityScale;
             fallMultiplier = originalfallMultiplier;
+            isInWater = false;  // Reset the flag when the player exits water
         }
     }
 }
