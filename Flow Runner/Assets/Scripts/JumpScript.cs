@@ -8,7 +8,7 @@ public class JumpScript : MonoBehaviour
 
     [Header("Jump System")]
     [SerializeField] float jumpTime;
-    [SerializeField] int jumpPower;
+    [SerializeField] float jumpPower;
     [SerializeField] float fallMultiplier;
     [SerializeField] float jumpMultiplier;
     [SerializeField] float playerSpeed;
@@ -20,17 +20,29 @@ public class JumpScript : MonoBehaviour
     bool isJumping;
     float jumpCounter;
 
+    // Water physics variables
+    private float originalJumpPower;
+    private float originalGravityScale;
+    private float originalfallMultiplier;
+    public float waterJumpPower = 0.5f;  // Adjust as needed
+    public float waterGravityScale = 0.2f;  // Adjust as needed
+
     // Start is called before the first frame update
     void Start()
     {
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         rb = GetComponent<Rigidbody2D>();
+
+        // Save original physics properties
+        originalJumpPower = jumpPower;
+        originalGravityScale = rb.gravityScale;
+        originalfallMultiplier = fallMultiplier;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         if (Input.GetButtonDown("Jump") && isGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
@@ -75,5 +87,27 @@ public class JumpScript : MonoBehaviour
     bool isGrounded()
     {
         return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1, 0.03f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            // Apply water physics properties
+            jumpPower = waterJumpPower;
+            rb.gravityScale = waterGravityScale;
+            fallMultiplier = fallMultiplier * waterGravityScale;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            // Revert to original physics properties
+            jumpPower = originalJumpPower;
+            rb.gravityScale = originalGravityScale;
+            fallMultiplier = originalfallMultiplier;
+        }
     }
 }
