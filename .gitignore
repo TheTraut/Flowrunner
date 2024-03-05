@@ -10,10 +10,16 @@
 **/[Bb]uilds/
 **/[Ll]ogs/
 **/[Uu]ser[Ss]ettings/
-**/[Mm]emoryCaptures/     # MemoryCaptures can get excessive in size. They also could contain extremely sensitive data
-**/[Rr]ecordings/         # Recordings can get excessive in size
-**/.vs/                    # Visual Studio cache directory
-**/gradle/                # Gradle cache directory
+
+# MemoryCaptures can get excessive in size. They also could contain extremely sensitive data
+**/[Mm]emoryCaptures/
+# Recordings can get excessive in size
+**/[Rr]ecordings/
+# Visual Studio cache directory
+**/.vs/
+# Gradle cache directory
+**/gradle/
+
 **/xportedObj/
 **/consulo/
 **/.csproj
@@ -33,13 +39,20 @@
 **/.pidb.meta
 **/.pdb.meta
 **/.mdb.meta
-**/ysinfo.txt             # Unity3D generated file on crash reports
+
+# Unity3D generated file on crash reports
+**/ysinfo.txt
+
 **/.apk
 **/.aab
 **/.unitypackage
 **/.app
-**/rashlytics-build.properties   # Crashlytics generated file
-**/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*   # Packed Addressables
+
+# Crashlytics generated file
+**/rashlytics-build.properties
+
+# Packed Addressables
+**/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 **/[Aa]ssets/[Ss]treamingAssets/aa.meta
 **/[Aa]ssets/[Ss]treamingAssets/aa/*
 
