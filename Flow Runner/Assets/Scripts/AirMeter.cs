@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class AirMeter : MonoBehaviour
 {
@@ -47,6 +51,7 @@ public class AirMeter : MonoBehaviour
             {
                 // Handle drowning
                 Debug.Log("Player has drowned!");
+                SceneManager.LoadSceneAsync("Title Screen");
             }
         }
         else
