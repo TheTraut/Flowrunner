@@ -24,8 +24,11 @@ public class AirMeter : MonoBehaviour
         // Consume air when the player is underwater
         if (playerMovement.IsInWater)
         {
-            currentAir -= airConsumptionRate * Time.deltaTime;
-            airSlider.value = currentAir;
+            if (0 <= currentAir)
+            {
+                currentAir -= airConsumptionRate * Time.deltaTime;
+                airSlider.value = currentAir;
+            }
             uiSlider.SetActive(true); // Show the air meter
 
             if (currentAir <= 0)

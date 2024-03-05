@@ -129,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             jumpPower = originalJumpPower;
             rb.gravityScale = originalGravityScale;
             fallMultiplier = originalfallMultiplier;
+            // Add a small boost to the player's momentum
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 3f); // Adjust the value as needed
             isInWater = false;  // Reset the flag when the player exits water
         }
     }
