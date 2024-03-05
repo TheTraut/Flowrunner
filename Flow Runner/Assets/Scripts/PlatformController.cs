@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlatformController : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs; // Array of obstacle prefabs
-    public float obstacleSpawnTime = 2f; 
+    public float obstacleSpawnTime = 2f;
     public float obstacleSpeed = 1f; 
-    private float timeUntilObstacleSpawn; 
+    private float timeUntilObstacleSpawn;
+    private float speedMultiplicity;
 
 
     void Start()
     {
         StartSpawnObstacle();
+        speedMultiplicity = 0.5f;
     }
 
     void Update()
@@ -30,10 +32,13 @@ public class PlatformController : MonoBehaviour
     {
         timeUntilObstacleSpawn += Time.deltaTime;
 
+
         if(timeUntilObstacleSpawn >= obstacleSpawnTime)
         {
             SpawnObstacle();
             timeUntilObstacleSpawn = 0f;
+
+            obstacleSpeed += speedMultiplicity;
         }
     }
 
