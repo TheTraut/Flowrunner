@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static BirdController;
 
 public class BirdMovment : MonoBehaviour
 {
