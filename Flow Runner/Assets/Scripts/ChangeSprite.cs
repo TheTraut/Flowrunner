@@ -4,34 +4,61 @@ using UnityEngine;
 
 public class ChangeSprite : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer; //
-    public Color underwaterColor = Color.blue; // Color for underwater
-    private Quaternion originalRotation; // To store the original rotation
-    private Quaternion underwaterRotation = Quaternion.Euler(0, 0, 270); // Set to horizontal rotation
-
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor; // Store the original color
+    public Color underwaterColor = Color.blue;
+    private Quaternion originalRotation;
+    private Quaternion underwaterRotation = Quaternion.Euler(0, 0, 270);
 
     private void Start()
     {
+        // Get the sprite renderer component
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Store the original color
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
+        else
+        {
+            Debug.LogError("SpriteRenderer component not found on the GameObject.");
+        }
+
         originalRotation = transform.rotation; // Save the original rotation
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
         {
-            spriteRenderer.color = underwaterColor; // Set color to underwater
-            transform.rotation = underwaterRotation; // Rotate to horizontal
+            // Set color to underwater and rotate
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = underwaterColor;
+            }
+            else
+            {
+                Debug.LogError("SpriteRenderer component not found on the GameObject.");
+            }
+            transform.rotation = underwaterRotation;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
         {
-            spriteRenderer.color = Color.white; // Reset to original color
-            transform.rotation = originalRotation; // Reset to original rotation
-
+            // Reset color and rotation to original
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = originalColor;
+            }
+            else
+            {
+                Debug.LogError("SpriteRenderer component not found on the GameObject.");
+            }
+            transform.rotation = originalRotation;
         }
     }
 }

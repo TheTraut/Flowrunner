@@ -6,21 +6,33 @@ public class AirMeter : MonoBehaviour
     public Slider airSlider; // Reference to the UI slider
     public float maxAir = 100f; // Maximum air
     public float airConsumptionRate = 10f; // Rate at which air is consumed per second
-    private float currentAir; // Current air
+    public float currentAir; // Current air
     public PlayerMovement playerMovement; // Assign this in the Unity Inspector
     public GameObject uiSlider; // Assign the GameObject containing the UI Slider in the Unity Inspector
 
-
-
-    void Start()
+    public void Start()
     {
+        if (airSlider == null)
+        {
+            Debug.LogError("Air Slider is not assigned in the inspector.");
+            return;
+        }
+
         currentAir = maxAir;
+
+        // Set up the slider only if it's assigned
         airSlider.maxValue = maxAir;
         airSlider.value = currentAir;
     }
 
-    void Update()
+    public void Update()
     {
+        if (playerMovement == null)
+        {
+            Debug.LogError("Player Movement is not assigned in the inspector.");
+            return;
+        }
+
         // Consume air when the player is underwater
         if (playerMovement.IsInWater)
         {

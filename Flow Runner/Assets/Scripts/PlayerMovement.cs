@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     [Header("Jump System")]
-    [SerializeField] float jumpTime;
-    [SerializeField] float jumpPower;
-    [SerializeField] float fallMultiplier;
-    [SerializeField] float jumpMultiplier;
-    [SerializeField] float playerSpeed;
+    public float jumpTime;
+    public float jumpPower;
+    public float fallMultiplier;
+    public float jumpMultiplier;
+    public float playerSpeed;
 
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -33,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
     {
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogWarning("Rigidbody2D component not found on the player. Adding Rigidbody2D component...");
+            rb = gameObject.AddComponent<Rigidbody2D>();
+        }
 
         // Save original physics properties
         originalJumpPower = jumpPower;
@@ -41,10 +46,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
 
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
             //rb.velocity = Vector2.right * playerSpeed;
@@ -98,18 +103,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool isGrounded()
+    public bool IsGrounded()
     {
         return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1, 0.03f), CapsuleDirection2D.Horizontal, 0, groundLayer);
     }
 
     public bool IsInWater
-{
-    get { return isInWater; }
-}
+    {
+        get { return isInWater; }
+    }
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
         {
@@ -121,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
         {
