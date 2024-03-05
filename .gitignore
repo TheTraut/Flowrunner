@@ -3,58 +3,58 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 # Unity standard ignores
-**/[Ll]ibrary/
-**/[Tt]emp/
-**/[Oo]bj/
-**/[Bb]uild/
-**/[Bb]uilds/
-**/[Ll]ogs/
-**/[Uu]ser[Ss]ettings/
+**//[Ll]ibrary/
+**//[Tt]emp/
+**//[Oo]bj/
+**//[Bb]uild/
+**//[Bb]uilds/
+**//[Ll]ogs/
+**//[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size. They also could contain extremely sensitive data
-**/[Mm]emoryCaptures/
+**//[Mm]emoryCaptures/ 
 # Recordings can get excessive in size
-**/[Rr]ecordings/
+**//[Rr]ecordings/
 # Visual Studio cache directory
 **/.vs/
 # Gradle cache directory
-**/gradle/
+**/.gradle/
 
-**/xportedObj/
-**/consulo/
-**/.csproj
-**/.unityproj
-**/.sln
-**/.suo
-**/.tmp
-**/.user
-**/.userprefs
-**/.pidb
-**/.booproj
-**/.svd
-**/.pdb
-**/.mdb
-**/.opendb
-**/.VC.db
-**/.pidb.meta
-**/.pdb.meta
-**/.mdb.meta
+**/ExportedObj/
+**/.consulo/
+**/*.csproj
+**/*.unityproj
+**/*.sln
+**/*.suo
+**/*.tmp
+**/*.user
+**/*.userprefs
+**/*.pidb
+**/*.booproj
+**/*.svd
+**/*.pdb
+**/*.mdb
+**/*.opendb
+**/*.VC.db
+**/*.pidb.meta
+**/*.pdb.meta
+**/*.mdb.meta
 
 # Unity3D generated file on crash reports
-**/ysinfo.txt
+**/sysinfo.txt
 
-**/.apk
-**/.aab
-**/.unitypackage
-**/.app
+**/*.apk
+**/*.aab
+**/*.unitypackage
+**/*.app
 
 # Crashlytics generated file
-**/rashlytics-build.properties
-
+**/crashlytics-build.properties
 # Packed Addressables
-**/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-**/[Aa]ssets/[Ss]treamingAssets/aa.meta
-**/[Aa]ssets/[Ss]treamingAssets/aa/*
+**//[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+**//[Aa]ssets/[Ss]treamingAssets/aa.meta
+**//[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Additional ignores from Unity generated
 **/.vscode/
