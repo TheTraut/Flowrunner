@@ -13,7 +13,7 @@
 1. Clone this repo
 2. Download [Unity LTS Release 2022.3.19f1](https://unity.com/releases/editor/qa/lts-releases?version=2022.3#:~:text=Released%3A%20January%2031%2C%202024)
 3. Download [Unity Hub](https://unity.com/download)
-4. Provison a Student License using [form](https://unity.com/products/unity-student)
+4. Provison a Student License using [this form](https://unity.com/products/unity-student)
 5. Open Unity Hub
 6. Add license received from email (Unity Technologies <accounts@unity3d.com>)
 7. Click dropdown arrow next to 'Add'
