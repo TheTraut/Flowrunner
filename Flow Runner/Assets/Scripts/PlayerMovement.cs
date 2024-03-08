@@ -92,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
         // Swimming controls
         if (isInWater)
         {
-            if (Input.GetKey(KeyCode.W))  // Swim up
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))  // Swim up
             {
                 rb.velocity = new Vector2(rb.velocity.x, waterJumpPower);
             }
-            else if (Input.GetKey(KeyCode.S))  // Swim down
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  // Swim down
             {
                 rb.velocity = new Vector2(rb.velocity.x, -waterJumpPower);
             }
