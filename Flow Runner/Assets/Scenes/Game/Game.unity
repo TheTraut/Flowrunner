@@ -677,7 +677,6 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162444874}
   serializedVersion: 2
-<<<<<<< Updated upstream
   m_Modification:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
@@ -743,7 +742,6 @@ Transform:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
-=======
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.72, y: 13.26, z: -0.074874654}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -751,7 +749,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes
 --- !u!1 &1376713693
 GameObject:
   m_ObjectHideFlags: 0
