@@ -11,6 +11,7 @@ public class PlatformControllerLevel : MonoBehaviour
     private float speedMultiplicity;
 
 
+
     void Start()
     {
         speedMultiplicity = 0.5f;
@@ -24,7 +25,7 @@ public class PlatformControllerLevel : MonoBehaviour
 
 
         // Despawn obstacles behind the player
-        // DespawnObstacles();
+        DespawnObstacles();
     }
 
     private void SpawnLoop()
@@ -41,6 +42,23 @@ public class PlatformControllerLevel : MonoBehaviour
         }
     }
 
+    private void DespawnObstacles() {
+        // Get all obstacle objects currently in the scene
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Ground");
+
+        // Loop through each obstacle
+        foreach (GameObject obstacle in obstacles)
+        {
+            // If the obstacle has moved behind a certain threshold
+            if (obstacle.transform.position.x <= -50)
+            {
+                // Destroy the obstacle
+                Destroy(obstacle);
+            }
+        }
+    }
+
+
 
 
     void SpawnObstacle()
@@ -54,6 +72,7 @@ public class PlatformControllerLevel : MonoBehaviour
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
 
+      
     }
     
 

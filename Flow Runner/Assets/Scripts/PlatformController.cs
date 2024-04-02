@@ -55,6 +55,11 @@ public class PlatformController : MonoBehaviour
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
 
+        if (spawnedObstacle.transform.position.x <= -30)
+        {
+            Destroy(spawnedObstacle);
+        }
+
     }
     void StartSpawnObstacle()
     {
