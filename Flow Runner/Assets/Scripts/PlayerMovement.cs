@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float originalJumpPower;
     private float originalGravityScale;
     private float originalfallMultiplier;
-    public float waterJumpPower = 2f;  // Adjust as needed
+    public float waterJumpPower = 3f;  // Adjust as needed
     public float waterGravityScale = 0.2f;  // Adjust as needed
     private bool isInWater = false;  // Track if the player is in water
 
@@ -92,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
         // Swimming controls
         if (isInWater)
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))  // Swim up
+            if (Input.GetButtonUp("Jump"))  // Swim up
             {
                 rb.velocity = new Vector2(rb.velocity.x, waterJumpPower);
             }
-            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  // Swim down
+            else if (Input.GetKey(KeyCode.S))  // Swim down
             {
                 rb.velocity = new Vector2(rb.velocity.x, -waterJumpPower);
             }
