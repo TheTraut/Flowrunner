@@ -9,4 +9,19 @@ public class TitleScreen : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("Game");
     }
+
+    public void SeeGuide()
+    {
+        SceneManager.LoadSceneAsync("Guide");
+    }
+
+    public void SeeHighScores()
+    {
+        SceneManager.LoadSceneAsync("High Scores");
+    }
+
+    public void SeeSettings()
+    {
+        SceneManager.LoadSceneAsync("Settings");
+    }
 }
