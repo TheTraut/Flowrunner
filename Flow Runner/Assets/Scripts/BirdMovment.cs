@@ -1,38 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdMovment : MonoBehaviour
 {
-    public enum OccilationFuntion { Sine, Cosine }
+    public float minAmplitude = 3f; // Minimum amplitude of the oscillation
+    public float maxAmplitude = 7f; // Maximum amplitude of the oscillation
+    public float minFrequency = 0.5f; // Minimum frequency of the oscillation
+    public float maxFrequency = 2f; // Maximum frequency of the oscillation
+    public bool useSine = true; // Use sine function if true, cosine if false
+    
+    private float amplitude; // Actual amplitude for this instance
+    private float frequency; // Actual frequency for this instance
+    private Vector3 startPosition;
+
     // Start is called before the first frame update
     void Start()
     {
-        //to start at zero
-        StartCoroutine(Oscillate(OccilationFuntion.Sine, 5f));
-        //to start at scalar value
-        //StartCoroutine (Oscillate (OccilationFuntion.Cosine, 1f));
+        // Set random amplitude and frequency for this instance
+        amplitude = Random.Range(minAmplitude, maxAmplitude);
+        frequency = Random.Range(minFrequency, maxFrequency);
+
+        startPosition = transform.position;
+        StartCoroutine(Oscillate());
     }
 
-    private IEnumerator Oscillate(OccilationFuntion method, float scalar)
+    private IEnumerator Oscillate()
     {
         while (true)
         {
-            if (method == OccilationFuntion.Sine)
-            {
-                transform.position = new Vector3(Mathf.Sin(Time.time) * scalar, 5f, 0);
-            }
-            else if (method == OccilationFuntion.Cosine)
-            {
-                transform.position = new Vector3(Mathf.Cos(Time.time) * scalar, 1f, 0);
-            }
+            float oscillation = useSine ? Mathf.Sin(Time.time * frequency) : Mathf.Cos(Time.time * frequency);
+            transform.position = startPosition + new Vector3(oscillation * amplitude, 0f, 0f);
             yield return new WaitForEndOfFrame();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

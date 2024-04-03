@@ -1,56 +1,75 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RockFalling : MonoBehaviour
 {
-    public GameObject rockPrefab; // Assign your rock prefab in the Inspector
-    public Transform birdTransform; // Assign the bird's transform in the Inspector
-    public float spawnInterval = 5f; // Time between each spawn
-    public float despawnDistance = 20f; // Distance from the bird at which the rock will be despawned
+    public GameObject rockPrefab;
+    public Transform birdTransform;
+    public float initialMinSpawnInterval = 4f;
+    public float initialMaxSpawnInterval = 6f;
+    public float minimumSpawnInterval = 1f;
+    public float intervalReductionRate = 0.1f; // Amount by which the spawn interval range is reduced per second
+    public float despawnDistance = 20f;
+    public int maxRocksDropped = 5; // Maximum number of rocks the bird can drop before despawning
 
     private float timeSinceLastSpawn;
+    private float currentMinSpawnInterval;
+    private float currentMaxSpawnInterval;
+    private float currentSpawnInterval;
+    private int rocksDropped;
 
-    // Start is called before the first frame update
     void Start()
     {
         timeSinceLastSpawn = 0f;
+        rocksDropped = 0;
+        currentMinSpawnInterval = initialMinSpawnInterval;
+        currentMaxSpawnInterval = initialMaxSpawnInterval;
+        SetRandomSpawnInterval();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeSinceLastSpawn += Time.deltaTime;
 
-        // Check if it's time to spawn a new rock
-        if (timeSinceLastSpawn >= spawnInterval)
+        // Reduce the spawn interval range over time, but don't let it go below the minimum
+        currentMinSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMinSpawnInterval - intervalReductionRate * Time.deltaTime);
+        currentMaxSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMaxSpawnInterval - intervalReductionRate * Time.deltaTime);
+
+        if (timeSinceLastSpawn >= currentSpawnInterval)
         {
             SpawnRock();
             timeSinceLastSpawn = 0f;
+            rocksDropped++;
+            SetRandomSpawnInterval();
+
+            if (rocksDropped >= maxRocksDropped)
+            {
+                Destroy(gameObject); // Despawn the bird after dropping maxRocksDropped rocks
+            }
         }
 
-        // Check for rocks that are too far away and despawn them
         DespawnDistantRocks();
     }
 
     void SpawnRock()
     {
-        // Instantiate the rock at the bird's position
-        GameObject rock = Instantiate(rockPrefab, birdTransform.position, Quaternion.identity);
-        // You can add additional logic here if needed (e.g., setting the velocity of the rock)
+        Instantiate(rockPrefab, birdTransform.position, Quaternion.identity);
     }
 
     void DespawnDistantRocks()
     {
-        // Find all rocks in the scene
-        GameObject[] rocks = GameObject.FindGameObjectsWithTag("Rock"); // Make sure your rock prefabs have the tag "Rock"
+        GameObject[] rocks = GameObject.FindGameObjectsWithTag("Rock");
         foreach (GameObject rock in rocks)
         {
             if (Vector3.Distance(rock.transform.position, birdTransform.position) > despawnDistance)
             {
-                // Despawn the rock if it's too far from the bird
                 Destroy(rock);
             }
         }
     }
+
+    void SetRandomSpawnInterval()
+    {
+        currentSpawnInterval = Random.Range(currentMinSpawnInterval, currentMaxSpawnInterval);
+    }
 }
+

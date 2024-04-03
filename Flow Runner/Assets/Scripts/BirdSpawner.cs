@@ -1,45 +1,61 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdSpawner : MonoBehaviour
 {
-    public GameObject birdPrefab; // Assign your bird prefab in the Inspector
-    public float spawnInterval = 5f; // Time between each spawn
-    public Vector2 spawnPositionRange = new Vector2(0f, 10f); // Range for random spawn positions
+    public GameObject birdPrefab;
+    public float minSpawnInterval = 3f; // Minimum interval between bird spawns
+    public float maxSpawnInterval = 8f; // Maximum interval between bird spawns
+    public Vector2 spawnPositionRangeX = new Vector2(-10f, 10f);
+    public Vector2 spawnPositionRangeY = new Vector2(0f, 5f);
+    public float despawnTime = 20f; // Time after which the bird will be despawned
+    public int maxBirds = 3; // Maximum number of birds at a time
 
     private float timeSinceLastSpawn;
+    private float currentSpawnInterval;
+    private int currentBirdCount;
 
-    // Start is called before the first frame update
     void Start()
     {
         timeSinceLastSpawn = 0f;
+        SetRandomSpawnInterval();
+        currentBirdCount = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeSinceLastSpawn += Time.deltaTime;
 
-        // Check if it's time to spawn new birds
-        if (timeSinceLastSpawn >= spawnInterval)
+        if (timeSinceLastSpawn >= currentSpawnInterval && currentBirdCount < maxBirds)
         {
-            SpawnBirds();
+            SpawnBird();
             timeSinceLastSpawn = 0f;
+            SetRandomSpawnInterval();
         }
     }
 
-    void SpawnBirds()
+    void SpawnBird()
     {
-        int numberOfBirds = Random.Range(1, 4); // Randomly choose between 1 and 3 birds
+        Vector3 spawnPosition = new Vector3(
+            Random.Range(spawnPositionRangeX.x, spawnPositionRangeX.y),
+            Random.Range(spawnPositionRangeY.x, spawnPositionRangeY.y),
+            transform.position.z
+        );
+        GameObject bird = Instantiate(birdPrefab, spawnPosition, Quaternion.identity);
+        currentBirdCount++;
+        Destroy(bird, despawnTime); // Despawn the bird after despawnTime seconds
+        // Decrement bird count when the bird is destroyed
+        StartCoroutine(DecrementBirdCountAfterDelay(despawnTime));
+    }
 
-        for (int i = 0; i < numberOfBirds; i++)
-        {
-            // Generate a random spawn position within the specified range
-            Vector3 spawnPosition = new Vector3(Random.Range(spawnPositionRange.x, spawnPositionRange.y), transform.position.y, transform.position.z);
+    void SetRandomSpawnInterval()
+    {
+        currentSpawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
+    }
 
-            // Instantiate the bird prefab at the random spawn position
-            Instantiate(birdPrefab, spawnPosition, Quaternion.identity);
-        }
+    IEnumerator DecrementBirdCountAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        currentBirdCount--;
     }
 }

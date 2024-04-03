@@ -198,6 +198,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79560113}
   m_CullTransparentMesh: 1
+--- !u!1001 &263808499
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 23762517358414932, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_Name
+      value: Falling Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.1131783
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.8462524
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247509781058697135, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8650c9a5ea6827d44805c8ece81ed6b8, type: 3}
 --- !u!1 &486808886
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,8 +875,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   birdPrefab: {fileID: 5949353039791555515, guid: d9ebaaf706e7407488f7e4de93c05ef3, type: 3}
-  spawnInterval: 5
-  spawnPositionRange: {x: -10, y: 10}
+  minSpawnInterval: 3
+  maxSpawnInterval: 8
+  spawnPositionRangeX: {x: -10, y: 10}
+  spawnPositionRangeY: {x: 0, y: 5}
+  despawnTime: 20
+  maxBirds: 3
 --- !u!1 &1575462601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,7 +1444,7 @@ Transform:
   m_GameObject: {fileID: 2059761477}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.32, y: 2.3, z: 0}
+  m_LocalPosition: {x: -6.32, y: 2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1509,3 +1570,4 @@ SceneRoots:
   - {fileID: 1905650260}
   - {fileID: 944299581}
   - {fileID: 515607223}
+  - {fileID: 263808499}
