@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformController : MonoBehaviour
+public class PlatformControllerLevel : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs; // Array of obstacle prefabs
     public float obstacleSpawnTime = 2f;
-    public float obstacleSpeed = 1f; 
+    public float obstacleSpeed = 1f;
     private float timeUntilObstacleSpawn;
     private float speedMultiplicity;
 
 
+
     void Start()
     {
-        StartSpawnObstacle();
         speedMultiplicity = 0.5f;
     }
 
     void Update()
     {
         // Spawn new obstacles ahead of the player
-       
+
         SpawnLoop();
-        
+
 
         // Despawn obstacles behind the player
-        // DespawnObstacles();
+        DespawnObstacles();
     }
 
     private void SpawnLoop()
@@ -33,7 +33,7 @@ public class PlatformController : MonoBehaviour
         timeUntilObstacleSpawn += Time.deltaTime;
 
 
-        if(timeUntilObstacleSpawn >= obstacleSpawnTime)
+        if (timeUntilObstacleSpawn >= obstacleSpawnTime)
         {
             SpawnObstacle();
             timeUntilObstacleSpawn = 0f;
@@ -42,12 +42,29 @@ public class PlatformController : MonoBehaviour
         }
     }
 
-    
+    private void DespawnObstacles() {
+        // Get all obstacle objects currently in the scene
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Ground");
+
+        // Loop through each obstacle
+        foreach (GameObject obstacle in obstacles)
+        {
+            // If the obstacle has moved behind a certain threshold
+            if (obstacle.transform.position.x <= -50)
+            {
+                // Destroy the obstacle
+                Destroy(obstacle);
+            }
+        }
+    }
+
+
+
 
     void SpawnObstacle()
     {
         // Select a random obstacle prefab (excluding the first one)
-        GameObject obstacleToSpawn = obstaclePrefabs[Random.Range(1, obstaclePrefabs.Length)];
+        GameObject obstacleToSpawn = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
 
         // Instantiate the selected obstacle prefab at the spawn position
         GameObject spawnedObstacle = Instantiate(obstacleToSpawn, transform.position, Quaternion.identity);
@@ -55,23 +72,8 @@ public class PlatformController : MonoBehaviour
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
 
-        if (spawnedObstacle.transform.position.x <= -30)
-        {
-            Destroy(spawnedObstacle);
-        }
-
+      
     }
-    void StartSpawnObstacle()
-    {
-        // Select a random obstacle prefab (excluding the first one)
-        GameObject obstacleToSpawn = obstaclePrefabs[0];
-
-        // Instantiate the selected obstacle prefab at the spawn position
-        GameObject spawnedObstacle = Instantiate(obstacleToSpawn, transform.position, Quaternion.identity);
-
-        Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
-        obstacleRB.velocity = Vector2.left * obstacleSpeed;
-
-    }
+    
 
 }
