@@ -248,6 +248,79 @@ MonoBehaviour:
   - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
   obstacleSpawnTime: 6
   obstacleSpeed: 12
+--- !u!1001 &267924547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1427460290631870394, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_Name
+      value: Platform0(starting)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.3401728
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.061281
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4800735053639780732, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618946232423266897, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281688084382585047, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281688084382585047, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281688084382585047, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
 --- !u!1 &486808886
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,30 +718,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162444876}
-  - component: {fileID: 1162444875}
+  - component: {fileID: 1162444877}
   m_Layer: 0
-  m_Name: BirdSpawner (4)
+  m_Name: BirdSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1162444875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162444874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ba8e9f8f996c54caf6ac4f8900aa48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstaclePrefabs:
-  - {fileID: 6227142754551746455, guid: 7de49398fe14b7245a8ac42b418bcb2d, type: 3}
-  obstacleSpawnTime: 10
-  obstacleSpeed: 1
 --- !u!4 &1162444876
 Transform:
   m_ObjectHideFlags: 0
@@ -684,6 +741,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1162444877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162444874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5208beea3d11bf408c0ef5c7ab292b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birdPrefab: {fileID: 5949353039791555515, guid: d9ebaaf706e7407488f7e4de93c05ef3, type: 3}
+  minSpawnInterval: 3
+  maxSpawnInterval: 8
+  spawnPositionRangeX: {x: -10, y: 10}
+  spawnPositionRangeY: {x: 0, y: 5}
+  despawnTime: 20
+  maxBirds: 3
 --- !u!1 &1376713693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1080,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1861609841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982ea24882eee457da5180dc5322c2ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 324f951744f20b64aa17d1bc67ef0037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   airSlider: {fileID: 1575462603}
@@ -1025,6 +1101,7 @@ GameObject:
   - component: {fileID: 1905650259}
   - component: {fileID: 1905650261}
   - component: {fileID: 1905650262}
+  - component: {fileID: 1905650263}
   m_Layer: 0
   m_Name: Water
   m_TagString: Water
@@ -1129,7 +1206,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 1
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -1157,6 +1234,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   riseSpeed: 0.1
+--- !u!253 &1905650263
+BuoyancyEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905650258}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_SurfaceLevel: 0.5
+  m_Density: 2
+  m_LinearDrag: 5
+  m_AngularDrag: 5
+  m_FlowAngle: 0
+  m_FlowMagnitude: 0
+  m_FlowVariation: 0
 --- !u!1 &2014472709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,7 +1410,7 @@ Transform:
   m_GameObject: {fileID: 2059761477}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.32, y: 2.3, z: 0}
+  m_LocalPosition: {x: -6.32, y: 2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1415,8 +1511,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  waterJumpPower: 2
-  waterGravityScale: 0.2
+  waterSwimPower: 3
 --- !u!114 &2059761483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,3 +1538,4 @@ SceneRoots:
   - {fileID: 1162444876}
   - {fileID: 741296455}
   - {fileID: 1905650260}
+  - {fileID: 267924547}
