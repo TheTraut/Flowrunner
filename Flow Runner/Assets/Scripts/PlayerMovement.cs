@@ -20,12 +20,7 @@ public class PlayerMovement : MonoBehaviour
     bool isJumping;
     float jumpCounter;
 
-    // Water physics variables
-    private float originalJumpPower;
-    private float originalGravityScale;
-    private float originalfallMultiplier;
-    public float waterJumpPower = 3f;  // Adjust as needed
-    public float waterGravityScale = 0.2f;  // Adjust as needed
+    public float waterSwimPower = 3f;  // Adjust as needed
     private bool isInWater = false;  // Track if the player is in water
 
     // Start is called before the first frame update

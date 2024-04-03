@@ -3,10 +3,10 @@ using UnityEngine.SceneManagement;
 
 
 public class RockCollision : MonoBehaviour
-{
-    void OnCollisionEnter2D(Collision2D collision)
+{    
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             // Handle player death here (e.g., restart the level, reduce player health, etc.)
             Debug.Log("Player hit by rock!");

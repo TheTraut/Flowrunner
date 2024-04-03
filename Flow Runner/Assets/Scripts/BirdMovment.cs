@@ -1,19 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public class BirdMovment : MonoBehaviour
+public class BirdMovement : MonoBehaviour
 {
     public float minAmplitude = 3f; // Minimum amplitude of the oscillation
     public float maxAmplitude = 7f; // Maximum amplitude of the oscillation
     public float minFrequency = 0.5f; // Minimum frequency of the oscillation
     public float maxFrequency = 2f; // Maximum frequency of the oscillation
     public bool useSine = true; // Use sine function if true, cosine if false
-    
+
     private float amplitude; // Actual amplitude for this instance
     private float frequency; // Actual frequency for this instance
     private Vector3 startPosition;
 
-    // Start is called before the first frame update
     void Start()
     {
         // Set random amplitude and frequency for this instance
