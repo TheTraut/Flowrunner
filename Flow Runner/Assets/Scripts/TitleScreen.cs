@@ -12,7 +12,7 @@ public class TitleScreen : MonoBehaviour
 
     public void SeeGuide()
     {
-        SceneManager.LoadSceneAsync("Guide");
+        SceneManager.LoadSceneAsync("Guide1");
     }
 
     public void SeeHighScores()
