@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class AirMeter : MonoBehaviour
 {
     public Slider airSlider; // Reference to the UI slider
@@ -35,38 +34,39 @@ public class AirMeter : MonoBehaviour
             return;
         }
 
-        // Consume air when the player is underwater
-        if (playerMovement.IsInWater)
+        // Check if the game is paused
+        if (!PauseManager.isPaused)
         {
-            if (0 <= currentAir)
+            // Consume air when the player is underwater
+            if (playerMovement.IsInWater)
             {
-                currentAir -= airConsumptionRate * Time.deltaTime;
-                airSlider.value = currentAir;
-            }
-            uiSlider.SetActive(true); // Show the air meter
+                if (0 <= currentAir)
+                {
+                    currentAir -= airConsumptionRate * Time.deltaTime;
+                    airSlider.value = currentAir;
+                }
+                uiSlider.SetActive(true); // Show the air meter
 
-            if (currentAir <= 0)
-            {
-                // Handle drowning
-                Debug.Log("Player has drowned!");
-                SceneManager.LoadSceneAsync("Title Screen");
+                if (currentAir <= 0)
+                {
+                    // Handle drowning
+                    Debug.Log("Player has drowned!");
+                    SceneManager.LoadSceneAsync("Title Screen");
+                }
             }
-        }
-        else
-        {
-
-            // Replenish air when the player is not underwater
-            if (currentAir < maxAir)
+            else
             {
-                currentAir += airConsumptionRate * Time.deltaTime;
-                airSlider.value = currentAir;
+                // Replenish air when the player is not underwater
+                if (currentAir < maxAir)
+                {
+                    currentAir += airConsumptionRate * Time.deltaTime;
+                    airSlider.value = currentAir;
+                }
+                if (currentAir >= maxAir)
+                {
+                    uiSlider.SetActive(false); // Hide the air meter
+                }
             }
-            if (currentAir >= maxAir) 
-            {
-                uiSlider.SetActive(false); // Hide the air meter
-            }
-            
         }
     }
-
 }

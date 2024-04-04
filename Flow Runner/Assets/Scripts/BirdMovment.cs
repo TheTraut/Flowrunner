@@ -12,6 +12,7 @@ public class BirdMovement : MonoBehaviour
     private float amplitude; // Actual amplitude for this instance
     private float frequency; // Actual frequency for this instance
     private Vector3 startPosition;
+    private Coroutine oscillationCoroutine; // Coroutine reference
 
     void Start()
     {
@@ -20,16 +21,33 @@ public class BirdMovement : MonoBehaviour
         frequency = Random.Range(minFrequency, maxFrequency);
 
         startPosition = transform.position;
-        StartCoroutine(Oscillate());
+        oscillationCoroutine = StartCoroutine(Oscillate());
     }
 
     private IEnumerator Oscillate()
     {
         while (true)
         {
-            float oscillation = useSine ? Mathf.Sin(Time.time * frequency) : Mathf.Cos(Time.time * frequency);
-            transform.position = startPosition + new Vector3(oscillation * amplitude, 0f, 0f);
-            yield return new WaitForEndOfFrame();
+            if (!PauseManager.isPaused)
+            {
+                float oscillation = useSine ? Mathf.Sin(Time.time * frequency) : Mathf.Cos(Time.time * frequency);
+                transform.position = startPosition + new Vector3(oscillation * amplitude, 0f, 0f);
+            }
+            yield return null;
         }
+    }
+
+    // Optional method to stop the coroutine externally
+    public void StopOscillation()
+    {
+        if (oscillationCoroutine != null)
+            StopCoroutine(oscillationCoroutine);
+    }
+
+    // Optional method to resume the coroutine externally
+    public void ResumeOscillation()
+    {
+        if (oscillationCoroutine == null)
+            oscillationCoroutine = StartCoroutine(Oscillate());
     }
 }

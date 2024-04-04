@@ -24,13 +24,16 @@ public class BirdSpawner : MonoBehaviour
 
     void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime;
-
-        if (timeSinceLastSpawn >= currentSpawnInterval && currentBirdCount < maxBirds)
+        if (!PauseManager.isPaused) // Check if the game is not paused
         {
-            SpawnBird();
-            timeSinceLastSpawn = 0f;
-            SetRandomSpawnInterval();
+            timeSinceLastSpawn += Time.deltaTime;
+
+            if (timeSinceLastSpawn >= currentSpawnInterval && currentBirdCount < maxBirds)
+            {
+                SpawnBird();
+                timeSinceLastSpawn = 0f;
+                SetRandomSpawnInterval();
+            }
         }
     }
 

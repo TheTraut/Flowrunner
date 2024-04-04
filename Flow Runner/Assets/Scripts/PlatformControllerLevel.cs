@@ -10,8 +10,6 @@ public class PlatformControllerLevel : MonoBehaviour
     private float timeUntilObstacleSpawn;
     private float speedMultiplicity;
 
-
-
     void Start()
     {
         speedMultiplicity = 0.5f;
@@ -20,29 +18,32 @@ public class PlatformControllerLevel : MonoBehaviour
     void Update()
     {
         // Spawn new obstacles ahead of the player
-
-        SpawnLoop();
-
+        if (!PauseManager.isPaused)
+        {
+            SpawnLoop();
+        }
 
         // Despawn obstacles behind the player
-        DespawnObstacles();
+        if (!PauseManager.isPaused)
+        {
+            DespawnObstacles();
+        }
     }
 
     private void SpawnLoop()
     {
         timeUntilObstacleSpawn += Time.deltaTime;
 
-
         if (timeUntilObstacleSpawn >= obstacleSpawnTime)
         {
             SpawnObstacle();
             timeUntilObstacleSpawn = 0f;
-
             obstacleSpeed += speedMultiplicity;
         }
     }
 
-    private void DespawnObstacles() {
+    private void DespawnObstacles()
+    {
         // Get all obstacle objects currently in the scene
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Ground");
 
@@ -58,12 +59,9 @@ public class PlatformControllerLevel : MonoBehaviour
         }
     }
 
-
-
-
     void SpawnObstacle()
     {
-        // Select a random obstacle prefab (excluding the first one)
+        // Select a random obstacle prefab
         GameObject obstacleToSpawn = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
 
         // Instantiate the selected obstacle prefab at the spawn position
@@ -71,9 +69,5 @@ public class PlatformControllerLevel : MonoBehaviour
 
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
-
-      
     }
-    
-
 }

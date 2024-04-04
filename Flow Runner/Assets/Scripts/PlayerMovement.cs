@@ -38,7 +38,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if (!PauseManager.isPaused)
+        {
+            HandleMovement();
+        }
+    }
 
+    void HandleMovement()
+    {
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
@@ -46,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = 0;
         }
 
-        if(rb.velocity.y > 0 && isJumping)
+        if (rb.velocity.y > 0 && isJumping)
         {
             jumpCounter += Time.deltaTime;
             if (jumpCounter > jumpTime) isJumping = false;
@@ -54,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             float tCal = jumpCounter / jumpTime;
             float currentJumpM = jumpMultiplier;
 
-            if(tCal > 0.6f)
+            if (tCal > 0.6f)
             {
                 currentJumpM = jumpMultiplier * (1 - tCal);
             }
@@ -67,13 +74,13 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
             jumpCounter = 0;
 
-            if(rb.velocity.y > 0)
+            if (rb.velocity.y > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }
         }
 
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
@@ -107,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             // Set the flag to indicate the player is in water
-            isInWater = true;  
+            isInWater = true;
         }
     }
 
@@ -116,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Water"))
         {
             // Reset the flag when the player exits water
-            isInWater = false;  
+            isInWater = false;
         }
     }
 }
