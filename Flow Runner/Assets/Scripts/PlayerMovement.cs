@@ -20,12 +20,7 @@ public class PlayerMovement : MonoBehaviour
     bool isJumping;
     float jumpCounter;
 
-    // Water physics variables
-    private float originalJumpPower;
-    private float originalGravityScale;
-    private float originalfallMultiplier;
-    public float waterJumpPower = 3f;  // Adjust as needed
-    public float waterGravityScale = 0.2f;  // Adjust as needed
+    public float waterSwimPower = 3f;  // Adjust as needed
     private bool isInWater = false;  // Track if the player is in water
 
     // Start is called before the first frame update
@@ -38,26 +33,27 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogWarning("Rigidbody2D component not found on the player. Adding Rigidbody2D component...");
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
-
-        // Save original physics properties
-        originalJumpPower = jumpPower;
-        originalGravityScale = rb.gravityScale;
-        originalfallMultiplier = fallMultiplier;
     }
 
     // Update is called once per frame
     public void Update()
     {
+        if (!PauseManager.isPaused)
+        {
+            HandleMovement();
+        }
+    }
 
+    void HandleMovement()
+    {
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower);
-            //rb.velocity = Vector2.right * playerSpeed;
             isJumping = true;
             jumpCounter = 0;
         }
 
-        if(rb.velocity.y > 0 && isJumping)
+        if (rb.velocity.y > 0 && isJumping)
         {
             jumpCounter += Time.deltaTime;
             if (jumpCounter > jumpTime) isJumping = false;
@@ -65,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
             float tCal = jumpCounter / jumpTime;
             float currentJumpM = jumpMultiplier;
 
-            if(tCal > 0.6f)
+            if (tCal > 0.6f)
             {
                 currentJumpM = jumpMultiplier * (1 - tCal);
             }
@@ -78,13 +74,13 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
             jumpCounter = 0;
 
-            if(rb.velocity.y > 0)
+            if (rb.velocity.y > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }
         }
 
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
@@ -92,13 +88,13 @@ public class PlayerMovement : MonoBehaviour
         // Swimming controls
         if (isInWater)
         {
-            if (Input.GetButtonUp("Jump"))  // Swim up
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))  // Swim up
             {
-                rb.velocity = new Vector2(rb.velocity.x, waterJumpPower);
+                rb.AddForce(new Vector2(0, waterSwimPower), ForceMode2D.Force);
             }
-            else if (Input.GetKey(KeyCode.S))  // Swim down
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  // Swim down
             {
-                rb.velocity = new Vector2(rb.velocity.x, -waterJumpPower);
+                rb.AddForce(new Vector2(0, -waterSwimPower), ForceMode2D.Force);
             }
         }
     }
@@ -117,11 +113,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            // Apply water physics properties
-            jumpPower = waterJumpPower;
-            rb.gravityScale = waterGravityScale;
-            fallMultiplier = fallMultiplier * waterGravityScale;
-            isInWater = true;  // Set the flag to indicate the player is in water
+            // Set the flag to indicate the player is in water
+            isInWater = true;
         }
     }
 
@@ -129,13 +122,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            // Revert to original physics properties
-            jumpPower = originalJumpPower;
-            rb.gravityScale = originalGravityScale;
-            fallMultiplier = originalfallMultiplier;
-            // Add a small boost to the player's momentum
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + 3f); // Adjust the value as needed
-            isInWater = false;  // Reset the flag when the player exits water
+            // Reset the flag when the player exits water
+            isInWater = false;
         }
     }
 }

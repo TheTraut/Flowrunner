@@ -6,7 +6,7 @@ public class PlatformController : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs; // Array of obstacle prefabs
     public float obstacleSpawnTime = 2f;
-    public float obstacleSpeed = 1f; 
+    public float obstacleSpeed = 1f;
     private float timeUntilObstacleSpawn;
     private float speedMultiplicity;
 
@@ -20,10 +20,10 @@ public class PlatformController : MonoBehaviour
     void Update()
     {
         // Spawn new obstacles ahead of the player
-       
-        SpawnLoop();
-        
-
+        if (!PauseManager.isPaused)
+        {
+            SpawnLoop();
+        }
         // Despawn obstacles behind the player
         // DespawnObstacles();
     }
@@ -33,7 +33,7 @@ public class PlatformController : MonoBehaviour
         timeUntilObstacleSpawn += Time.deltaTime;
 
 
-        if(timeUntilObstacleSpawn >= obstacleSpawnTime)
+        if (timeUntilObstacleSpawn >= obstacleSpawnTime)
         {
             SpawnObstacle();
             timeUntilObstacleSpawn = 0f;
@@ -41,8 +41,6 @@ public class PlatformController : MonoBehaviour
             obstacleSpeed += speedMultiplicity;
         }
     }
-
-    
 
     void SpawnObstacle()
     {
@@ -59,8 +57,8 @@ public class PlatformController : MonoBehaviour
         {
             Destroy(spawnedObstacle);
         }
-
     }
+
     void StartSpawnObstacle()
     {
         // Select a random obstacle prefab (excluding the first one)
@@ -71,7 +69,5 @@ public class PlatformController : MonoBehaviour
 
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
-
     }
-
 }

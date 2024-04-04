@@ -1,43 +1,53 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BirdMovment : MonoBehaviour
+public class BirdMovement : MonoBehaviour
 {
-    public enum OccilationFuntion { Sine, Cosine }
-    // Start is called before the first frame update
-    public float speed = 0.1f;
-    public float velocity1 = 1f;
-    public float velocity2 = 1f;
+    public float minAmplitude = 3f; // Minimum amplitude of the oscillation
+    public float maxAmplitude = 7f; // Maximum amplitude of the oscillation
+    public float minFrequency = 0.5f; // Minimum frequency of the oscillation
+    public float maxFrequency = 2f; // Maximum frequency of the oscillation
+    public bool useSine = true; // Use sine function if true, cosine if false
+
+    private float amplitude; // Actual amplitude for this instance
+    private float frequency; // Actual frequency for this instance
+    private Vector3 startPosition;
+    private Coroutine oscillationCoroutine; // Coroutine reference
+
     void Start()
     {
-        //to start at zero
-        StartCoroutine(Oscillate(OccilationFuntion.Sine, 5f));
-        //to start at scalar value
-        //StartCoroutine (Oscillate (OccilationFuntion.Cosine, 1f));
+        // Set random amplitude and frequency for this instance
+        amplitude = Random.Range(minAmplitude, maxAmplitude);
+        frequency = Random.Range(minFrequency, maxFrequency);
+
+        startPosition = transform.position;
+        oscillationCoroutine = StartCoroutine(Oscillate());
     }
 
-    private IEnumerator Oscillate(OccilationFuntion method, float scalar)
+    private IEnumerator Oscillate()
     {
         while (true)
         {
-            if (method == OccilationFuntion.Sine)
+            if (!PauseManager.isPaused)
             {
-                transform.position = new Vector3((Mathf.Sin(Time.time) * scalar) + velocity1, 5f, 0);
+                float oscillation = useSine ? Mathf.Sin(Time.time * frequency) : Mathf.Cos(Time.time * frequency);
+                transform.position = startPosition + new Vector3(oscillation * amplitude, 0f, 0f);
             }
-            else if (method == OccilationFuntion.Cosine)
-            {
-                transform.position = new Vector3((Mathf.Cos(Time.time) * scalar) + velocity2, 1f, 0);
-            }
-            yield return new WaitForEndOfFrame();
-            velocity1 -= speed;
-            velocity2 -= speed;
+            yield return null;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Optional method to stop the coroutine externally
+    public void StopOscillation()
     {
-        
+        if (oscillationCoroutine != null)
+            StopCoroutine(oscillationCoroutine);
+    }
+
+    // Optional method to resume the coroutine externally
+    public void ResumeOscillation()
+    {
+        if (oscillationCoroutine == null)
+            oscillationCoroutine = StartCoroutine(Oscillate());
     }
 }
