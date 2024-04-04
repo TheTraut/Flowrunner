@@ -28,26 +28,29 @@ public class RockFalling : MonoBehaviour
 
     void Update()
     {
-        timeSinceLastSpawn += Time.deltaTime;
-
-        // Reduce the spawn interval range over time, but don't let it go below the minimum
-        currentMinSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMinSpawnInterval - intervalReductionRate * Time.deltaTime);
-        currentMaxSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMaxSpawnInterval - intervalReductionRate * Time.deltaTime);
-
-        if (timeSinceLastSpawn >= currentSpawnInterval)
+        if (!PauseManager.isPaused)
         {
-            SpawnRock();
-            timeSinceLastSpawn = 0f;
-            rocksDropped++;
-            SetRandomSpawnInterval();
+            timeSinceLastSpawn += Time.deltaTime;
 
-            if (rocksDropped >= maxRocksDropped)
+            // Reduce the spawn interval range over time, but don't let it go below the minimum
+            currentMinSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMinSpawnInterval - intervalReductionRate * Time.deltaTime);
+            currentMaxSpawnInterval = Mathf.Max(minimumSpawnInterval, currentMaxSpawnInterval - intervalReductionRate * Time.deltaTime);
+
+            if (timeSinceLastSpawn >= currentSpawnInterval)
             {
-                Destroy(gameObject); // Despawn the bird after dropping maxRocksDropped rocks
-            }
-        }
+                SpawnRock();
+                timeSinceLastSpawn = 0f;
+                rocksDropped++;
+                SetRandomSpawnInterval();
 
-        DespawnDistantRocks();
+                if (rocksDropped >= maxRocksDropped)
+                {
+                    Destroy(gameObject); // Despawn the bird after dropping maxRocksDropped rocks
+                }
+            }
+
+            DespawnDistantRocks();
+        }
     }
 
     void SpawnRock()
@@ -72,4 +75,3 @@ public class RockFalling : MonoBehaviour
         currentSpawnInterval = Random.Range(currentMinSpawnInterval, currentMaxSpawnInterval);
     }
 }
-

@@ -30,7 +30,7 @@ public class ChangeSprite : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Water"))
+        if (other.CompareTag("Water") && !PauseManager.isPaused)
         {
             // Set color to underwater and rotate
             if (spriteRenderer != null)
@@ -47,7 +47,7 @@ public class ChangeSprite : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Water"))
+        if (other.CompareTag("Water") && !PauseManager.isPaused)
         {
             // Reset color and rotation to original
             if (spriteRenderer != null)
