@@ -21,7 +21,9 @@ public class PlayerMovement : MonoBehaviour
     float jumpCounter;
 
     public float waterSwimPower = 3f;  // Adjust as needed
-    private bool isInWater = false;  // Track if the player is in water
+    public bool isInWater = false;  // Track if the player is in water
+    public bool isUnderWater = false;  // Track if the player is in water
+
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +109,11 @@ public class PlayerMovement : MonoBehaviour
     public bool IsInWater
     {
         get { return isInWater; }
+    }
+
+    public bool IsUnderWater
+    {
+        get { return isUnderWater; }
     }
 
     public void OnTriggerEnter2D(Collider2D other)
