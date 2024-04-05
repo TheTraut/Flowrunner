@@ -1751,6 +1751,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3510163487063836178, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 2059761482}
+    - target: {fileID: 3510163487063836178, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
       propertyPath: waterGameObject
       value: 
       objectReference: {fileID: 1905650258}
