@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7963628469660937508}
   - component: {fileID: 8970585214466069068}
   - component: {fileID: 2502093829607639722}
-  - component: {fileID: 5172054038574572664}
+  - component: {fileID: 1922566083931380468}
   - component: {fileID: 4307225743648943030}
   - component: {fileID: 3510163487063836178}
   m_Layer: 0
@@ -147,8 +147,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!61 &5172054038574572664
-BoxCollider2D:
+--- !u!60 &1922566083931380468
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -189,9 +189,55 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 2}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.19, y: -0.96999997}
+      - {x: 0.48, y: -0.96999997}
+      - {x: 0.48999998, y: -0.85999995}
+      - {x: 0.44, y: -0.84}
+      - {x: 0.53, y: -0.61}
+      - {x: 0.53999996, y: -0.39999998}
+      - {x: 0.48999998, y: -0.38}
+      - {x: 0.48999998, y: -0.14999999}
+      - {x: 0.44, y: -0.13}
+      - {x: 0.52, y: 0.01}
+      - {x: 0.59999996, y: 0.14}
+      - {x: 0.58, y: 0.24}
+      - {x: 0.76, y: 0.22999999}
+      - {x: 0.77, y: 0.24}
+      - {x: 0.77, y: 0.48999998}
+      - {x: 0.71999997, y: 0.53}
+      - {x: 0.71, y: 0.59999996}
+      - {x: 0.77, y: 0.66999996}
+      - {x: 0.77, y: 0.83}
+      - {x: 0.45999998, y: 0.88}
+      - {x: 0.37, y: 0.96999997}
+      - {x: 0.02, y: 0.96999997}
+      - {x: -0.06, y: 0.94}
+      - {x: -0.16, y: 0.84999996}
+      - {x: -0.29, y: 0.83}
+      - {x: -0.32, y: 0.62}
+      - {x: -0.42999998, y: 0.41}
+      - {x: -0.42999998, y: 0.25}
+      - {x: -0.39, y: 0.14999999}
+      - {x: -0.34, y: 0.08}
+      - {x: -0.22, y: 0}
+      - {x: -0.28, y: -0.14999999}
+      - {x: -0.42999998, y: -0.32}
+      - {x: -0.58, y: -0.5}
+      - {x: -0.58, y: -0.53999996}
+      - {x: -0.77, y: -0.53999996}
+      - {x: -0.77, y: -0.64}
+      - {x: -0.66999996, y: -0.75}
+      - {x: -0.41, y: -0.78}
+      - {x: -0.26999998, y: -0.78999996}
+      - {x: -0.22999999, y: -0.84999996}
+      - {x: -0.25, y: -0.96999997}
+      - {x: 0.07, y: -0.96999997}
+      - {x: 0.12, y: -0.79999995}
+      - {x: 0.19, y: -0.78999996}
+      - {x: 0.17999999, y: -0.96}
+  m_UseDelaunayMesh: 0
 --- !u!114 &4307225743648943030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +261,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   waterSwimPower: 3
+  isInWater: 0
+  isUnderWater: 0
 --- !u!114 &3510163487063836178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,5 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   underwaterColor: {r: 0, g: 0.74150085, b: 1, a: 1}
-  playerHeight: 1
-  buoyancyEffector: {fileID: 0}
+  playerMovement: {fileID: 0}
+  waterBuoyancyEffector: {fileID: 0}
+  waterGameObject: {fileID: 0}
+  waterSurfaceLevel: 0
