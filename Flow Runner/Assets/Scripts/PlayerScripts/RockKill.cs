@@ -14,5 +14,9 @@ public class RockCollision : MonoBehaviour
             // Destroy the rock after hitting the player
             Destroy(gameObject);
         }
+        else if (!PauseManager.isPaused && other.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
