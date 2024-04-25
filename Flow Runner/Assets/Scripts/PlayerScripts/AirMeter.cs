@@ -50,7 +50,6 @@ public class AirMeter : MonoBehaviour
 
                 if (currentAir <= 0)
                 {
-                    //coinController.UpdateCoins();
                     // Handle drowning
                     Debug.Log("Player has drowned!");
                     SceneManager.LoadSceneAsync("Title Screen");

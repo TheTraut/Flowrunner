@@ -8,7 +8,6 @@ public class RockKill : MonoBehaviour
     public bool isShielded; // Flag to track if the player is shielded
     public float shieldTime = 2f; // Duration of the shield
 
-    
     public GameObject Coins;
     private CoinController coinController;
 
@@ -42,10 +41,6 @@ public class RockKill : MonoBehaviour
             {
                 Destroy(gameObject); // Destroy the rock GameObject even if the player is shielded
             }
-            //coinController.UpdateCoins();
-            // Handle player death here (e.g., restart the level, reduce player health, etc.)
-            Debug.Log("Player hit by rock!");
-            SceneManager.LoadSceneAsync("Title Screen");
         }
         else if (!PauseManager.isPaused && other.CompareTag("Ground")) // Check if the game is not paused and collides with ground
         {
@@ -67,9 +62,5 @@ public class RockKill : MonoBehaviour
     void NoShield()
     {
         isShielded = false; // Set shielded flag to false
-    }
-    private void die()
-    {
-        
     }
 }
