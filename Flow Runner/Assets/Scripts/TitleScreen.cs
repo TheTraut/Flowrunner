@@ -7,6 +7,7 @@ using System.IO;
 public class TitleScreen : MonoBehaviour
 {
     private string settingsFilePath;
+    private string guideFilePath;
     void Awake()
     {
         settingsFilePath = Application.persistentDataPath + "/settings.json";
@@ -37,9 +38,23 @@ public class TitleScreen : MonoBehaviour
         SceneManager.LoadSceneAsync("Game");
     }
 
+    private void LoadGuide()
+    {
+        string jsonData = File.ReadAllText(guideFilePath);
+        GuideData data = JsonUtility.FromJson<GuideData>(jsonData);
+
+        //line1 = data.line1;
+        //line2 = data.line2;
+        //line3 = data.line3;
+        //line4 = data.line4;
+    }
+
     public void SeeGuide()
     {
-        SceneManager.LoadSceneAsync("Guide1");
+        GuideModalWindow.Create()
+            .SetHeader("Guide")
+            .SetBody("Hello World.")
+            .Show();
     }
 
     public void SeeHighScores()
