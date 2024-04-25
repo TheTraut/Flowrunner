@@ -10,6 +10,7 @@ public class AirMeter : MonoBehaviour
     public float currentAir; // Current air
     public PlayerMovement playerMovement; // Assign this in the Unity Inspector
     public GameObject uiSlider; // Assign the GameObject containing the UI Slider in the Unity Inspector
+    public CoinController coinController;
 
     public void Start()
     {
@@ -49,6 +50,7 @@ public class AirMeter : MonoBehaviour
 
                 if (currentAir <= 0)
                 {
+                    //coinController.UpdateCoins();
                     // Handle drowning
                     Debug.Log("Player has drowned!");
                     SceneManager.LoadSceneAsync("Title Screen");

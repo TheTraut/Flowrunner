@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RockCollision : MonoBehaviour
+public class RockKill : MonoBehaviour
 {
     public GameObject Player; // Reference to the player GameObject
     public PlayerMovement script; // Reference to the PlayerMovement script attached to the player
     public bool isShielded; // Flag to track if the player is shielded
     public float shieldTime = 2f; // Duration of the shield
 
-    // Start is called before the first frame update
-    public void Start()
+    
+    public GameObject Coins;
+    private CoinController coinController;
+
+    private void Start()
     {
         isShielded = false; // Initialize shielded flag to false
     }
@@ -18,6 +21,7 @@ public class RockCollision : MonoBehaviour
     public void Update()
     {
         CheckShield(); // Check if the shield is active
+        coinController = Coins.GetComponent<CoinController>();
     }
 
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger
@@ -38,6 +42,10 @@ public class RockCollision : MonoBehaviour
             {
                 Destroy(gameObject); // Destroy the rock GameObject even if the player is shielded
             }
+            //coinController.UpdateCoins();
+            // Handle player death here (e.g., restart the level, reduce player health, etc.)
+            Debug.Log("Player hit by rock!");
+            SceneManager.LoadSceneAsync("Title Screen");
         }
         else if (!PauseManager.isPaused && other.CompareTag("Ground")) // Check if the game is not paused and collides with ground
         {
@@ -59,5 +67,9 @@ public class RockCollision : MonoBehaviour
     void NoShield()
     {
         isShielded = false; // Set shielded flag to false
+    }
+    private void die()
+    {
+        
     }
 }

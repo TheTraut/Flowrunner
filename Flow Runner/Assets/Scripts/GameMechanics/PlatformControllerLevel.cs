@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlatformControllerLevel : MonoBehaviour
 {
     public GameObject[] obstaclePrefabs; // Array of obstacle prefabs
+    public GameObject coinPrefab; // Assign this in the Unity editor
     public float obstacleSpawnTime = 2f;
     public float obstacleSpeed = 1f;
     private float timeUntilObstacleSpawn;
@@ -46,6 +47,7 @@ public class PlatformControllerLevel : MonoBehaviour
     {
         // Get all obstacle objects currently in the scene
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Ground");
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
 
         // Loop through each obstacle
         foreach (GameObject obstacle in obstacles)
@@ -55,6 +57,16 @@ public class PlatformControllerLevel : MonoBehaviour
             {
                 // Destroy the obstacle
                 Destroy(obstacle);
+            }
+        }
+        // Loop through each coin
+        foreach (GameObject coin in coins)
+        {
+            // If the obstacle has moved behind a certain threshold
+            if (coin.transform.position.x <= -50)
+            {
+                // Destroy the obstacle
+                Destroy(coin);
             }
         }
     }
@@ -67,7 +79,16 @@ public class PlatformControllerLevel : MonoBehaviour
         // Instantiate the selected obstacle prefab at the spawn position
         GameObject spawnedObstacle = Instantiate(obstacleToSpawn, transform.position, Quaternion.identity);
 
+        // Add Rigidbody2D to spawned obstacle for movement
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
+
+        // Instantiate the selected coin
+        Vector2 coinPosition = new Vector2(spawnedObstacle.transform.position.x, spawnedObstacle.transform.position.y + 2.0f); // Adjust Y offset as needed
+        GameObject spawnedCoin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+
+        // Add Rigidbody2D to spawned coin for movement
+        Rigidbody2D coinRB = spawnedCoin.GetComponent<Rigidbody2D>();
+        coinRB.velocity = Vector2.left * obstacleSpeed;
     }
 }
