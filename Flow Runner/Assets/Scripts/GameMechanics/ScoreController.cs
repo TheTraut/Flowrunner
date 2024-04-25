@@ -7,8 +7,8 @@ public class ScoreController : MonoBehaviour
 {
 
     public float currentScore = 0f;
-    public string textScore;
-    Text score;
+    private string textScore;
+    private Text score;
     // Start is called before the first frame update
     void Start()
     {
