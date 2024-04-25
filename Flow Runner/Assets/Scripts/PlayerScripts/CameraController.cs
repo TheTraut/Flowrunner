@@ -28,14 +28,26 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private bool waiting = false;
+    private float waitDuration = 0.3f;
+
+    void Update()
+    {
+        if (waiting)
+        {
+            return; // Don't process input while waiting
+        }
+
+        // Check if the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape) && !PauseManager.isPaused)
+        {
+            TogglePause();
+        }
+    }
+
     void Awake()
     {
         pauseButtonImage.sprite = pauseSprite;
-    }
-
-    public void PauseGame()
-    {
-        PauseManager.Pause();
     }
 
     public void TogglePause()
@@ -47,9 +59,26 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            PauseGame();
-            pauseButtonImage.sprite = playSprite; // Change button image to play (resume) icon
+            PauseModalWindow modalWindow = PauseModalWindow.Create()
+                .SetHeader("Game is Paused")
+                .PauseMenu()
+                .Show();
+            StartCoroutine(WaitForAnimationAndPause(modalWindow));
         }
+    }
+
+    private IEnumerator WaitForAnimationAndPause(PauseModalWindow modalWindow)
+    {
+        waiting = true; // Start waiting
+        yield return new WaitForSeconds(waitDuration); // Wait for the duration of the animation
+        PauseGame();
+        pauseButtonImage.sprite = playSprite; // Change button image to play (resume) icon
+        waiting = false; // Animation finished, allow input again
+    }
+
+    public void PauseGame()
+    {
+        PauseManager.Pause();
     }
 
     void ResumeGame()

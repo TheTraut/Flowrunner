@@ -3,45 +3,78 @@ using System.IO;
 
 public class SettingsManager : MonoBehaviour
 {
-    public string playerName = "Player";
-    public int soundVolume = 50;
-    private string settingsFilePath;
-
-    void Awake()
+    private static SettingsManager instance;
+    public static SettingsManager Instance
     {
-        settingsFilePath = Application.persistentDataPath + "/settings.json";
-        if (File.Exists(settingsFilePath))
+        get
         {
-            LoadSettings();
-        } else
-        {
-            SaveSettings();
+            if (instance == null)
+            {
+                instance = FindObjectOfType<SettingsManager>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    obj.name = "SettingsManager";
+                    instance = obj.AddComponent<SettingsManager>();
+                    DontDestroyOnLoad(obj);
+                }
+            }
+            return instance;
         }
     }
 
-    public void SaveSettings()
-    {
-        SettingsData data = new SettingsData(playerName, soundVolume);
-        string jsonData = JsonUtility.ToJson(data);
+    private string playerName;
+    private int volume;
 
+    public string PlayerName { get { return playerName; } }
+    public int Volume { get { return volume; } }
+
+    private const string settingsFileName = "settings.json";
+    private string settingsFilePath;
+
+    private void Awake()
+    {
+        settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
+        LoadSettings();
+    }
+
+    public void UpdateSettings(string newName, int newVolume)
+    {
+        playerName = newName;
+        volume = newVolume;
+        SaveSettings();
+    }
+
+    private void SaveSettings()
+    {
+        SettingsData data = new SettingsData(playerName, volume);
+
+        string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(settingsFilePath, jsonData);
     }
 
     public void LoadSettings()
     {
-        string jsonData = File.ReadAllText(settingsFilePath);
-        SettingsData data = JsonUtility.FromJson<SettingsData>(jsonData);
+        settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
+        if (File.Exists(settingsFilePath))
+        {
+            string jsonData = File.ReadAllText(settingsFilePath);
+            SettingsData data = JsonUtility.FromJson<SettingsData>(jsonData);
 
-        playerName = data.playerName;
-        soundVolume = data.soundVolume;
-    }
+            playerName = data.playerName;
+            volume = data.soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("Settings file not found. Creating new settings file.");
 
-    public void UpdateSettings(string name, int volume)
-    {
-        playerName = name;
-        soundVolume = Mathf.Clamp(volume, 1, 100);
+            // Set default values
+            playerName = "Player";
+            volume = 50;
 
-        SaveSettings();
+            // Create and save new settings file
+            SaveSettings();
+        }
     }
 }
 
@@ -53,7 +86,14 @@ public class SettingsData
 
     public SettingsData(string name, int volume)
     {
-        this.playerName = name;
-        this.soundVolume = volume;
+        playerName = name;
+        soundVolume = volume;
+    }
+
+    // Default constructor
+    public SettingsData()
+    {
+        playerName = "Player";
+        soundVolume = 50;
     }
 }
