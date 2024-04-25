@@ -29,7 +29,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject shield; // Reference to the shield GameObject
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Handles player movement, including jumping, gravity adjustments, and swimming.
+    /// </summary>
     void Start()
     {
         shielded = false;
@@ -42,7 +44,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Updates player movement based on input and game state.
+    /// </summary>
     public void Update()
     {
         if (!PauseManager.isPaused) // Check if the game is not paused
@@ -52,7 +56,9 @@ public class PlayerMovement : MonoBehaviour
         CheckShield(); // Check if the shield is active
     }
 
-    // Check if the shield is active
+    /// <summary>
+    /// Checks if the shield is active and deactivates it after a set duration.
+    /// </summary>
     void CheckShield()
     {
         if (Input.GetKey(KeyCode.Space) && !shielded) // Check if the space key is pressed and shield is not active
@@ -63,14 +69,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Deactivate the shield
+    /// <summary>
+    /// Deactivates the shield.
+    /// </summary>
     void NoShield()
     {
         shield.SetActive(false); // Deactivate the shield
         shielded = false; // Set shielded flag to false
     }
 
-    // Handle player movement
+    /// <summary>
+    /// Handles player movement including jumping, gravity adjustments, and swimming controls.
+    /// </summary>
     void HandleMovement()
     {
         if (Input.GetButtonDown("Jump") && IsGrounded()) // Check if the jump button is pressed and player is grounded
@@ -126,7 +136,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Check if the player is grounded
+    /// <summary>
+    /// Checks if the player is grounded.
+    /// </summary>
+    /// <returns>True if the player is grounded, otherwise false.</returns>
     public bool IsGrounded()
     {
         return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1, 0.03f), CapsuleDirection2D.Horizontal, 0, groundLayer); // Check for ground overlap
@@ -144,7 +157,10 @@ public class PlayerMovement : MonoBehaviour
         get { return isUnderWater; }
     }
 
-    // Trigger enter event for water
+    /// <summary>
+    /// Trigger enter event for water collision.
+    /// </summary>
+    /// <param name="other">The Collider2D object the player has collided with.</param>
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Water")) // Check if the collider is tagged as water
@@ -154,7 +170,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Trigger exit event for water
+    /// <summary>
+    /// Trigger exit event for water collision.
+    /// </summary>
+    /// <param name="other">The Collider2D object the player has exited from.</param>
     public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Water")) // Check if the collider is tagged as water

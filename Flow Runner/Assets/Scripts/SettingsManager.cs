@@ -3,6 +3,10 @@ using System.IO;
 
 public class SettingsManager : MonoBehaviour
 {
+    /// <summary>
+    /// Gets the instance of the SettingsManager, creating one if none exists.
+    /// </summary>
+    /// <returns>The instance of SettingsManager.</returns>
     private static SettingsManager instance;
     public static SettingsManager Instance
     {
@@ -32,12 +36,20 @@ public class SettingsManager : MonoBehaviour
     private const string settingsFileName = "settings.json";
     private string settingsFilePath;
 
+    /// <summary>
+    /// Initializes the SettingsManager instance.
+    /// </summary>
     private void Awake()
     {
         settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
         LoadSettings();
     }
 
+    /// <summary>
+    /// Updates player settings with new values.
+    /// </summary>
+    /// <param name="newName">The new player name.</param>
+    /// <param name="newVolume">The new volume level.</param>
     public void UpdateSettings(string newName, float newVolume)
     {
         playerName = newName;
@@ -45,6 +57,9 @@ public class SettingsManager : MonoBehaviour
         SaveSettings();
     }
 
+    /// <summary>
+    /// Saves current player settings to a file.
+    /// </summary>
     private void SaveSettings()
     {
         SettingsData data = new SettingsData(playerName, volume);
@@ -53,6 +68,9 @@ public class SettingsManager : MonoBehaviour
         File.WriteAllText(settingsFilePath, jsonData);
     }
 
+    /// <summary>
+    /// Loads player settings from a file, or creates new settings with default values if no file exists.
+    /// </summary>
     public void LoadSettings()
     {
         settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
@@ -78,6 +96,9 @@ public class SettingsManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Represents player settings data for serialization.
+/// </summary>
 [System.Serializable]
 public class SettingsData
 {

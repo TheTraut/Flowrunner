@@ -4,7 +4,9 @@ public class WaterRise : MonoBehaviour
 {
     public float riseSpeed = 0.1f; // Speed at which the water rises
 
-    // Update is called once per frame
+    /// <summary>
+    /// Controls the rising movement of water.
+    /// </summary>
     void Update()
     {
         if (!PauseManager.isPaused)

@@ -11,7 +11,10 @@ public class ChangeSprite : MonoBehaviour
     public BuoyancyEffector2D waterBuoyancyEffector;
     public GameObject waterGameObject; // Assign the water GameObject in the inspector
     public float waterSurfaceLevel;
-    
+
+    /// <summary>
+    /// Manages sprite changes and rotations based on the player's position relative to water.
+    /// </summary>
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -32,6 +35,9 @@ public class ChangeSprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the sprite and rotation based on the player's position relative to water.
+    /// </summary>
     public void Update()
     {
 
@@ -51,6 +57,9 @@ public class ChangeSprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Changes the sprite and rotation to represent being underwater.
+    /// </summary>
     private void ChangeToUnderwaterSprite()
     {
         if (spriteRenderer != null)
@@ -60,6 +69,9 @@ public class ChangeSprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets the sprite and rotation to the original state.
+    /// </summary>
     private void ResetToOriginalSprite()
     {
         if (spriteRenderer != null)
@@ -69,6 +81,10 @@ public class ChangeSprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles actions when entering a trigger collider.
+    /// </summary>
+    /// <param name="other">The Collider2D object the GameObject has collided with.</param>
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Water") && !PauseManager.isPaused)
@@ -82,6 +98,10 @@ public class ChangeSprite : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles actions when exiting a trigger collider.
+    /// </summary>
+    /// <param name="other">The Collider2D object the GameObject has exited.</param>
     public void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Water") && !PauseManager.isPaused)

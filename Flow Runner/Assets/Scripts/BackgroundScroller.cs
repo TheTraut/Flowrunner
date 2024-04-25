@@ -8,13 +8,17 @@ public class BackgroundScroller : MonoBehaviour
     private float offset;
     private Material mat;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Scrolls the background texture horizontally.
+    /// </summary>
     void Start()
     {
         mat = GetComponent<Renderer>().material;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Updates the offset of the background texture to create scrolling effect.
+    /// </summary>
     void Update()
     {
         offset += (Time.deltaTime * scrollSpeed) / 10f;

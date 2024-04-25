@@ -18,6 +18,9 @@ public class CameraController : MonoBehaviour
 
     public float defaultWidth = 9.6f; // Width in units you design in.
 
+    /// <summary>
+    /// Controls the camera's movement to follow a target with a specified offset.
+    /// </summary>
     private void LateUpdate()
     {
         if (!PauseManager.isPaused)
@@ -31,6 +34,9 @@ public class CameraController : MonoBehaviour
     private bool waiting = false;
     private float waitDuration = 0.25f;
 
+    /// <summary>
+    /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
+    /// </summary>
     void Update()
     {
         if (waiting)
@@ -45,11 +51,17 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initializes the pause button's image sprite.
+    /// </summary>
     void Awake()
     {
         pauseButtonImage.sprite = pauseSprite;
     }
 
+    /// <summary>
+    /// Toggles the game's pause state.
+    /// </summary>
     public void TogglePause()
     {
         if (PauseManager.isPaused)
@@ -67,6 +79,10 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Waits for a specified duration after a UI animation before pausing the game.
+    /// </summary>
+    /// <param name="modalWindow">The PauseModalWindow object representing the pause menu.</param>
     private IEnumerator WaitForAnimationAndPause(PauseModalWindow modalWindow)
     {
         waiting = true; // Start waiting
@@ -76,11 +92,17 @@ public class CameraController : MonoBehaviour
         waiting = false; // Animation finished, allow input again
     }
 
+    /// <summary>
+    /// Pauses the game.
+    /// </summary>
     public void PauseGame()
     {
         PauseManager.Pause();
     }
 
+    /// <summary>
+    /// Resumes the game.
+    /// </summary>
     void ResumeGame()
     {
         PauseManager.Resume();

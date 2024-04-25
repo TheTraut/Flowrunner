@@ -10,13 +10,18 @@ public class PlatformController : MonoBehaviour
     private float timeUntilObstacleSpawn;
     private float speedMultiplicity;
 
-
+    /// <summary>
+    /// Controls the spawning and movement of obstacles on platforms.
+    /// </summary>
     void Start()
     {
         StartSpawnObstacle();
         speedMultiplicity = 0.5f;
     }
 
+    /// <summary>
+    /// Updates obstacle spawning and movement.
+    /// </summary>
     void Update()
     {
         // Spawn new obstacles ahead of the player
@@ -28,6 +33,9 @@ public class PlatformController : MonoBehaviour
         // DespawnObstacles();
     }
 
+    /// <summary>
+    /// Handles the continuous spawning of obstacles.
+    /// </summary>
     private void SpawnLoop()
     {
         timeUntilObstacleSpawn += Time.deltaTime;
@@ -42,6 +50,9 @@ public class PlatformController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns a new obstacle if the spawn time condition is met.
+    /// </summary>
     void SpawnObstacle()
     {
         // Select a random obstacle prefab (excluding the first one)
@@ -59,6 +70,9 @@ public class PlatformController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Instantiates the first obstacle at the start of the game.
+    /// </summary>
     void StartSpawnObstacle()
     {
         // Select a random obstacle prefab (excluding the first one)

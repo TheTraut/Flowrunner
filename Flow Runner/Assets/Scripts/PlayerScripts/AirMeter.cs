@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manages the player's air meter, controlling air consumption and replenishment.
+/// </summary>
 public class AirMeter : MonoBehaviour
 {
     public Slider airSlider; // Reference to the UI slider
@@ -12,6 +15,9 @@ public class AirMeter : MonoBehaviour
     public GameObject uiSlider; // Assign the GameObject containing the UI Slider in the Unity Inspector
     public CoinController coinController;
 
+    /// <summary>
+    /// Initializes the air meter slider and sets the current air to maximum.
+    /// </summary>
     public void Start()
     {
         if (airSlider == null)
@@ -27,6 +33,9 @@ public class AirMeter : MonoBehaviour
         airSlider.value = currentAir;
     }
 
+    /// <summary>
+    /// Updates the air meter based on player's actions.
+    /// </summary>
     public void Update()
     {
         if (playerMovement == null)

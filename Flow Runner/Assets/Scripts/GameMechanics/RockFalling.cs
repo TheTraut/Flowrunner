@@ -17,6 +17,9 @@ public class RockFalling : MonoBehaviour
     private float currentSpawnInterval;
     private int rocksDropped;
 
+    /// <summary>
+    /// Controls the falling of rocks from a bird.
+    /// </summary>
     void Start()
     {
         timeSinceLastSpawn = 0f;
@@ -26,6 +29,9 @@ public class RockFalling : MonoBehaviour
         SetRandomSpawnInterval();
     }
 
+    /// <summary>
+    /// Updates rock spawning and despawning.
+    /// </summary>
     void Update()
     {
         if (!PauseManager.isPaused)
@@ -53,11 +59,17 @@ public class RockFalling : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns a rock.
+    /// </summary>
     void SpawnRock()
     {
         Instantiate(rockPrefab, birdTransform.position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Despawns rocks that are too far from the bird.
+    /// </summary>
     void DespawnDistantRocks()
     {
         GameObject[] rocks = GameObject.FindGameObjectsWithTag("Rock");
@@ -70,6 +82,9 @@ public class RockFalling : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets a random spawn interval within the current range.
+    /// </summary>
     void SetRandomSpawnInterval()
     {
         currentSpawnInterval = Random.Range(currentMinSpawnInterval, currentMaxSpawnInterval);

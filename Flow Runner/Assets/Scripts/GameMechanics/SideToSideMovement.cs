@@ -4,7 +4,9 @@ public class SideToSideMovement : MonoBehaviour
 {
     public float speed = 5f;
 
-    // Update is called once per frame
+    /// <summary>
+    /// Controls the side-to-side movement of an object.
+    /// </summary>
     void Update()
     {
         if (!PauseManager.isPaused)

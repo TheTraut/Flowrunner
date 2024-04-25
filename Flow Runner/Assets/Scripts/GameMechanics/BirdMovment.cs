@@ -14,6 +14,9 @@ public class BirdMovement : MonoBehaviour
     private Vector3 startPosition;
     private Coroutine oscillationCoroutine; // Coroutine reference
 
+    /// <summary>
+    /// Handles the oscillating movement of the bird.
+    /// </summary>
     void Start()
     {
         // Set random amplitude and frequency for this instance
@@ -24,6 +27,9 @@ public class BirdMovement : MonoBehaviour
         oscillationCoroutine = StartCoroutine(Oscillate());
     }
 
+    /// <summary>
+    /// Coroutine for oscillating the bird's position.
+    /// </summary>
     private IEnumerator Oscillate()
     {
         while (true)
@@ -37,14 +43,18 @@ public class BirdMovement : MonoBehaviour
         }
     }
 
-    // Optional method to stop the coroutine externally
+    /// <summary>
+    /// Stops the oscillation coroutine.
+    /// </summary>
     public void StopOscillation()
     {
         if (oscillationCoroutine != null)
             StopCoroutine(oscillationCoroutine);
     }
 
-    // Optional method to resume the coroutine externally
+    /// <summary>
+    /// Resumes the oscillation coroutine.
+    /// </summary>
     public void ResumeOscillation()
     {
         if (oscillationCoroutine == null)

@@ -11,11 +11,17 @@ public class PlatformControllerLevel : MonoBehaviour
     private float timeUntilObstacleSpawn;
     private float speedMultiplicity;
 
+    /// <summary>
+    /// Controls the spawning and movement of obstacles and coins on platforms.
+    /// </summary>
     void Start()
     {
         speedMultiplicity = 0.5f;
     }
 
+    /// <summary>
+    /// Updates obstacle spawning and despawning.
+    /// </summary>
     void Update()
     {
         // Spawn new obstacles ahead of the player
@@ -31,6 +37,9 @@ public class PlatformControllerLevel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the continuous spawning of obstacles.
+    /// </summary>
     private void SpawnLoop()
     {
         timeUntilObstacleSpawn += Time.deltaTime;
@@ -43,6 +52,9 @@ public class PlatformControllerLevel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Despawns obstacles and coins that have moved behind a certain threshold.
+    /// </summary>
     private void DespawnObstacles()
     {
         // Get all obstacle objects currently in the scene
@@ -71,6 +83,9 @@ public class PlatformControllerLevel : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns a new obstacle and a corresponding coin.
+    /// </summary>
     void SpawnObstacle()
     {
         // Select a random obstacle prefab

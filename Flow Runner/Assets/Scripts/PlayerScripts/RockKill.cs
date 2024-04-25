@@ -11,19 +11,27 @@ public class RockKill : MonoBehaviour
     public GameObject Coins;
     private CoinController coinController;
 
+    /// <summary>
+    /// Handles collisions with rocks and player's shield.
+    /// </summary>
     private void Start()
     {
         isShielded = false; // Initialize shielded flag to false
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Updates the state of the player's shield.
+    /// </summary>
     public void Update()
     {
         CheckShield(); // Check if the shield is active
         coinController = Coins.GetComponent<CoinController>();
     }
 
-    // OnTriggerEnter2D is called when the Collider2D other enters the trigger
+    /// <summary>
+    /// Handles collision events when other colliders enter the trigger.
+    /// </summary>
+    /// <param name="other">The Collider2D object that has entered the trigger.</param>
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (!PauseManager.isPaused && other.CompareTag("Player")) // Check if the game is not paused and collides with player
@@ -48,7 +56,9 @@ public class RockKill : MonoBehaviour
         }
     }
 
-    // Check if the shield is active
+    /// <summary>
+    /// Checks if the player's shield is active.
+    /// </summary>
     void CheckShield()
     {
         if (Input.GetKey(KeyCode.Space)) // Check if the space key is pressed
@@ -58,7 +68,9 @@ public class RockKill : MonoBehaviour
         }
     }
 
-    // Deactivate the shield
+    /// <summary>
+    /// Deactivates the player's shield after a set duration.
+    /// </summary>
     void NoShield()
     {
         isShielded = false; // Set shielded flag to false

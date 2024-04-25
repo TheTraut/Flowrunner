@@ -15,6 +15,9 @@ public class BirdSpawner : MonoBehaviour
     private float currentSpawnInterval;
     private int currentBirdCount;
 
+    /// <summary>
+    /// Manages the spawning of birds at random intervals.
+    /// </summary>
     void Start()
     {
         timeSinceLastSpawn = 0f;
@@ -22,6 +25,9 @@ public class BirdSpawner : MonoBehaviour
         currentBirdCount = 0;
     }
 
+    /// <summary>
+    /// Updates the time and spawns birds if conditions are met.
+    /// </summary>
     void Update()
     {
         if (!PauseManager.isPaused) // Check if the game is not paused
@@ -37,6 +43,9 @@ public class BirdSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns a bird at a random position within specified ranges.
+    /// </summary>
     void SpawnBird()
     {
         Vector3 spawnPosition = new Vector3(
@@ -51,11 +60,17 @@ public class BirdSpawner : MonoBehaviour
         StartCoroutine(DecrementBirdCountAfterDelay(despawnTime));
     }
 
+    /// <summary>
+    /// Sets a random spawn interval between minSpawnInterval and maxSpawnInterval.
+    /// </summary>
     void SetRandomSpawnInterval()
     {
         currentSpawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
     }
 
+    /// <summary>
+    /// Decrements the current bird count after a specified delay.
+    /// </summary>
     IEnumerator DecrementBirdCountAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
