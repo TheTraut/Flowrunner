@@ -4,19 +4,25 @@ using UnityEngine.SceneManagement;
 public class RockCollision : MonoBehaviour
 {
     public GameObject Player;
-    private PlayerMovement script;
-    private void Start()
+    public PlayerMovement script;
+    public bool isShielded;
+    public float shieldTime = 2f;
+
+    public void Start()
     {
-        script = Player.GetComponent<PlayerMovement>();
+        isShielded = false;
+    }
+    public void Update()
+    {
+        CheckShield();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        bool isShielded = script.shielded;
 
         if (!PauseManager.isPaused && other.CompareTag("Player"))
         {
-            if (isShielded)
+            if (!isShielded)
             {
 
                 // Handle player death here (e.g., restart the level, reduce player health, etc.)
@@ -34,9 +40,20 @@ public class RockCollision : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (!PauseManager.isPaused && other.CompareTag("Shield")) // collision with platforms
+        
+    }
+    void CheckShield()
+    {
+        if (Input.GetKey(KeyCode.Space))
         {
-            Destroy(gameObject);
+            isShielded = true;
+            Invoke("NoShield", shieldTime);
         }
     }
+
+    void NoShield()
+    {
+        isShielded = false;
+    }
+
 }

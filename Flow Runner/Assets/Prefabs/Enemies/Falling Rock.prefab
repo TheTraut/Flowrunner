@@ -229,3 +229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 7890034449239961469, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+  script: {fileID: 0}
+  isShielded: 0
+  shieldTime: 2
