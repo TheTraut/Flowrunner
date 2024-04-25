@@ -4,10 +4,14 @@ using UnityEngine.SceneManagement;
 public class RockKill : MonoBehaviour
 {
     public GameObject Player;
+    public GameObject Coins;
     private PlayerMovement script;
+    private CoinController coinController;
+
     private void Start()
     {
         script = Player.GetComponent<PlayerMovement>();
+        coinController = Coins.GetComponent<CoinController>();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -16,19 +20,10 @@ public class RockKill : MonoBehaviour
 
         if (!PauseManager.isPaused && other.CompareTag("Player"))
         {
-            if (isShielded)
-            {
-
-                // Handle player death here (e.g., restart the level, reduce player health, etc.)
-                Debug.Log("Player hit by rock!");
-                SceneManager.LoadSceneAsync("Title Screen");
-
-                // Destroy the rock after hitting the player
-                // Destroy the rock after hitting the player
-                Destroy(gameObject);
-            }
-            else
-                Destroy(gameObject);
+            //coinController.UpdateCoins();
+            // Handle player death here (e.g., restart the level, reduce player health, etc.)
+            Debug.Log("Player hit by rock!");
+            SceneManager.LoadSceneAsync("Title Screen");
         }
         else if (!PauseManager.isPaused && other.CompareTag("Ground")) // collision with platforms
         {
@@ -38,5 +33,9 @@ public class RockKill : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void die()
+    {
+        
     }
 }

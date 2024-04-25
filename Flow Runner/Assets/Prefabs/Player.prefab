@@ -264,6 +264,9 @@ MonoBehaviour:
   waterSwimPower: 3
   isInWater: 0
   isUnderWater: 0
+  shielded: 0
+  shieldTime: 2
+  shield: {fileID: 0}
 --- !u!114 &3510163487063836178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,4 +296,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59e91ff0862b4941bb6207153b22e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinController: {fileID: 0}
+  coinManager: {fileID: 0}

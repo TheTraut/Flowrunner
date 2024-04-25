@@ -79,13 +79,13 @@ public class PlatformControllerLevel : MonoBehaviour
         // Instantiate the selected obstacle prefab at the spawn position
         GameObject spawnedObstacle = Instantiate(obstacleToSpawn, transform.position, Quaternion.identity);
 
-        // Instantiate the selected coin
-        Vector2 coinPosition = new Vector2(spawnedObstacle.transform.position.x, spawnedObstacle.transform.position.y + 2.0f); // Adjust Y offset as needed
-        GameObject spawnedCoin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
-
         // Add Rigidbody2D to spawned obstacle for movement
         Rigidbody2D obstacleRB = spawnedObstacle.GetComponent<Rigidbody2D>();
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
+
+        // Instantiate the selected coin
+        Vector2 coinPosition = new Vector2(spawnedObstacle.transform.position.x, spawnedObstacle.transform.position.y + 2.0f); // Adjust Y offset as needed
+        GameObject spawnedCoin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
 
         // Add Rigidbody2D to spawned coin for movement
         Rigidbody2D coinRB = spawnedCoin.GetComponent<Rigidbody2D>();
