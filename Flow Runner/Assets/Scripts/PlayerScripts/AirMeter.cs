@@ -38,7 +38,7 @@ public class AirMeter : MonoBehaviour
         if (!PauseManager.isPaused)
         {
             // Consume air when the player is underwater
-            if (playerMovement.IsInWater)
+            if (playerMovement.IsUnderWater)
             {
                 if (0 <= currentAir)
                 {

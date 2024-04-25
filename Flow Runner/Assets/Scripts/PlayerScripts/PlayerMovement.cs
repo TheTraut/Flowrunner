@@ -21,22 +21,13 @@ public class PlayerMovement : MonoBehaviour
     float jumpCounter;
 
     public float waterSwimPower = 3f;  // Adjust as needed
-<<<<<<< Updated upstream:Flow Runner/Assets/Scripts/PlayerMovement.cs
-    private bool isInWater = false;  // Track if the player is in water
-=======
     public bool isInWater = false;  // Track if the player is in water
     public bool isUnderWater = false;  // Track if the player is in water
 
-    public bool shielded;
-    public float shieldTime = 2f;
-    [SerializeField]
-    private GameObject shield;
->>>>>>> Stashed changes:Flow Runner/Assets/Scripts/PlayerScripts/PlayerMovement.cs
 
     // Start is called before the first frame update
     void Start()
     {
-        shielded = false;
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
@@ -49,28 +40,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        
         if (!PauseManager.isPaused)
         {
             HandleMovement();
         }
-        CheckShield();
-    }
-
-    void CheckShield()
-    {
-        if (Input.GetKey(KeyCode.Space) && !shielded)
-        {
-            shield.SetActive(true);
-            shielded = true;
-            Invoke("NoShield", shieldTime);
-        }
-    }
-
-    void NoShield()
-    {
-        shield.SetActive(false);
-        shielded = false;
     }
 
     void HandleMovement()
@@ -136,6 +109,11 @@ public class PlayerMovement : MonoBehaviour
     public bool IsInWater
     {
         get { return isInWater; }
+    }
+
+    public bool IsUnderWater
+    {
+        get { return isUnderWater; }
     }
 
     public void OnTriggerEnter2D(Collider2D other)

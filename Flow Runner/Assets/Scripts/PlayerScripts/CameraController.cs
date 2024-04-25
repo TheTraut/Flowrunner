@@ -16,11 +16,15 @@ public class CameraController : MonoBehaviour
     public Sprite pauseSprite; // Sprite for the pause button
     public Sprite playSprite; // Sprite for the play (resume) button
 
+    public float defaultWidth = 9.6f; // Width in units you design in.
+
     private void LateUpdate()
     {
         if (!PauseManager.isPaused)
         {
             transform.position = Vector3.SmoothDamp(transform.position, target.position + posOffset, ref velocity, smooth);
+            // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio
+            Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
         }
     }
 
