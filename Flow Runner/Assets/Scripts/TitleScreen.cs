@@ -19,6 +19,8 @@ public class TitleScreen : MonoBehaviour
         {
             Debug.LogWarning("Settings file not found!");
         }
+
+        LoadGuide();
     }
 
     string playerName;
@@ -35,15 +37,17 @@ public class TitleScreen : MonoBehaviour
 
     public void PlayGame()
     {
+
         SceneManager.LoadSceneAsync("Game");
     }
 
+    string line1;
     private void LoadGuide()
     {
-        string jsonData = File.ReadAllText(guideFilePath);
-        GuideData data = JsonUtility.FromJson<GuideData>(jsonData);
+        //string jsonData = File.ReadAllText(guideFilePath);
+        //GuideData data = JsonUtility.FromJson<GuideData>(jsonData);
 
-        //line1 = data.line1;
+        line1 = "data.line1";
         //line2 = data.line2;
         //line3 = data.line3;
         //line4 = data.line4;
