@@ -343,6 +343,7 @@ MonoBehaviour:
   - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
   - {fileID: 6537142309745885907, guid: 4b7aa14164f2c294e962409f5b1de4a9, type: 3}
   - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
+  coinPrefab: {fileID: 6531146122329785953, guid: f07974ae42a8849d4862deb3a9843120, type: 3}
   obstacleSpawnTime: 6
   obstacleSpeed: 12
 --- !u!1001 &267924547
@@ -882,6 +883,7 @@ MonoBehaviour:
   - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
   - {fileID: 6537142309745885907, guid: 4b7aa14164f2c294e962409f5b1de4a9, type: 3}
   - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
+  coinPrefab: {fileID: 6531146122329785953, guid: f07974ae42a8849d4862deb3a9843120, type: 3}
   obstacleSpawnTime: 10
   obstacleSpeed: 16
 --- !u!4 &685986147
@@ -1097,6 +1099,7 @@ MonoBehaviour:
   - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
   - {fileID: 6537142309745885907, guid: 4b7aa14164f2c294e962409f5b1de4a9, type: 3}
   - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
+  coinPrefab: {fileID: 6531146122329785953, guid: f07974ae42a8849d4862deb3a9843120, type: 3}
   obstacleSpawnTime: 8
   obstacleSpeed: 14
 --- !u!4 &1048967290
@@ -1321,7 +1324,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448474541}
-  - component: {fileID: 1448474540}
   - component: {fileID: 1448474542}
   m_Layer: 0
   m_Name: Spawner
@@ -1330,25 +1332,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1448474540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448474539}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65e41d003b1b9e041a8dd39ec52e6474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstaclePrefabs:
-  - {fileID: 1427460290631870394, guid: 7895347492eca5c4d9722cb2c45732d3, type: 3}
-  - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
-  - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
-  - {fileID: 1815536521554734122, guid: 1cf8350f04f59fc4c962db7936061ef5, type: 3}
-  obstacleSpawnTime: 3
-  obstacleSpeed: 10
 --- !u!4 &1448474541
 Transform:
   m_ObjectHideFlags: 0
@@ -1380,6 +1363,7 @@ MonoBehaviour:
   - {fileID: 7195390257255841153, guid: 06d8380227eb77749b396984c44f83fe, type: 3}
   - {fileID: 7110094997217798440, guid: 312fd9b09f82ca849a243017b2ca6d4d, type: 3}
   - {fileID: 1815536521554734122, guid: 1cf8350f04f59fc4c962db7936061ef5, type: 3}
+  coinPrefab: {fileID: 6531146122329785953, guid: f07974ae42a8849d4862deb3a9843120, type: 3}
   obstacleSpawnTime: 3
   obstacleSpeed: 10
 --- !u!1 &1575462601
