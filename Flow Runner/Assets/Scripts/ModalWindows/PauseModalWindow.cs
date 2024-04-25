@@ -41,22 +41,20 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
 
     private IEnumerator TemporaryUnpauseAndOpenSettings()
     {
-        // Unpause the game for 0.3 seconds
         Time.timeScale = 1f;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
 
         // Show the settings modal window
         SettingsModalWindow.Create()
             .SetHeader("Settings")
             .SetSettings((newName, newVolume) =>
             {
-                SettingsManager.Instance.UpdateSettings(newName, int.Parse(newVolume));
-            }, SettingsManager.Instance.PlayerName, SettingsManager.Instance.Volume.ToString(), "Enter your name", "Enter between 1-100")
+                SettingsManager.Instance.UpdateSettings(newName, newVolume);
+            }, SettingsManager.Instance.PlayerName, (SettingsManager.Instance.Volume / 100f), "Enter your name")
             .SetShouldPauseOnClose(true)
             .Show();
 
-        // Repause the game after 0.3 seconds
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
         Time.timeScale = 0f;
     }
 

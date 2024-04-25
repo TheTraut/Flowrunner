@@ -7,17 +7,16 @@ using UnityEngine.UI;
 public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 {
     [SerializeField] private InputField nameField;
-    [SerializeField] private InputField volumeField;
+    [SerializeField] private Slider volumeSlider;
 
-    private Action<string, string> onInputFieldsDone;
+    private Action<string, float> onInputFieldsDone;
     private bool shouldPauseOnClose = true;
 
-    public SettingsModalWindow SetSettings(Action<string, string> onDone, string initialValue = "", string volumeInitialValue = "80", string placeholderValue = "Type here", string volumePlaceholderValue = "Type here")
+    public SettingsModalWindow SetSettings(Action<string, float> onDone, string initialValue = "", float volumeInitialValue = 0.8f, string placeholderValue = "Type here")
     {
         nameField.text = initialValue;
         ((Text)nameField.placeholder).text = placeholderValue;
-        volumeField.text = volumeInitialValue;
-        ((Text)volumeField.placeholder).text = volumePlaceholderValue;
+        volumeSlider.value = volumeInitialValue * 100f;
         onInputFieldsDone = onDone;
 
         return this;
@@ -30,15 +29,13 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 
     void SubmitInput()
     {
-        onInputFieldsDone?.Invoke(nameField.text, volumeField.text);
-        onInputFieldsDone = null;
-        Close();
+        onInputFieldsDone?.Invoke(nameField.text, volumeSlider.value);
     }
 
     protected override void Update()
     {
         base.Update();
-        if ((nameField.isFocused || volumeField.isFocused) && Input.GetKeyDown(KeyCode.Return))
+        if ((nameField.isFocused || volumeSlider.interactable) && (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonUp(0)))
             SubmitInput();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -49,6 +46,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     public void UI_InputFieldOKButton()
     {
         SubmitInput();
+        CloseSettings();
     }
 
     public SettingsModalWindow SetShouldPauseOnClose(bool shouldPause)

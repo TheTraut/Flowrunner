@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     }
 
     private bool waiting = false;
-    private float waitDuration = 0.3f;
+    private float waitDuration = 0.25f;
 
     void Update()
     {

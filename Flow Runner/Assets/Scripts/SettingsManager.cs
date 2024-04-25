@@ -24,10 +24,10 @@ public class SettingsManager : MonoBehaviour
     }
 
     private string playerName;
-    private int volume;
+    private float volume;
 
     public string PlayerName { get { return playerName; } }
-    public int Volume { get { return volume; } }
+    public float Volume { get { return volume; } }
 
     private const string settingsFileName = "settings.json";
     private string settingsFilePath;
@@ -38,7 +38,7 @@ public class SettingsManager : MonoBehaviour
         LoadSettings();
     }
 
-    public void UpdateSettings(string newName, int newVolume)
+    public void UpdateSettings(string newName, float newVolume)
     {
         playerName = newName;
         volume = newVolume;
@@ -70,7 +70,7 @@ public class SettingsManager : MonoBehaviour
 
             // Set default values
             playerName = "Player";
-            volume = 50;
+            volume = 80f;
 
             // Create and save new settings file
             SaveSettings();
@@ -82,9 +82,9 @@ public class SettingsManager : MonoBehaviour
 public class SettingsData
 {
     public string playerName;
-    public int soundVolume;
+    public float soundVolume;
 
-    public SettingsData(string name, int volume)
+    public SettingsData(string name, float volume)
     {
         playerName = name;
         soundVolume = volume;
@@ -94,6 +94,6 @@ public class SettingsData
     public SettingsData()
     {
         playerName = "Player";
-        soundVolume = 50;
+        soundVolume = 80f;
     }
 }
