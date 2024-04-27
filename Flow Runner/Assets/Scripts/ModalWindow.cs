@@ -123,19 +123,19 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
 
     protected virtual void Update()
     {
-        //CheckIgnorableForClose();
+        CheckIgnorableForClose();
     }
 
     protected virtual void CheckIgnorableForClose()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    if (!ReferenceEquals(Instance, null))
-        //    {
-        //        if (Instance.ignorable)
-        //            Instance.Close();
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!ReferenceEquals(Instance, null))
+            {
+                if (Instance.ignorable)
+                    Instance.Close();
+            }
+        }
     }
 
     public virtual T Show()

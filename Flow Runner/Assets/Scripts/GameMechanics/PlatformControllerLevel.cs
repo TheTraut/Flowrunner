@@ -24,16 +24,10 @@ public class PlatformControllerLevel : MonoBehaviour
     /// </summary>
     void Update()
     {
-        // Spawn new obstacles ahead of the player
         if (!PauseManager.isPaused)
         {
-            SpawnLoop();
-        }
-
-        // Despawn obstacles behind the player
-        if (!PauseManager.isPaused)
-        {
-            DespawnObstacles();
+            SpawnLoop(); // Spawn new obstacles ahead of the player
+            DespawnObstacles(); // Despawn obstacles behind the player
         }
     }
 

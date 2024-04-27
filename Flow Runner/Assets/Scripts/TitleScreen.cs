@@ -68,7 +68,6 @@ public class TitleScreen : MonoBehaviour
             {
                 SettingsManager.Instance.UpdateSettings(newName, newVolume);
             }, SettingsManager.Instance.PlayerName, (SettingsManager.Instance.Volume / 100f), "Enter your name")
-            .SetShouldPauseOnClose(false)
             .Show();
     }
 

@@ -31,21 +31,13 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private bool waiting = false;
-    private float waitDuration = 0.25f;
-
     /// <summary>
     /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
     /// </summary>
     void Update()
     {
-        if (waiting)
-        {
-            return; // Don't process input while waiting
-        }
-
         // Check if the Escape key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape) && !PauseManager.isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
@@ -75,21 +67,9 @@ public class CameraController : MonoBehaviour
                 .SetHeader("Game is Paused")
                 .PauseMenu()
                 .Show();
-            StartCoroutine(WaitForAnimationAndPause(modalWindow));
+            PauseGame();
+            pauseButtonImage.sprite = playSprite; // Change button image to play (resume) icon
         }
-    }
-
-    /// <summary>
-    /// Waits for a specified duration after a UI animation before pausing the game.
-    /// </summary>
-    /// <param name="modalWindow">The PauseModalWindow object representing the pause menu.</param>
-    private IEnumerator WaitForAnimationAndPause(PauseModalWindow modalWindow)
-    {
-        waiting = true; // Start waiting
-        yield return new WaitForSeconds(waitDuration); // Wait for the duration of the animation
-        PauseGame();
-        pauseButtonImage.sprite = playSprite; // Change button image to play (resume) icon
-        waiting = false; // Animation finished, allow input again
     }
 
     /// <summary>

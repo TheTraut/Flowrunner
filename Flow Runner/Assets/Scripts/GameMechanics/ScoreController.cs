@@ -32,9 +32,12 @@ public class ScoreController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        currentScore += (Time.deltaTime * 100); // Score calculation 
-        textScore = TextScore(currentScore);
-        score.text = textScore;
+        if (!PauseManager.isPaused)
+        {
+            currentScore += (Time.deltaTime * 100); // Score calculation 
+            textScore = TextScore(currentScore);
+            score.text = textScore;
+        }
     }
 
 }

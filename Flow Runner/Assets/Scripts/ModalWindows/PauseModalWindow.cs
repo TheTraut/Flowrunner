@@ -54,29 +54,13 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     /// </summary>
     public void UI_SettingsButton()
     {
-        StartCoroutine(TemporaryUnpauseAndOpenSettings());
-    }
-
-    /// <summary>
-    /// Temporarily unpauses the game and opens the settings modal window.
-    /// </summary>
-    private IEnumerator TemporaryUnpauseAndOpenSettings()
-    {
-        Time.timeScale = 1f;
-        yield return new WaitForSeconds(0.25f);
-
-        // Show the settings modal window
         SettingsModalWindow.Create()
             .SetHeader("Settings")
             .SetSettings((newName, newVolume) =>
             {
                 SettingsManager.Instance.UpdateSettings(newName, newVolume);
             }, SettingsManager.Instance.PlayerName, (SettingsManager.Instance.Volume / 100f), "Enter your name")
-            .SetShouldPauseOnClose(true)
             .Show();
-
-        yield return new WaitForSeconds(0.25f);
-        Time.timeScale = 0f;
     }
 
     /// <summary>
@@ -86,13 +70,5 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     {
         PauseManager.Resume();
         SceneManager.LoadSceneAsync("Title Screen");
-    }
-
-    /// <summary>
-    /// Updates the modal window.
-    /// </summary>
-    protected override void Update()
-    {
-        base.Update();
     }
 }

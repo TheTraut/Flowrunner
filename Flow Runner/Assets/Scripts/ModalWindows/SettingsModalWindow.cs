@@ -13,7 +13,6 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     [SerializeField] private Slider volumeSlider;
 
     private Action<string, float> onInputFieldsDone;
-    private bool shouldPauseOnClose = true;
 
     /// <summary>
     /// Sets up the settings modal window with the specified settings.
@@ -70,49 +69,5 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     {
         SubmitInput();
         CloseSettings();
-    }
-
-    /// <summary>
-    /// Sets whether the game should be paused when the settings modal window is closed.
-    /// </summary>
-    /// <param name="shouldPause">True if the game should be paused, false otherwise.</param>
-    /// <returns>The current instance of the settings modal window.</returns>
-    public SettingsModalWindow SetShouldPauseOnClose(bool shouldPause)
-    {
-        shouldPauseOnClose = shouldPause;
-        return this;
-    }
-
-    /// <summary>
-    /// Overrides the Close method to handle pausing the game when the window is closed.
-    /// </summary>
-    /// <returns>The current instance of the settings modal window.</returns>
-    public override SettingsModalWindow Close()
-    {
-        base.Close();
-
-        if (shouldPauseOnClose)
-        {
-            StartCoroutine(TemporaryUnpauseAndPause());
-        }
-        else
-        {
-            Time.timeScale = 1f; // Unpause the game
-        }
-
-        return this;
-    }
-
-    /// <summary>
-    /// Temporarily unpauses the game and then pauses it.
-    /// </summary>
-    private IEnumerator TemporaryUnpauseAndPause()
-    {
-        // Unpause the game for 0.3 seconds
-        Time.timeScale = 1f;
-        yield return new WaitForSeconds(0.3f);
-
-        // Pause the game
-        Time.timeScale = 0f;
     }
 }

@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool shielded; // Flag to track if the player is shielded
     public float shieldTime = 2f; // Duration of the shield
+    float remainingShieldTime;
+    float pausedTimeRemainingShield; // Store the remaining shield time when paused
+    Coroutine shieldCoroutine;
     [SerializeField]
     private GameObject shield; // Reference to the shield GameObject
 
@@ -52,8 +55,8 @@ public class PlayerMovement : MonoBehaviour
         if (!PauseManager.isPaused) // Check if the game is not paused
         {
             HandleMovement(); // Handle player movement
+            CheckShield(); // Check if the shield is active
         }
-        CheckShield(); // Check if the shield is active
     }
 
     /// <summary>
@@ -61,21 +64,64 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void CheckShield()
     {
-        if (Input.GetKey(KeyCode.Space) && !shielded) // Check if the space key is pressed and shield is not active
+        if (!PauseManager.isPaused && Input.GetKey(KeyCode.Space) && !shielded) // Check if the space key is pressed and shield is not active
         {
             shield.SetActive(true); // Activate the shield
             shielded = true; // Set shielded flag to true
-            Invoke("NoShield", shieldTime); // Schedule the deactivation of the shield
+            if (remainingShieldTime <= 0f)
+            {
+                remainingShieldTime = shieldTime;
+            }
+            if (shieldCoroutine != null)
+            {
+                StopCoroutine(shieldCoroutine);
+            }
+            shieldCoroutine = StartCoroutine(NoShieldCoroutine(remainingShieldTime));
         }
     }
 
     /// <summary>
     /// Deactivates the shield.
     /// </summary>
-    void NoShield()
+    IEnumerator NoShieldCoroutine(float delay)
     {
-        shield.SetActive(false); // Deactivate the shield
-        shielded = false; // Set shielded flag to false
+        float startTime = Time.realtimeSinceStartup;
+        float remainingTime = delay;
+
+        while (remainingTime > 0f)
+        {
+            if (!PauseManager.isPaused)
+            {
+                remainingTime -= Time.deltaTime;
+            }
+            else
+            {
+                pausedTimeRemainingShield = remainingTime;
+                yield return null;
+            }
+            yield return null;
+        }
+
+        shield.SetActive(false);
+        shielded = false;
+
+        // Check if there's remaining time when unpaused
+        if (pausedTimeRemainingShield > 0f)
+        {
+            remainingTime = pausedTimeRemainingShield;
+            pausedTimeRemainingShield = 0f;
+            startTime = Time.realtimeSinceStartup;
+            while (remainingTime > 0f)
+            {
+                if (!PauseManager.isPaused)
+                {
+                    remainingTime -= Time.deltaTime;
+                }
+                yield return null;
+            }
+            shield.SetActive(false);
+            shielded = false;
+        }
     }
 
     /// <summary>
