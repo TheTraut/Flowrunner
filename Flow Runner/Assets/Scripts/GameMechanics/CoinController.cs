@@ -17,7 +17,7 @@ public class CoinController : MonoBehaviour
     void Awake()
     {
         totalCoinsFilePath = Application.persistentDataPath + "/totalCoins.json";
-        Debug.Log("File path set to: " + totalCoinsFilePath);
+        //Debug.Log("File path set to: " + totalCoinsFilePath);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class CoinController : MonoBehaviour
     /// </summary>
     /// <param name="currentCoins">The current number of coins.</param>
     /// <returns>A string representation of the current coins.</returns>
-    public string TextCoin( float currentCoins) // rounds and converts score into a string to be displayed 
+    public string TextCoin( float currentCoins) // rounds and converts score into a string to be displayed
     {
         return Mathf.RoundToInt(currentCoins).ToString();
     }
@@ -56,7 +56,7 @@ public class CoinController : MonoBehaviour
         totalCoinsFilePath = Application.persistentDataPath + "/totalCoins.json";
         if (string.IsNullOrEmpty(totalCoinsFilePath))
         {
-            Debug.LogError("Save path is null or empty!");
+            Debug.LogError("totalCoins.json save path is null or empty.");
             return;
         }
 
@@ -70,7 +70,7 @@ public class CoinController : MonoBehaviour
     /// </summary>
     void LoadCoins()
     {
-        Debug.Log("Loading coins from: " + totalCoinsFilePath);
+        //Debug.Log("Loading coins from: " + totalCoinsFilePath);
         if (!File.Exists(totalCoinsFilePath))
         {
             Debug.LogWarning("File does not exist. Initializing coins to zero.");
@@ -88,7 +88,7 @@ public class CoinController : MonoBehaviour
     public void UpdateCoins()
     {
         totalCoins ++;
-        Debug.Log("Total Coins" + totalCoins);
+        //Debug.Log("Total Coins" + totalCoins);
         SaveCoins();
     }
 

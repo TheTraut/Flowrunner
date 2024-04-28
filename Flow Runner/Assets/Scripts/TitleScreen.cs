@@ -64,11 +64,21 @@ public class TitleScreen : MonoBehaviour
     {
         SettingsModalWindow.Create()
             .SetHeader("Settings")
-            .SetSettings((newName, newVolume) =>
+            .SetSettings((newName, newVolume, upKeys, downKeys, shieldKeys) =>
             {
-                SettingsManager.Instance.UpdateSettings(newName, newVolume);
-            }, SettingsManager.Instance.PlayerName, (SettingsManager.Instance.Volume / 100f), "Enter your name")
+                List<KeyCode> upKey = new List<KeyCode>(upKeys);
+                List<KeyCode> downKey = new List<KeyCode>(downKeys);
+                List<KeyCode> shieldKey = new List<KeyCode>(shieldKeys);
+                SettingsManager.Instance.UpdateSettings(newName, newVolume, upKey, downKey, shieldKey);
+            },
+            SettingsManager.Instance.PlayerName,
+            SettingsManager.Instance.Volume / 100f,
+            "Enter your name",
+            SettingsManager.Instance.UpShortcutKeys,
+            SettingsManager.Instance.DownShortcutKeys,
+            SettingsManager.Instance.ShieldShortcutKeys)
             .Show();
+
     }
 
     /// <summary>

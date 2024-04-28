@@ -60,7 +60,7 @@ public class AirMeter : MonoBehaviour
                 if (currentAir <= 0)
                 {
                     // Handle drowning
-                    Debug.Log("Player has drowned!");
+                    //Debug.Log("Player has drowned!");
                     SceneManager.LoadSceneAsync("Title Screen");
                 }
             }

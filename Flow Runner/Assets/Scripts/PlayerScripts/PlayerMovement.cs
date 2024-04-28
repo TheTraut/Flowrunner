@@ -25,7 +25,10 @@ public class PlayerMovement : MonoBehaviour
     public bool isUnderWater = false; // Flag to track if the player is underwater
 
     public bool shielded; // Flag to track if the player is shielded
-    public float shieldTime = 2f; // Duration of the shield
+    public float shieldTime = 5f; // Duration of the shield
+    float shieldCooldownTime = 10f;
+    bool canUseShield = true; // Flag to track if the shield can be used
+    Coroutine shieldCooldownCoroutine; // Coroutine reference for shield cooldown
     float remainingShieldTime;
     float pausedTimeRemainingShield; // Store the remaining shield time when paused
     Coroutine shieldCoroutine;
@@ -64,10 +67,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void CheckShield()
     {
-        if (!PauseManager.isPaused && Input.GetKey(KeyCode.Space) && !shielded) // Check if the space key is pressed and shield is not active
+        // Check if the game is not paused, and the shield key combination is pressed, and the shield is not active
+        if (!PauseManager.isPaused && SettingsManager.Instance.AreKeyCombinationsPressed(SettingsManager.Instance.ShieldShortcutKeys) && !shielded && canUseShield)
         {
             shield.SetActive(true); // Activate the shield
-            shielded = true; // Set shielded flag to true
+            StartShieldCooldown(); // Start the shield cooldown coroutine
             if (remainingShieldTime <= 0f)
             {
                 remainingShieldTime = shieldTime;
@@ -78,6 +82,36 @@ public class PlayerMovement : MonoBehaviour
             }
             shieldCoroutine = StartCoroutine(NoShieldCoroutine(remainingShieldTime));
         }
+    }
+
+    /// <summary>
+    /// Starts the cooldown for using the shield.
+    /// </summary>
+    void StartShieldCooldown()
+    {
+        canUseShield = false; // Disable shield usage
+        if (shieldCooldownCoroutine != null)
+        {
+            StopCoroutine(shieldCooldownCoroutine); // Stop previous cooldown coroutine if exists
+        }
+        shieldCooldownCoroutine = StartCoroutine(ShieldCooldown());
+    }
+
+    /// <summary>
+    /// Coroutine for the shield cooldown.
+    /// </summary>
+    IEnumerator ShieldCooldown()
+    {
+        float remainingShieldCooldownTime = shieldCooldownTime; // Initial cooldown time
+        while (remainingShieldCooldownTime > 0f)
+        {
+            if (!PauseManager.isPaused)
+            {
+                remainingShieldCooldownTime -= Time.deltaTime; // Decrease remaining cooldown time
+            }
+            yield return null;
+        }
+        canUseShield = true; // Enable shield usage after cooldown
     }
 
     /// <summary>
@@ -129,14 +163,28 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void HandleMovement()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded()) // Check if the jump button is pressed and player is grounded
+        // Check if the jump button is pressed and player is grounded
+        if (SettingsManager.Instance.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys) && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpPower); // Apply vertical jump velocity
             isJumping = true; // Set jumping flag to true
             jumpCounter = 0; // Reset jump counter
         }
 
-        if (rb.velocity.y > 0 && isJumping) // Check if the player is moving upwards and jumping
+        // Check if the jump button is released
+        if (!SettingsManager.Instance.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys) && isJumping)
+        {
+            isJumping = false; // Set jumping flag to false
+            jumpCounter = 0; // Reset jump counter
+
+            if (rb.velocity.y > 0) // Check if the player is moving upwards
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); // Reduce vertical velocity
+            }
+        }
+
+        // Check if the player is moving upwards and jumping
+        if (rb.velocity.y > 0 && isJumping)
         {
             jumpCounter += Time.deltaTime; // Increment jump counter
             if (jumpCounter > jumpTime) isJumping = false; // Disable jumping if jump time exceeds limit
@@ -152,18 +200,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity += vecGravity * currentJumpM * Time.deltaTime; // Apply gravity with adjusted multiplier
         }
 
-        if (Input.GetButtonUp("Jump")) // Check if the jump button is released
-        {
-            isJumping = false; // Set jumping flag to false
-            jumpCounter = 0; // Reset jump counter
-
-            if (rb.velocity.y > 0) // Check if the player is moving upwards
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); // Reduce vertical velocity
-            }
-        }
-
-        if (rb.velocity.y < 0) // Check if the player is moving downwards
+        // Check if the player is moving downwards
+        if (rb.velocity.y < 0)
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime; // Apply increased gravity when falling
         }
@@ -171,11 +209,11 @@ public class PlayerMovement : MonoBehaviour
         // Swimming controls
         if (isInWater) // Check if the player is in water
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))  // Swim up
+            if (SettingsManager.Instance.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys))  // Swim up
             {
                 rb.AddForce(new Vector2(0, waterSwimPower), ForceMode2D.Force); // Apply upward force for swimming
             }
-            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))  // Swim down
+            else if (SettingsManager.Instance.AreKeyCombinationsPressed(SettingsManager.Instance.DownShortcutKeys))  // Swim down
             {
                 rb.AddForce(new Vector2(0, -waterSwimPower), ForceMode2D.Force); // Apply downward force for swimming
             }

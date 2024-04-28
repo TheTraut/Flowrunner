@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -29,9 +30,15 @@ public class SettingsManager : MonoBehaviour
 
     private string playerName;
     private float volume;
+    private List<KeyCode> upShortcutKeys;
+    private List<KeyCode> downShortcutKeys;
+    private List<KeyCode> shieldShortcutKeys;
 
     public string PlayerName { get { return playerName; } }
     public float Volume { get { return volume; } }
+    public List<KeyCode> UpShortcutKeys { get { return upShortcutKeys; } }
+    public List<KeyCode> DownShortcutKeys { get { return downShortcutKeys; } }
+    public List<KeyCode> ShieldShortcutKeys { get { return shieldShortcutKeys; } }
 
     private const string settingsFileName = "settings.json";
     private string settingsFilePath;
@@ -50,10 +57,13 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     /// <param name="newName">The new player name.</param>
     /// <param name="newVolume">The new volume level.</param>
-    public void UpdateSettings(string newName, float newVolume)
+    public void UpdateSettings(string newName, float newVolume, List<KeyCode> newUpShortcutKeys, List<KeyCode> newDownShortcutKeys, List<KeyCode> newShieldShortcutKeys)
     {
         playerName = newName;
         volume = newVolume;
+        upShortcutKeys = newUpShortcutKeys;
+        downShortcutKeys = newDownShortcutKeys;
+        shieldShortcutKeys = newShieldShortcutKeys;
         SaveSettings();
     }
 
@@ -62,8 +72,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void SaveSettings()
     {
-        SettingsData data = new SettingsData(playerName, volume);
-
+        SettingsData data = new SettingsData(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(settingsFilePath, jsonData);
     }
@@ -81,6 +90,9 @@ public class SettingsManager : MonoBehaviour
 
             playerName = data.playerName;
             volume = data.soundVolume;
+            upShortcutKeys = data.upShortcutKeys;
+            downShortcutKeys = data.downShortcutKeys;
+            shieldShortcutKeys = data.shieldShortcutKeys;
         }
         else
         {
@@ -89,10 +101,29 @@ public class SettingsManager : MonoBehaviour
             // Set default values
             playerName = "Player";
             volume = 80f;
+            upShortcutKeys = new List<KeyCode>() { KeyCode.W };
+            downShortcutKeys = new List<KeyCode>() { KeyCode.S };
+            shieldShortcutKeys = new List<KeyCode>() { KeyCode.Space };
 
             // Create and save new settings file
             SaveSettings();
         }
+    }
+}
+
+public static class SettingsManagerExtensions
+{
+    // Helper method to check if all keys in the combination are pressed simultaneously
+    public static bool AreKeyCombinationsPressed(this SettingsManager settingsManager, List<KeyCode> keys)
+    {
+        foreach (KeyCode key in keys)
+        {
+            if (!Input.GetKey(key))
+            {
+                return false; // Return false if any key in the combination is not pressed
+            }
+        }
+        return true; // Return true if all keys in the combination are pressed
     }
 }
 
@@ -104,11 +135,17 @@ public class SettingsData
 {
     public string playerName;
     public float soundVolume;
+    public List<KeyCode> upShortcutKeys;
+    public List<KeyCode> downShortcutKeys;
+    public List<KeyCode> shieldShortcutKeys;
 
-    public SettingsData(string name, float volume)
+    public SettingsData(string name, float volume, List<KeyCode> upKeys, List<KeyCode> downKeys, List<KeyCode> changeShieldKeys)
     {
         playerName = name;
         soundVolume = volume;
+        upShortcutKeys = upKeys;
+        downShortcutKeys = downKeys;
+        shieldShortcutKeys = changeShieldKeys;
     }
 
     // Default constructor
@@ -116,5 +153,8 @@ public class SettingsData
     {
         playerName = "Player";
         soundVolume = 80f;
+        upShortcutKeys = new List<KeyCode>() { KeyCode.W };
+        downShortcutKeys = new List<KeyCode>() { KeyCode.S };
+        shieldShortcutKeys = new List<KeyCode>() { KeyCode.Space };
     }
 }
