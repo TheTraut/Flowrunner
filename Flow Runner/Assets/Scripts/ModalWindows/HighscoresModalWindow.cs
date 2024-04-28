@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
@@ -13,6 +14,7 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
     {
         public TMP_Text[] nameTexts;
         public TMP_Text[] scoreTexts;
+        public Button[] deleteButtons;
         public TMP_Text noScoresText;
         public TMP_Text[] headerTexts;
     }
@@ -81,6 +83,19 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
                 // Display highscore entry
                 highscoreTexts.nameTexts[i].text = highscores[i].playerName;
                 highscoreTexts.scoreTexts[i].text = highscores[i].score.ToString();
+                if (highscores[i].playerName == SettingsManager.Instance.PlayerName)
+                {
+                    // Remove existing onClick listeners (if any)
+                    highscoreTexts.deleteButtons[i].onClick.RemoveAllListeners();
+                    highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().alpha = 1f;
+                    highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    int currentIndex = i; // Save current index for use in lambda
+                    highscoreTexts.deleteButtons[i].onClick.AddListener(() => DeleteButton_OnClick(currentIndex));
+                } else
+                {
+                    highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().alpha = 0f;
+                    highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
                 if (i < maxEntries - 1) // Check if it's the last iteration
                 {
                     rowLines[i].SetActive(true); // Show the row line for this row
@@ -91,6 +106,8 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
                 // Hide remaining UI elements
                 highscoreTexts.nameTexts[i].text = "";
                 highscoreTexts.scoreTexts[i].text = "";
+                highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().alpha = 0f;
+                highscoreTexts.deleteButtons[i].GetComponent<CanvasGroup>().blocksRaycasts = false;
                 if (i < highscoreTexts.nameTexts.Length - 1) // Check if it's not the last iteration
                 {
                     rowLines[i].SetActive(false); // Hide the row line for this row
@@ -114,9 +131,25 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
             text.text = "";
         }
 
+        foreach (var deleteButton in highscoreTexts.deleteButtons)
+        {
+            deleteButton.gameObject.SetActive(false);
+        }
+
         foreach (var line in rowLines)
         {
             line.SetActive(false); // Hide all row lines when there are no scores
         }
+    }
+
+    /// <summary>
+    /// Handles the onClick event for delete buttons in the highscores modal window.
+    /// Removes the highscore entry corresponding to the button's index.
+    /// </summary>
+    /// <param name="index">The index of the highscore entry to delete.</param>
+    private void DeleteButton_OnClick(int index)
+    {
+        HighscoresManager.Instance.RemoveHighscore(index);
+        PopulateHighscores(); // Update the UI after deletion
     }
 }
