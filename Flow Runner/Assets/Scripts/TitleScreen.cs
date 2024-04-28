@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.IO;
 
 /// <summary>
 /// Manages interactions and UI elements on the title screen.
@@ -49,12 +47,18 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void SeeHighScores()
     {
-        ToastModalWindow.Create(ignorable: true)
-                .SetHeader("Coming Soon")
-                .SetBody("Highscores are being added, check back soon!")
-                .SetDelay(3f) // Set it to 0 to make popup persistent
-                              //.SetIcon(sprite) // Also you can set icon
-                .Show();
+        //ToastModalWindow.Create(ignorable: true)
+        //        .SetHeader("Coming Soon")
+        //        .SetBody("Highscores are being added, check back soon!")
+        //        .SetDelay(3f) // Set it to 0 to make popup persistent
+        //                      //.SetIcon(sprite) // Also you can set icon
+        //        .Show();
+
+        // Create and display the HighscoresModalWindow
+        HighscoresModalWindow.Create()
+            .SetHeader("High Scores") // Set the header text
+            .Highscores() // Populate the high scores
+            .Show(); // Show the modal window
     }
 
     /// <summary>
@@ -78,7 +82,6 @@ public class TitleScreen : MonoBehaviour
             SettingsManager.Instance.DownShortcutKeys,
             SettingsManager.Instance.ShieldShortcutKeys)
             .Show();
-
     }
 
     /// <summary>

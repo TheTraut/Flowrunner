@@ -59,12 +59,21 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         }
         else
         {
-            // Check if the sprite is not already inputSprite, then set it back to inputSprite
-            if (nameField.GetComponent<Image>().sprite != inputSprite)
+            // Check if the sprite is not already inputSprite or green, then set it back to inputSprite
+            if (nameField.GetComponent<Image>().sprite != inputSprite && nameField.GetComponent<Image>().sprite != inputOutlineGreen)
             {
                 SetInputFieldSprite(nameField, inputSprite);
             }
         }
+
+        // Check for the up shortcut field
+        CheckAndUpdateShortcutField(upShortcutField);
+
+        // Check for the down shortcut field
+        CheckAndUpdateShortcutField(downShortcutField);
+
+        // Check for the shield shortcut field
+        CheckAndUpdateShortcutField(shieldShortcutField);
 
         // Clear input field when focus is brought to it and start capturing
         if (!isCapturing)
@@ -174,7 +183,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
             if (!isFlashing)
             {
                 SetInputFieldSprite(field, inputOutlineYellow); // Set to yellow outline sprite if capturing keystrokes
-                // Start flashing
+                                                                // Start flashing
                 StartCoroutine(FlashOutline(field));
             }
         }
@@ -196,6 +205,41 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         }
         SetInputFieldSprite(field, inputOutlineYellow);
         isFlashing = false;
+    }
+
+    void CheckAndUpdateShortcutField(InputField shortcutField)
+    {
+        // Check for text modification for the shortcut field
+        if (shortcutField.text != GetShortcutFieldInitialValue(shortcutField))
+        {
+            SetInputFieldSprite(shortcutField, inputOutlineYellow);
+        }
+        else
+        {
+            // Check if the sprite is not already inputSprite or green, then set it back to inputSprite
+            if (shortcutField.GetComponent<Image>().sprite != inputSprite && shortcutField.GetComponent<Image>().sprite != inputOutlineGreen)
+            {
+                SetInputFieldSprite(shortcutField, inputSprite);
+            }
+        }
+    }
+
+    string GetShortcutFieldInitialValue(InputField shortcutField)
+    {
+        if (shortcutField == upShortcutField)
+        {
+            return KeyCodeListToString(SettingsManager.Instance.UpShortcutKeys);
+        }
+        else if (shortcutField == downShortcutField)
+        {
+            return KeyCodeListToString(SettingsManager.Instance.DownShortcutKeys);
+        }
+        else if (shortcutField == shieldShortcutField)
+        {
+            return KeyCodeListToString(SettingsManager.Instance.ShieldShortcutKeys);
+        }
+
+        return "";
     }
 
     void UpdateShortcutField()

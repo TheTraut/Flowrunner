@@ -1,43 +1,65 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
+    /// <summary>
+    /// Gets the instance of the ScoreController, creating one if none exists.
+    /// </summary>
+    /// <returns>The instance of ScoreController.</returns>
+    private static ScoreController instance;
+    public static ScoreController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<ScoreController>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    obj.name = "ScoreController";
+                    instance = obj.AddComponent<ScoreController>();
+                    DontDestroyOnLoad(obj);
+                }
+            }
+            return instance;
+        }
+    }
 
     public float currentScore = 0f;
-    private string textScore;
-    private Text score;
+    [SerializeField] private Text scoreText;
 
     /// <summary>
-    /// Controls the display and calculation of the score.
+    /// Sets the score text GameObject to update the displayed score.
     /// </summary>
-    void Start()
+    /// <param name="scoreText">The Text component responsible for displaying the score.</param>
+    public void SetScoreText(Text scoreText)
     {
-        score = GetComponent<Text>();
+        this.scoreText = scoreText;
+        UpdateScoreText();
     }
 
     /// <summary>
-    /// Rounds and converts the current score into a string for display.
+    /// Updates the displayed score text.
     /// </summary>
-    /// <param name="currentScore">The current score.</param>
-    /// <returns>A string representation of the current score.</returns>
-    public string TextScore( float currentScore) // rounds and converts score into a string to be displayed 
+    private void UpdateScoreText()
     {
-        return Mathf.RoundToInt(currentScore).ToString();
+        if (scoreText != null)
+        {
+            scoreText.text = Mathf.RoundToInt(currentScore).ToString();
+        }
     }
 
     /// <summary>
-    /// Updates the current score and updates the text display.
+    /// Updates the current score.
     /// </summary>
     void Update()
     {
         if (!PauseManager.isPaused)
         {
             currentScore += (Time.deltaTime * 100); // Score calculation 
-            textScore = TextScore(currentScore);
-            score.text = textScore;
+            UpdateScoreText();
         }
     }
-
 }

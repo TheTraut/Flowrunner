@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-
 public class CoinController : MonoBehaviour
 {
     public int currentCoins = 0;
@@ -34,7 +33,7 @@ public class CoinController : MonoBehaviour
     /// </summary>
     /// <param name="currentCoins">The current number of coins.</param>
     /// <returns>A string representation of the current coins.</returns>
-    public string TextCoin( float currentCoins) // rounds and converts score into a string to be displayed
+    public string TextCoin(float currentCoins) // rounds and converts score into a string to be displayed
     {
         return Mathf.RoundToInt(currentCoins).ToString();
     }
@@ -87,7 +86,7 @@ public class CoinController : MonoBehaviour
     /// </summary>
     public void UpdateCoins()
     {
-        totalCoins ++;
+        totalCoins++;
         //Debug.Log("Total Coins" + totalCoins);
         SaveCoins();
     }

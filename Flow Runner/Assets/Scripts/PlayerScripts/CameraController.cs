@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -23,7 +20,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.isPaused && target != null) // Add null check for target transform
         {
             transform.position = Vector3.SmoothDamp(transform.position, target.position + posOffset, ref velocity, smooth);
             // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio

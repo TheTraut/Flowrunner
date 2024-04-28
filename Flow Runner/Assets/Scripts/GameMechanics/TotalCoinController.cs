@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-
 public class TotalCoinController : MonoBehaviour
 {
     private string textCoin;
     Text coin;
-    public int totalCoins = 0;    
+    public int totalCoins = 0;
     private string totalCoinsFilePath;
 
     /// <summary>
@@ -32,7 +31,7 @@ public class TotalCoinController : MonoBehaviour
     /// </summary>
     /// <param name="currentCoins">The current number of coins.</param>
     /// <returns>A string representation of the current coins.</returns>
-    public string TextCoin( float currentCoins) // rounds and converts score into a string to be displayed 
+    public string TextCoin(float currentCoins) // rounds and converts score into a string to be displayed 
     {
         return Mathf.RoundToInt(currentCoins).ToString();
     }

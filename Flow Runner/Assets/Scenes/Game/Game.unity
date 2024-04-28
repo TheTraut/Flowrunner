@@ -629,7 +629,6 @@ GameObject:
   - component: {fileID: 379875217}
   - component: {fileID: 379875219}
   - component: {fileID: 379875218}
-  - component: {fileID: 379875220}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -698,19 +697,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379875216}
   m_CullTransparentMesh: 1
---- !u!114 &379875220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379875216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80412268650fd3e4da276c8dd26ae5ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentScore: 0
 --- !u!1 &486808886
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,6 +784,8 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -899,6 +887,32 @@ MonoBehaviour:
   pauseSprite: {fileID: 21300000, guid: adce4ccda2563aa499a884ff22e10a68, type: 3}
   playSprite: {fileID: 21300000, guid: d11d53f20e5b9b24d85013b409d3cd63, type: 3}
   defaultWidth: 9.6
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cba00ab3954e2442a4047ffe6c64489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80412268650fd3e4da276c8dd26ae5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScore: 0
+  scoreText: {fileID: 379875218}
 --- !u!1 &685986145
 GameObject:
   m_ObjectHideFlags: 0

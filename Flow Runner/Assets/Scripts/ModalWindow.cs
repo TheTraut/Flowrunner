@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
 {
     protected const string PREFABS_DIR_IN_RESOURCES = "Modal Windows/";
-    protected const string BUTTONS_PATH= "Buttons/Button_";     
+    protected const string BUTTONS_PATH = "Buttons/Button_";
 
     [SerializeField] protected Animator animator;
     [SerializeField] protected Text headerText;
@@ -22,9 +21,9 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
     protected List<ModalWindowButton> buttons = new List<ModalWindowButton>();
 
     protected bool ignorable;
-    public virtual bool Ignorable 
-    { 
-        get => ignorable; 
+    public virtual bool Ignorable
+    {
+        get => ignorable;
         protected set
         {
             ignorable = value;
@@ -92,8 +91,8 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
 
         return Instance;
     }
-    
-    
+
+
 
     public virtual T SetBody(string text)
     {
@@ -111,7 +110,7 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
         buttons.Add(button);
 
         return Instance;
-    }  
+    }
 
     protected virtual void OnBeforeShow()
     {
@@ -152,7 +151,7 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
         Visible = false;
         Destroy(gameObject, 1f);
         return Instance;
-    }    
+    }
 
     public virtual void UI_IgnorePopup()
     {
@@ -160,7 +159,7 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
         {
             Close();
         }
-    }    
+    }
 
     public virtual void ButtonPressedCallback(ModalWindowButton modalWindowButton)
     {
