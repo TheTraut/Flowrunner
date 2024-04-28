@@ -17,9 +17,11 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
         public TMP_Text[] headerTexts;
     }
 
+    #pragma warning disable IDE0044 // Add readonly modifier
     [SerializeField] private HighscoreTexts highscoreTexts;
     [SerializeField] private GameObject[] rowLines;
     [SerializeField] private GameObject[] otherLines;
+    #pragma warning restore IDE0044 // Add readonly modifier
 
     /// <summary>
     /// Opens the highscores modal.
@@ -32,11 +34,27 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
     }
 
     /// <summary>
+    /// Loads settings when the object is awake.
+    /// </summary>
+    private void Awake()
+    {
+        HighscoresManager.Instance.LoadHighscores();
+    }
+
+    /// <summary>
+    /// Closes the highscores modal.
+    /// </summary>
+    public void CloseHighscores()
+    {
+        Close();
+    }
+
+    /// <summary>
     /// Populates the highscores in the UI.
     /// </summary>
     private void PopulateHighscores()
     {
-        List<(string, int)> highscores = HighscoresManager.Instance.GetHighscores();
+        List<HighscoreEntry> highscores = HighscoresManager.Instance.GetHighscores();
 
         if (highscores.Count == 0)
         {
@@ -55,16 +73,30 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
 
         highscoreTexts.noScoresText.text = "";
 
-        int count = Mathf.Min(highscores.Count, highscoreTexts.nameTexts.Length);
-
-        for (int i = 0; i < count; i++)
+        int maxEntries = Mathf.Min(highscores.Count, highscoreTexts.nameTexts.Length);
+        for (int i = 0; i < highscoreTexts.nameTexts.Length; i++)
         {
-            highscoreTexts.nameTexts[i].text = highscores[i].Item1;
-            highscoreTexts.scoreTexts[i].text = highscores[i].Item2.ToString();
-            rowLines[i].SetActive(true); // Show the row line for this row
+            if (i < maxEntries)
+            {
+                // Display highscore entry
+                highscoreTexts.nameTexts[i].text = highscores[i].playerName;
+                highscoreTexts.scoreTexts[i].text = highscores[i].score.ToString();
+                if (i < maxEntries - 1) // Check if it's the last iteration
+                {
+                    rowLines[i].SetActive(true); // Show the row line for this row
+                }
+            }
+            else
+            {
+                // Hide remaining UI elements
+                highscoreTexts.nameTexts[i].text = "";
+                highscoreTexts.scoreTexts[i].text = "";
+                if (i < highscoreTexts.nameTexts.Length - 1) // Check if it's not the last iteration
+                {
+                    rowLines[i].SetActive(false); // Hide the row line for this row
+                }
+            }
         }
-
-        SetRemainingTextsEmpty(count);
     }
 
     /// <summary>
@@ -86,35 +118,5 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
         {
             line.SetActive(false); // Hide all row lines when there are no scores
         }
-    }
-
-    /// <summary>
-    /// Sets remaining text elements to empty based on the count.
-    /// </summary>
-    /// <param name="count">Number of high scores to display.</param>
-    private void SetRemainingTextsEmpty(int count)
-    {
-        for (int i = count; i < highscoreTexts.nameTexts.Length; i++)
-        {
-            highscoreTexts.nameTexts[i].text = "";
-            highscoreTexts.scoreTexts[i].text = "";
-            rowLines[i].SetActive(false); // Hide the row line for this row
-        }
-    }
-
-    /// <summary>
-    /// Loads settings when the object is awake.
-    /// </summary>
-    private void Awake()
-    {
-        HighscoresManager.Instance.LoadHighscores();
-    }
-
-    /// <summary>
-    /// Closes the highscores modal.
-    /// </summary>
-    public void CloseHighscores()
-    {
-        Close();
     }
 }

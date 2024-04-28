@@ -24,7 +24,7 @@ public class HighscoresManager : MonoBehaviour
         }
     }
 
-    private List<(string, int)> highscores;
+    private List<HighscoreEntry> highscores;
 
     private const string highscoresFileName = "highscores.json";
     private string highscoresFilePath;
@@ -37,8 +37,8 @@ public class HighscoresManager : MonoBehaviour
 
     public void AddHighscore(string playerName, int score)
     {
-        highscores.Add((playerName, score));
-        highscores.Sort((a, b) => b.Item2.CompareTo(a.Item2)); // Sort in descending order based on score
+        highscores.Add(new HighscoreEntry(playerName, score));
+        highscores.Sort((a, b) => b.score.CompareTo(a.score)); // Sort in descending order based on score
 
         // Ensure only top 6 scores are saved
         if (highscores.Count > 6)
@@ -49,14 +49,18 @@ public class HighscoresManager : MonoBehaviour
         SaveHighscores();
     }
 
-    public List<(string, int)> GetHighscores()
+    public List<HighscoreEntry> GetHighscores()
     {
         return highscores;
     }
 
     private void SaveHighscores()
     {
-        string jsonData = JsonUtility.ToJson(highscores);
+        HighscoresData data = new()
+        {
+            highscores = highscores // Assign the current highscores list
+        };
+        string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(highscoresFilePath, jsonData);
     }
 
@@ -66,13 +70,34 @@ public class HighscoresManager : MonoBehaviour
         if (File.Exists(highscoresFilePath))
         {
             string jsonData = File.ReadAllText(highscoresFilePath);
-            highscores = JsonUtility.FromJson<List<(string, int)>>(jsonData);
+            HighscoresData data = JsonUtility.FromJson<HighscoresData>(jsonData);
+            highscores = data.highscores;
         }
         else
         {
             Debug.LogWarning("Highscores file not found. Creating new highscores file.");
-            highscores = new List<(string, int)>();
+            HighscoresData data = new();
+            highscores = data.highscores;
             SaveHighscores();
         }
+    }
+}
+
+[System.Serializable]
+public class HighscoresData
+{
+    public List<HighscoreEntry> highscores;
+}
+
+[System.Serializable]
+public class HighscoreEntry
+{
+    public string playerName;
+    public int score;
+
+    public HighscoreEntry(string name, int score)
+    {
+        playerName = name;
+        this.score = score;
     }
 }

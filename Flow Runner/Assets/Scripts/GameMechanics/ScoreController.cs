@@ -3,32 +3,16 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    /// <summary>
-    /// Gets the instance of the ScoreController, creating one if none exists.
-    /// </summary>
-    /// <returns>The instance of ScoreController.</returns>
-    private static ScoreController instance;
-    public static ScoreController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<ScoreController>();
-                if (instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = "ScoreController";
-                    instance = obj.AddComponent<ScoreController>();
-                    DontDestroyOnLoad(obj);
-                }
-            }
-            return instance;
-        }
-    }
-
     public float currentScore = 0f;
     [SerializeField] private Text scoreText;
+
+    /// <summary>
+    /// Invoked just before the game object is disabled or destroyed.
+    /// </summary>
+    private void OnDisable()
+    {
+        HighscoresManager.Instance.AddHighscore(SettingsManager.Instance.PlayerName, (int)currentScore);
+    }
 
     /// <summary>
     /// Sets the score text GameObject to update the displayed score.
