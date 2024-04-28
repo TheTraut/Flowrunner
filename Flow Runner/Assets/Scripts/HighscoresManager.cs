@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HighscoresManager : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class HighscoresManager : MonoBehaviour
     }
 
     private List<HighscoreEntry> highscores;
-
+    private readonly int MAX_HIGHSCORES = 10;
     private const string highscoresFileName = "highscores.json";
     private string highscoresFilePath;
 
@@ -58,34 +59,61 @@ public class HighscoresManager : MonoBehaviour
     /// </summary>
     /// <param name="playerName">The name of the player.</param>
     /// <param name="score">The score achieved by the player.</param>
-    public void AddHighscore(string playerName, int score)
+    public void AddHighscore(string playerName, int score, int? id = null)
     {
-        highscores.Add(new HighscoreEntry(playerName, score));
+        if (id.HasValue)
+        {
+            highscores.Add(new HighscoreEntry(id.Value, playerName, score));
+        }
+        else
+        {
+            highscores.Add(new HighscoreEntry(GetNextAvailableId(), playerName, score));
+        }
+
         highscores.Sort((a, b) => b.score.CompareTo(a.score)); // Sort in descending order based on score
 
-        // Ensure only top 6 scores are saved
-        if (highscores.Count > 6)
+        // Ensure only top MAX_HIGHSCORES scores are saved
+        if (highscores.Count > MAX_HIGHSCORES)
         {
-            highscores.RemoveAt(6);
+            highscores.RemoveAt(MAX_HIGHSCORES);
         }
 
         SaveHighscores();
     }
 
     /// <summary>
+    /// Retrieves the next available ID for a new highscore entry.
+    /// If there are existing entries, it returns the maximum ID plus one; otherwise, it returns 0.
+    /// </summary>
+    /// <returns>The next available ID.</returns>
+    private int GetNextAvailableId()
+    {
+        // Find the maximum ID in the list and return the next available ID
+        if (highscores.Count > 0)
+        {
+            return highscores.Max(entry => entry.id) + 1;
+        }
+        else
+        {
+            return 0; // Start from 0 if there are no entries
+        }
+    }
+
+    /// <summary>
     /// Removes the highscore entry at the specified index from the highscores list.
     /// </summary>
     /// <param name="index">The index of the highscore entry to remove.</param>
-    public void RemoveHighscore(int index)
+    public void RemoveHighscore(int id)
     {
-        if (index >= 0 && index < highscores.Count)
+        int indexToRemove = highscores.FindIndex(entry => entry.id == id);
+        if (indexToRemove != -1)
         {
-            highscores.RemoveAt(index);
+            highscores.RemoveAt(indexToRemove);
             SaveHighscores(); // Save the updated highscores list
         }
         else
         {
-            Debug.LogWarning("Invalid index to remove highscore: " + index);
+            Debug.LogWarning("Highscore entry with ID " + id + " not found.");
         }
     }
 
@@ -140,11 +168,13 @@ public class HighscoresData
 [System.Serializable]
 public class HighscoreEntry
 {
+    public int id; // Unique identifier for each entry
     public string playerName;
     public int score;
 
-    public HighscoreEntry(string name, int score)
+    public HighscoreEntry(int id, string name, int score)
     {
+        this.id = id;
         playerName = name;
         this.score = score;
     }
