@@ -31,8 +31,9 @@ public class PlayerMovement : MonoBehaviour
     float remainingShieldTime;
     float pausedTimeRemainingShield; // Store the remaining shield time when paused
     Coroutine shieldCoroutine;
-    [SerializeField]
-    private readonly GameObject shield; // Reference to the shield GameObject
+    #pragma warning disable IDE0044 // Add readonly modifier
+    [SerializeField] private GameObject shield; // Reference to the shield GameObject
+    #pragma warning restore IDE0044 // Add readonly modifier
 
     /// <summary>
     /// Handles player movement, including jumping, gravity adjustments, and swimming.
