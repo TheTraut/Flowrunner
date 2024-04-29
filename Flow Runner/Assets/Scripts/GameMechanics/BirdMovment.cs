@@ -33,10 +33,10 @@ public class BirdMovement : MonoBehaviour
     {
         while (true)
         {
-            if (!PauseManager.isPaused)
+            if (!PauseManager.IsPaused)
             {
                 float startTime = Time.time - elapsedTimePaused - lastOscillationTime; // Calculate start time for current oscillation cycle
-                while (!PauseManager.isPaused)
+                while (!PauseManager.IsPaused)
                 {
                     float currentTime = Time.time - elapsedTimePaused; // Calculate current time since the game was unpaused
                     float elapsedTime = currentTime - startTime; // Calculate elapsed time for the current oscillation cycle

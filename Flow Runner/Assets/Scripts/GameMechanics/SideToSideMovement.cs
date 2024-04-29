@@ -9,10 +9,10 @@ public class SideToSideMovement : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             float horizontalInput = Input.GetAxis("Horizontal");
-            Vector3 movement = new Vector3(horizontalInput, 0, 0);
+            Vector3 movement = new(horizontalInput, 0, 0);
             transform.Translate(movement * speed * Time.deltaTime);
         }
     }

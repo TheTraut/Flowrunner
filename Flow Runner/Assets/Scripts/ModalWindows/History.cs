@@ -16,57 +16,63 @@ class History
         }
     }
 
-    private readonly Stack<Command> done, undone;
+    private readonly Stack<Command> undoStack = new Stack<Command>();
+    private readonly Stack<Command> redoStack = new Stack<Command>();
 
-    public History()
-    {
-        done = new Stack<Command>();
-        undone = new Stack<Command>();
-    }
+    public Command CurrentCommand { get; private set; }
 
-    public void Do(Command new_cmd)
+    public void Do(Command command)
     {
-        new_cmd.Execute();
-        undone.Clear();
-        done.Push(new_cmd);
+        command.Execute();
+        undoStack.Push(command);
+
+        // Update the current command
+        CurrentCommand = command;
+
+        // Clear redo stack when a new command is executed
+        redoStack.Clear();
     }
 
     public bool CanUndo()
     {
-        return done.Count > 0;
+        return undoStack.Count > 0;
     }
 
     public void Undo()
     {
-        if (done.Count == 0)
+        if (undoStack.Count > 0)
         {
-            return;
+            Command command = undoStack.Pop();
+            command.Unexecute();
+            redoStack.Push(command);
+
+            // Update the current command
+            CurrentCommand = command;
         }
-        Command toUndo = done.Pop();
-        toUndo.Unexecute();
-        undone.Push(toUndo);
     }
 
     public bool CanRedo()
     {
-        return undone.Count > 0;
+        return redoStack.Count > 0;
     }
 
     public void Redo()
     {
-        if (undone.Count == 0)
+        if (redoStack.Count > 0)
         {
-            return;
+            Command command = redoStack.Pop();
+            command.Execute();
+            undoStack.Push(command);
+
+            // Update the current command
+            CurrentCommand = command;
         }
-        Command toDo = undone.Pop();
-        toDo.Execute();
-        done.Push(toDo);
     }
 
     public void DeleteInstance()
     {
-        done.Clear();
-        undone.Clear();
+        undoStack.Clear();
+        redoStack.Clear();
         instance = null;
     }
 }

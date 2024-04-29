@@ -40,7 +40,7 @@ public class ScoreController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             currentScore += (Time.deltaTime * 100); // Score calculation 
             UpdateScoreText();

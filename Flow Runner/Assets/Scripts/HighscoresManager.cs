@@ -19,8 +19,10 @@ public class HighscoresManager : MonoBehaviour
                 instance = FindObjectOfType<HighscoresManager>();
                 if (instance == null)
                 {
-                    GameObject obj = new GameObject();
-                    obj.name = "HighscoresManager";
+                    GameObject obj = new()
+                    {
+                        name = "HighscoresManager"
+                    };
                     instance = obj.AddComponent<HighscoresManager>();
                     DontDestroyOnLoad(obj);
                 }

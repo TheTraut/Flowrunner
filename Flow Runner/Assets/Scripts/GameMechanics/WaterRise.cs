@@ -9,7 +9,7 @@ public class WaterRise : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             // Move the water object upwards at the specified rise speed
             transform.position += new Vector3(0, riseSpeed * Time.deltaTime, 0);

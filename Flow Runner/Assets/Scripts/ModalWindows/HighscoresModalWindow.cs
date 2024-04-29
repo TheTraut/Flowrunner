@@ -63,25 +63,20 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
     /// </summary>
     private void UpdateUndoRedoButtonVisibility()
     {
-        if (!History.Instance.CanUndo()) {
-            undoButton.GetComponent<CanvasGroup>().alpha = 0f;
-            undoButton.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else
-        {
-            undoButton.GetComponent<CanvasGroup>().alpha = 1f;
-            undoButton.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        }
+        bool canUndo = History.Instance.CanUndo();
+        bool canRedo = History.Instance.CanRedo();
 
-        if (!History.Instance.CanRedo())
+        SetButtonVisibility(undoButton, canUndo);
+        SetButtonVisibility(redoButton, canRedo);
+    }
+
+    private void SetButtonVisibility(Button button, bool isVisible)
+    {
+        CanvasGroup canvasGroup = button.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
         {
-            redoButton.GetComponent<CanvasGroup>().alpha = 0f;
-            redoButton.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else
-        {
-            redoButton.GetComponent<CanvasGroup>().alpha = 1f;
-            redoButton.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            canvasGroup.alpha = isVisible ? 1f : 0f;
+            canvasGroup.blocksRaycasts = isVisible;
         }
     }
 
