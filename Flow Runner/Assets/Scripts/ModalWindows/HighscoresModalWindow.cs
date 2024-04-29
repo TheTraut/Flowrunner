@@ -58,6 +58,13 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
         });
     }
 
+    public override HighscoresModalWindow Close()
+    {
+        Instance = null;
+        base.Close();
+        return Instance;
+    }
+
     /// <summary>
     /// Updates the visibility of the undo and redo buttons based on the command history state.
     /// </summary>

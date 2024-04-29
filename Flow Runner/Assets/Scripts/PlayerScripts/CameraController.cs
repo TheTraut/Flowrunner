@@ -16,6 +16,26 @@ public class CameraController : MonoBehaviour
     public float defaultWidth = 9.6f; // Width in units you design in.
 
     /// <summary>
+    /// Initializes the pause button's image sprite.
+    /// </summary>
+    void Awake()
+    {
+        pauseButtonImage.sprite = pauseSprite;
+    }
+
+    /// <summary>
+    /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
+    /// </summary>
+    void Update()
+    {
+        // Check if the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape) && PauseModalWindow.Instance == null)
+        {
+            TogglePause();
+        }
+    }
+
+    /// <summary>
     /// Controls the camera's movement to follow a target with a specified offset.
     /// </summary>
     private void LateUpdate()
@@ -26,26 +46,6 @@ public class CameraController : MonoBehaviour
             // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio
             Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
         }
-    }
-
-    /// <summary>
-    /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
-    /// </summary>
-    void Update()
-    {
-        // Check if the Escape key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-        }
-    }
-
-    /// <summary>
-    /// Initializes the pause button's image sprite.
-    /// </summary>
-    void Awake()
-    {
-        pauseButtonImage.sprite = pauseSprite;
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            PauseModalWindow modalWindow = PauseModalWindow.Create()
+            PauseModalWindow.Create()
                 .SetHeader("Game is Paused")
                 .PauseMenu()
                 .Show();

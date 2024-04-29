@@ -109,6 +109,13 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         StoreInitialValues();
     }
 
+    public override SettingsModalWindow Close()
+    {
+        Instance = null;
+        base.Close();
+        return Instance;
+    }
+
     private void CloseSettings()
     {
         History.Instance.DeleteInstance();

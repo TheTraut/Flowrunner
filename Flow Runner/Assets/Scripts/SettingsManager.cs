@@ -88,7 +88,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Saves current player settings to a file.
     /// </summary>
-    private void SaveSettings()
+    public void SaveSettings()
     {
         Debug.Log("file saved");
         SettingsData data = new(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
