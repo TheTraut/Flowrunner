@@ -7,12 +7,12 @@ using System.Collections.Generic;
 public static class PauseManager
 {
     private static bool isGamePaused = false;
-    private static List<Rigidbody2D> affectedNonStaticRigidbodies = new List<Rigidbody2D>(); // Non-static rigidbodies affected by pause
-    private static List<Vector2> originalVelocities = new List<Vector2>(); // Store original velocities of rigidbodies
-    private static List<float> originalGravityScales = new List<float>(); // Store original gravity scales of rigidbodies
-    private static List<bool> originalSimulatedStates = new List<bool>(); // Store original simulated state of rigidbodies
+    private static readonly List<Rigidbody2D> affectedNonStaticRigidbodies = new(); // Non-static rigidbodies affected by pause
+    private static readonly List<Vector2> originalVelocities = new(); // Store original velocities of rigidbodies
+    private static readonly List<float> originalGravityScales = new(); // Store original gravity scales of rigidbodies
+    private static readonly List<bool> originalSimulatedStates = new(); // Store original simulated state of rigidbodies
 
-    public static bool isPaused
+    public static bool IsPaused
     {
         get { return isGamePaused; }
     }

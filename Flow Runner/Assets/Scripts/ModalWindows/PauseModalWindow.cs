@@ -38,10 +38,7 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     public void ClosePause()
     {
         CameraController cameraController = FindObjectOfType<CameraController>();
-        if (cameraController != null)
-        {
-            cameraController.TogglePause();
-        }
+        cameraController?.TogglePause();
         Close();
     }
 
@@ -52,13 +49,7 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     {
         SettingsModalWindow.Create()
             .SetHeader("Settings")
-            .SetSettings((newName, newVolume, upKeys, downKeys, shieldKeys) =>
-            {
-                List<KeyCode> upKey = new List<KeyCode>(upKeys);
-                List<KeyCode> downKey = new List<KeyCode>(downKeys);
-                List<KeyCode> shieldKey = new List<KeyCode>(shieldKeys);
-                SettingsManager.Instance.UpdateSettings(newName, newVolume, upKey, downKey, shieldKey);
-            },
+            .SetSettings(
             SettingsManager.Instance.PlayerName,
             SettingsManager.Instance.Volume / 100f,
             "Enter your name",

@@ -22,7 +22,7 @@ public class PlatformControllerLevel : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             SpawnLoop(); // Spawn new obstacles ahead of the player
             DespawnObstacles(); // Despawn obstacles behind the player
@@ -91,7 +91,7 @@ public class PlatformControllerLevel : MonoBehaviour
         obstacleRB.velocity = Vector2.left * obstacleSpeed;
 
         // Instantiate the selected coin
-        Vector2 coinPosition = new Vector2(spawnedObstacle.transform.position.x, spawnedObstacle.transform.position.y + 2.0f); // Adjust Y offset as needed
+        Vector2 coinPosition = new(spawnedObstacle.transform.position.x, spawnedObstacle.transform.position.y + 2.0f); // Adjust Y offset as needed
         GameObject spawnedCoin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
 
         // Add Rigidbody2D to spawned coin for movement

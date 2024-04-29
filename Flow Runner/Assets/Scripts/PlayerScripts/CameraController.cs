@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        if (!PauseManager.isPaused && target != null) // Add null check for target transform
+        if (!PauseManager.IsPaused && target != null) // Add null check for target transform
         {
             transform.position = Vector3.SmoothDamp(transform.position, target.position + posOffset, ref velocity, smooth);
             // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio
@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     public void TogglePause()
     {
-        if (PauseManager.isPaused)
+        if (PauseManager.IsPaused)
         {
             ResumeGame();
             pauseButtonImage.sprite = pauseSprite; // Change button image to pause icon

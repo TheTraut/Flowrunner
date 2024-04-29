@@ -21,7 +21,7 @@ public class CoinCollector : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
-            coinController.addCoin();
+            coinController.AddCoin();
         }
     }
 }
