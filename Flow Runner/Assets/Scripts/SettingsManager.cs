@@ -90,7 +90,6 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SaveSettings()
     {
-        Debug.Log("file saved");
         SettingsData data = new(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(settingsFilePath, jsonData);

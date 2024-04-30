@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,7 +16,6 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 
     #pragma warning disable IDE0044 // Add readonly modifier
     [SerializeField] private InputField nameField;
-    private string nameFieldInitialValue;
     [SerializeField] private Slider volumeSlider;
     [SerializeField] public InputField upShortcutField;
     [SerializeField] public InputField downShortcutField;
@@ -35,6 +35,10 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     private readonly float FLASH_DURATION = 0.3f; // Duration for each flash
     private bool isFlashing = false; // Flag to indicate if flashing is in progress
 
+    private string initalName;
+    // Define a dictionary to store previous shortcuts for each InputField
+    private readonly Dictionary<InputField, List<KeyCode>> initialShortcuts = new();
+
     private string previousName;
     private float previousVolume;
     // Define a dictionary to store previous shortcuts for each InputField
@@ -43,7 +47,6 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     public SettingsModalWindow SetSettings(string initialValue = "", float volumeInitialValue = 0.8f, string placeholderValue = "Type here", List<KeyCode> upShortcut = null, List<KeyCode> downShortcut = null, List<KeyCode> shieldShortcut = null)
     {
         nameField.text = initialValue;
-        nameFieldInitialValue = initialValue; // Store the initial value of the name field
         ((Text)nameField.placeholder).text = placeholderValue;
         volumeSlider.value = volumeInitialValue * 100f;
 
@@ -87,7 +90,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         nameField.onEndEdit.AddListener(OnNameFieldEndEdit);
 
         // Add EventTrigger component to the volume slider
-        EventTrigger volumeSliderTrigger = volumeSlider.gameObject.AddComponent<EventTrigger>();
+        EventTrigger volumeSliderPointerUpTrigger = volumeSlider.gameObject.AddComponent<EventTrigger>();
         // Create a pointer up event trigger
         EventTrigger.Entry pointerUpEntry = new()
         {
@@ -95,18 +98,30 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         };
         pointerUpEntry.callback.AddListener((eventData) => { OnVolumeSliderValueChanged(volumeSlider.value); });
         // Add the pointer up event trigger to the volume slider
-        volumeSliderTrigger.triggers.Add(pointerUpEntry);
+        volumeSliderPointerUpTrigger.triggers.Add(pointerUpEntry);
 
-        // Add event listeners for key shortcut capture
-        upShortcutField.onEndEdit.AddListener(OnShortcutFieldEndEdit);
-        downShortcutField.onEndEdit.AddListener(OnShortcutFieldEndEdit);
-        shieldShortcutField.onEndEdit.AddListener(OnShortcutFieldEndEdit);
+        // Focus events to set previous values
+        EventTrigger.Entry selectEntry = new()
+        {
+            eventID = EventTriggerType.Select
+        };
+        selectEntry.callback.AddListener((eventData) => { OnUIElementSelect(eventData); });
+        AddSelectEventTrigger(nameField.gameObject, selectEntry);
+        AddSelectEventTrigger(volumeSlider.gameObject, selectEntry);
+        AddSelectEventTrigger(upShortcutField.gameObject, selectEntry);
+        AddSelectEventTrigger(downShortcutField.gameObject, selectEntry);
+        AddSelectEventTrigger(shieldShortcutField.gameObject, selectEntry);
     }
 
     private void Start()
     {
         // Store initial values
         StoreInitialValues();
+
+        // Initialize previous shortcuts dictionary with copies of initial shortcuts
+        previousShortcuts[upShortcutField] = new List<KeyCode>(initialShortcuts[upShortcutField]);
+        previousShortcuts[downShortcutField] = new List<KeyCode>(initialShortcuts[downShortcutField]);
+        previousShortcuts[shieldShortcutField] = new List<KeyCode>(initialShortcuts[shieldShortcutField]);
     }
 
     public override SettingsModalWindow Close()
@@ -119,16 +134,50 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     private void CloseSettings()
     {
         History.Instance.DeleteInstance();
+        SettingsManager.Instance.LoadSettings();
         Close();
     }
 
     private void StoreInitialValues()
     {
-        previousName = nameField.text;
-        previousVolume = volumeSlider.value;
-        previousShortcuts[upShortcutField] = SettingsManager.Instance.UpShortcutKeys.ToList();
-        previousShortcuts[downShortcutField] = SettingsManager.Instance.DownShortcutKeys.ToList();
-        previousShortcuts[shieldShortcutField] = SettingsManager.Instance.ShieldShortcutKeys.ToList();
+        initalName = nameField.text;
+        //initalVolume = volumeSlider.value;
+        initialShortcuts[upShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(upShortcutField.text);
+        initialShortcuts[downShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(downShortcutField.text);
+        initialShortcuts[shieldShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(shieldShortcutField.text);
+    }
+
+    private void AddSelectEventTrigger(GameObject gameObject, EventTrigger.Entry selectEntry)
+    {
+        EventTrigger eventTrigger = gameObject.GetComponent<EventTrigger>() ?? gameObject.AddComponent<EventTrigger>();
+        eventTrigger.triggers.Add(selectEntry);
+    }
+
+    // Function to handle select events for input fields and slider
+    private void OnUIElementSelect(BaseEventData eventData)
+    {
+        GameObject selectedGameObject = eventData.selectedObject;
+        if (selectedGameObject != null)
+        {
+            if (selectedGameObject.TryGetComponent(out InputField selectedInputField))
+            {
+                if (selectedInputField == nameField)
+                {
+                    previousName = selectedInputField.text;
+                }
+                else if (selectedInputField == upShortcutField || selectedInputField == downShortcutField || selectedInputField == shieldShortcutField)
+                {
+                    previousShortcuts[selectedInputField] = SettingsManagerExtensions.StringToKeyCodeList(selectedInputField.text);
+                }
+            }
+            else if (selectedGameObject.TryGetComponent(out Slider selectedSlider))
+            {
+                if (selectedSlider == volumeSlider)
+                {
+                    previousVolume = selectedSlider.value;
+                }
+            }
+        }
     }
 
     private void UpdateInputs(bool usePreviousValues)
@@ -214,17 +263,24 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         }
     }
 
-    private void OnShortcutFieldEndEdit(string newShortcut)
+    private void UpdateShortcutField(string newShortcut)
     {
         List<KeyCode> parsedShortcut = SettingsManagerExtensions.StringToKeyCodeList(newShortcut);
-        List<KeyCode> previousShortcut = previousShortcuts[activeInputField];
-
-        if (!parsedShortcut.SequenceEqual(previousShortcut))
+        List<KeyCode> previousShortcut;
+        try
         {
-            Command setShortcutCommand = new SetShortcutCommand(activeInputField, previousShortcut, parsedShortcut);
-            History.Instance.Do(setShortcutCommand);
-            UpdateUndoRedoButtonVisibility();
-            previousShortcuts[activeInputField] = parsedShortcut;
+            previousShortcut = previousShortcuts[activeInputField];
+            if (previousShortcut != null && !parsedShortcut.SequenceEqual(previousShortcut))
+            {
+                Command setShortcutCommand = new SetShortcutCommand(activeInputField, previousShortcut, parsedShortcut);
+                History.Instance.Do(setShortcutCommand);
+                UpdateUndoRedoButtonVisibility();
+                previousShortcuts[activeInputField] = parsedShortcut;
+            }
+        }
+        catch (KeyNotFoundException)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -234,7 +290,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         //base.Update();
 
         // Check for text modification for the name field
-        if (nameField.text != nameFieldInitialValue)
+        if (nameField.text != initalName)
         {
             SetInputFieldSprite(nameField, inputOutlineYellow);
         }
@@ -308,7 +364,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
             {
                 StopCapture();
             }
-            else if (escapePressed)
+            else if (escapePressed || !activeInputField.isFocused)
             {
                 ResetShortcutField();
                 StopCapture();
@@ -338,6 +394,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 
     void StopCapture()
     {
+        UpdateShortcutField(activeInputField.text);
         isCapturing = false;
         ClearActiveInputField();
     }
@@ -362,10 +419,8 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         else if (isCapturing && field == activeInputField)
         {
             if (!isFlashing)
-            {
-                SetInputFieldSprite(field, inputOutlineYellow); // Set to yellow outline sprite if capturing keystrokes
-                                                                // Start flashing
-                StartCoroutine(FlashOutline(field));
+            {                      
+                StartCoroutine(FlashOutline(field)); // Start flashing to indicate capturing
             }
         }
         else
@@ -379,45 +434,40 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         isFlashing = true;
         while (isCapturing && field == activeInputField)
         {
-            SetInputFieldSprite(field, inputOutlineYellow); // Set to yellow outline sprite
+            SetInputFieldSprite(field, inputOutlineRed); // Set to red outline sprite
             yield return new WaitForSeconds(FLASH_DURATION);
             SetInputFieldSprite(field, inputSprite); // Set to default sprite
             yield return new WaitForSeconds(FLASH_DURATION);
         }
-        SetInputFieldSprite(field, inputOutlineYellow);
+        SetInputFieldSprite(field, inputOutlineRed);
         isFlashing = false;
     }
 
     void CheckAndUpdateShortcutField(InputField shortcutField)
     {
         // Check for text modification for the shortcut field
-        if (shortcutField.text != GetShortcutFieldInitialValue(shortcutField))
+        if (!isCapturing && shortcutField.text != GetShortcutFieldInitialValue(shortcutField))
         {
             SetInputFieldSprite(shortcutField, inputOutlineYellow);
         }
-        else
+        else if (!isCapturing && shortcutField.GetComponent<Image>().sprite != inputSprite && shortcutField.GetComponent<Image>().sprite != inputOutlineGreen)
         {
-            // Check if the sprite is not already inputSprite or green, then set it back to inputSprite
-            if (shortcutField.GetComponent<Image>().sprite != inputSprite && shortcutField.GetComponent<Image>().sprite != inputOutlineGreen)
-            {
-                SetInputFieldSprite(shortcutField, inputSprite);
-            }
+            SetInputFieldSprite(shortcutField, inputSprite);
         }
     }
 
     string GetShortcutFieldInitialValue(InputField shortcutField)
     {
-        if (shortcutField == upShortcutField)
+        try
         {
-            return KeyCodeListToString(SettingsManager.Instance.UpShortcutKeys);
+            if (shortcutField == upShortcutField || shortcutField == downShortcutField || shortcutField == shieldShortcutField)
+            {
+                return KeyCodeListToString(initialShortcuts[shortcutField]);
+            }
         }
-        else if (shortcutField == downShortcutField)
+        catch (KeyNotFoundException)
         {
-            return KeyCodeListToString(SettingsManager.Instance.DownShortcutKeys);
-        }
-        else if (shortcutField == shieldShortcutField)
-        {
-            return KeyCodeListToString(SettingsManager.Instance.ShieldShortcutKeys);
+            Destroy(gameObject);
         }
 
         return "";
@@ -446,19 +496,17 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
             string originalValue = "";
 
             // Retrieve original value based on the active input field
-            if (activeInputField == upShortcutField)
+            try
             {
-                originalValue = KeyCodeListToString(SettingsManager.Instance.UpShortcutKeys);
+                if (activeInputField == upShortcutField || activeInputField == downShortcutField || activeInputField == shieldShortcutField)
+                {
+                    originalValue = KeyCodeListToString(initialShortcuts[activeInputField]);
+                }
             }
-            else if (activeInputField == downShortcutField)
+            catch (KeyNotFoundException)
             {
-                originalValue = KeyCodeListToString(SettingsManager.Instance.DownShortcutKeys);
+                Destroy(gameObject);
             }
-            else if (activeInputField == shieldShortcutField)
-            {
-                originalValue = KeyCodeListToString(SettingsManager.Instance.ShieldShortcutKeys);
-            }
-
             activeInputField.text = originalValue;
             SetInputFieldSprite(activeInputField, inputSprite);
         }
@@ -467,7 +515,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     public void UI_InputFieldOKButton()
     {
         SaveSettings();
-        Close();
+        CloseSettings();
     }
 
     private void SaveSettings()

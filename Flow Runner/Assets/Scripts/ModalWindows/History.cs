@@ -16,8 +16,8 @@ class History
         }
     }
 
-    private readonly Stack<Command> undoStack = new Stack<Command>();
-    private readonly Stack<Command> redoStack = new Stack<Command>();
+    private readonly Stack<Command> undoStack = new();
+    private readonly Stack<Command> redoStack = new();
 
     public Command CurrentCommand { get; private set; }
 
