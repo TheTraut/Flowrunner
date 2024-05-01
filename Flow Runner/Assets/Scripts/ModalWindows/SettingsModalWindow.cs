@@ -35,7 +35,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     private readonly float FLASH_DURATION = 0.3f; // Duration for each flash
     private bool isFlashing = false; // Flag to indicate if flashing is in progress
 
-    private string initalName;
+    private string initialName;
     // Define a dictionary to store previous shortcuts for each InputField
     private readonly Dictionary<InputField, List<KeyCode>> initialShortcuts = new();
 
@@ -53,7 +53,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         if (upShortcut != null)
         {
             upShortcutField.text = KeyCodeListToString(upShortcut);
-        }   
+        }
         if (downShortcut != null)
         {
             downShortcutField.text = KeyCodeListToString(downShortcut);
@@ -140,8 +140,8 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 
     private void StoreInitialValues()
     {
-        initalName = nameField.text;
-        //initalVolume = volumeSlider.value;
+        initialName = nameField.text;
+        //initialVolume = volumeSlider.value;
         initialShortcuts[upShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(upShortcutField.text);
         initialShortcuts[downShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(downShortcutField.text);
         initialShortcuts[shieldShortcutField] = SettingsManagerExtensions.StringToKeyCodeList(shieldShortcutField.text);
@@ -290,7 +290,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         //base.Update();
 
         // Check for text modification for the name field
-        if (nameField.text != initalName)
+        if (nameField.text != initialName)
         {
             SetInputFieldSprite(nameField, inputOutlineYellow);
         }
@@ -419,7 +419,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         else if (isCapturing && field == activeInputField)
         {
             if (!isFlashing)
-            {                      
+            {
                 StartCoroutine(FlashOutline(field)); // Start flashing to indicate capturing
             }
         }
