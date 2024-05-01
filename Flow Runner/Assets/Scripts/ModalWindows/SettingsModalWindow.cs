@@ -52,15 +52,15 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
 
         if (upShortcut != null)
         {
-            upShortcutField.text = KeyCodeListToString(upShortcut);
+            upShortcutField.text = SettingsManager.Instance.KeyCodeListToString(upShortcut);
         }
         if (downShortcut != null)
         {
-            downShortcutField.text = KeyCodeListToString(downShortcut);
+            downShortcutField.text = SettingsManager.Instance.KeyCodeListToString(downShortcut);
         }
         if (shieldShortcut != null)
         {
-            shieldShortcutField.text = KeyCodeListToString(shieldShortcut);
+            shieldShortcutField.text = SettingsManager.Instance.KeyCodeListToString(shieldShortcut);
         }
 
         return this;
@@ -202,17 +202,17 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
             // Set up shortcut field to previous or new value depending on the parameter
             if (setShortcutCommand.inputField == upShortcutField)
             {
-                upShortcutField.text = usePreviousValues ? KeyCodeListToString(setShortcutCommand.previousShortcut) : KeyCodeListToString(setShortcutCommand.newShortcut);
+                upShortcutField.text = usePreviousValues ? SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.previousShortcut) : SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.newShortcut);
             }
             // Set down shortcut field to previous or new value depending on the parameter
             else if (setShortcutCommand.inputField == downShortcutField)
             {
-                downShortcutField.text = usePreviousValues ? KeyCodeListToString(setShortcutCommand.previousShortcut) : KeyCodeListToString(setShortcutCommand.newShortcut);
+                downShortcutField.text = usePreviousValues ? SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.previousShortcut) : SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.newShortcut);
             }
             // Set shield shortcut field to previous or new value depending on the parameter
             else if (setShortcutCommand.inputField == shieldShortcutField)
             {
-                shieldShortcutField.text = usePreviousValues ? KeyCodeListToString(setShortcutCommand.previousShortcut) : KeyCodeListToString(setShortcutCommand.newShortcut);
+                shieldShortcutField.text = usePreviousValues ? SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.previousShortcut) : SettingsManager.Instance.KeyCodeListToString(setShortcutCommand.newShortcut);
             }
         }
     }
@@ -462,7 +462,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         {
             if (shortcutField == upShortcutField || shortcutField == downShortcutField || shortcutField == shieldShortcutField)
             {
-                return KeyCodeListToString(initialShortcuts[shortcutField]);
+                return SettingsManager.Instance.KeyCodeListToString(initialShortcuts[shortcutField]);
             }
         }
         catch (KeyNotFoundException)
@@ -477,15 +477,15 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     {
         if (upShortcutField.isFocused)
         {
-            upShortcutField.text = KeyCodeListToString(capturedKeys);
+            upShortcutField.text = SettingsManager.Instance.KeyCodeListToString(capturedKeys);
         }
         else if (downShortcutField.isFocused)
         {
-            downShortcutField.text = KeyCodeListToString(capturedKeys);
+            downShortcutField.text = SettingsManager.Instance.KeyCodeListToString(capturedKeys);
         }
         else if (shieldShortcutField.isFocused)
         {
-            shieldShortcutField.text = KeyCodeListToString(capturedKeys);
+            shieldShortcutField.text = SettingsManager.Instance.KeyCodeListToString(capturedKeys);
         }
     }
 
@@ -500,7 +500,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
             {
                 if (activeInputField == upShortcutField || activeInputField == downShortcutField || activeInputField == shieldShortcutField)
                 {
-                    originalValue = KeyCodeListToString(initialShortcuts[activeInputField]);
+                    originalValue = SettingsManager.Instance.KeyCodeListToString(initialShortcuts[activeInputField]);
                 }
             }
             catch (KeyNotFoundException)
@@ -548,17 +548,5 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
         SetInputFieldSprite(upShortcutField, upShortcutField.text == "" ? inputOutlineRed : inputOutlineGreen);
         SetInputFieldSprite(downShortcutField, downShortcutField.text == "" ? inputOutlineRed : inputOutlineGreen);
         SetInputFieldSprite(shieldShortcutField, shieldShortcutField.text == "" ? inputOutlineRed : inputOutlineGreen);
-    }
-
-    public string KeyCodeListToString(List<KeyCode> keyCodes)
-    {
-        string result = "";
-        foreach (KeyCode keyCode in keyCodes)
-        {
-            if (result != "")
-                result += " + ";
-            result += keyCode.ToString();
-        }
-        return result;
     }
 }

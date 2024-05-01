@@ -31,6 +31,13 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    enum KeyType
+    {
+        Up,
+        Down,
+        Shield
+    }
+
     private string playerName;
     private float volume;
     private List<KeyCode> upShortcutKeys;
@@ -53,6 +60,57 @@ public class SettingsManager : MonoBehaviour
     {
         settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
         LoadSettings();
+    }
+
+    public string GetFormattedKeyShortcut(KeyType keyType)
+    {
+        List<KeyCode> keyCodes = null;
+        keyCodes = GetShortcutKeysVar(keyType);
+        string formattedString = "None";
+        if (keyCodes != null)
+        {
+            string keys = KeyCodeListToString(keyCodes);
+            if (keyCodes.Count > 1)
+            {
+                formattedString = "'" + keys + "' keys";
+            }
+            else
+            {
+                formattedString = "'" + keys + "' key";
+            }
+        }
+        return formattedString;
+    }
+
+    private List<KeyCode> GetShortcutKeysVar(KeyType keyType)
+    {
+        switch (keyType)
+        {
+            case KeyType.Up:
+                return upShortcutKeys;
+                break;
+            case KeyType.Down:
+                return downShortcutKeys;
+                break;
+            case KeyType.Shield:
+                return shieldShortcutKeys;
+                break;
+            default:
+                return null;
+                break;
+        }
+    }
+
+    public string KeyCodeListToString(List<KeyCode> keyCodes)
+    {
+        string result = "";
+        foreach (KeyCode keyCode in keyCodes)
+        {
+            if (result != "")
+                result += " + ";
+            result += keyCode.ToString();
+        }
+        return result;
     }
 
     // Setter for playerName
