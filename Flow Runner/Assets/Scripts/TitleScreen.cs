@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -32,6 +31,8 @@ public class TitleScreen : MonoBehaviour
     void Update()
     {
         SetName();
+        DestroyInactiveModals<SettingsModalWindow>();
+        DestroyInactiveModals<HighscoresModalWindow>();
     }
 
     /// <summary>
@@ -68,13 +69,7 @@ public class TitleScreen : MonoBehaviour
     {
         SettingsModalWindow.Create()
             .SetHeader("Settings")
-            .SetSettings((newName, newVolume, upKeys, downKeys, shieldKeys) =>
-            {
-                List<KeyCode> upKey = new List<KeyCode>(upKeys);
-                List<KeyCode> downKey = new List<KeyCode>(downKeys);
-                List<KeyCode> shieldKey = new List<KeyCode>(shieldKeys);
-                SettingsManager.Instance.UpdateSettings(newName, newVolume, upKey, downKey, shieldKey);
-            },
+            .SetSettings(
             SettingsManager.Instance.PlayerName,
             SettingsManager.Instance.Volume / 100f,
             "Enter your name",
@@ -91,5 +86,29 @@ public class TitleScreen : MonoBehaviour
     {
         string playerName = SettingsManager.Instance.PlayerName;
         playerNameLabel.text = playerName;
+    }
+
+    /// <summary>
+    /// Destroys any modal windows that are not visible.
+    /// </summary>
+    private void DestroyInactiveModals<T>() where T : ModalWindow<T>
+    {
+        // Find all active modal windows
+        T[] activeModals = FindObjectsOfType<T>();
+
+        foreach (T modal in activeModals)
+        {
+            // Check if the modal window is not visible and its close animation is not playing
+            if (!modal.Visible && IsClosingAnimationPlaying(modal))
+            {
+                Destroy(modal.gameObject);
+            }
+        }
+    }
+
+    private bool IsClosingAnimationPlaying<T>(T modal) where T : ModalWindow<T>
+    {
+        // Check if the modal's animation state is the closing animation
+        return modal.animator.GetCurrentAnimatorStateInfo(0).IsName("Close");
     }
 }

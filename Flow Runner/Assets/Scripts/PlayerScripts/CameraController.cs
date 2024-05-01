@@ -16,31 +16,6 @@ public class CameraController : MonoBehaviour
     public float defaultWidth = 9.6f; // Width in units you design in.
 
     /// <summary>
-    /// Controls the camera's movement to follow a target with a specified offset.
-    /// </summary>
-    private void LateUpdate()
-    {
-        if (!PauseManager.isPaused && target != null) // Add null check for target transform
-        {
-            transform.position = Vector3.SmoothDamp(transform.position, target.position + posOffset, ref velocity, smooth);
-            // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio
-            Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
-        }
-    }
-
-    /// <summary>
-    /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
-    /// </summary>
-    void Update()
-    {
-        // Check if the Escape key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TogglePause();
-        }
-    }
-
-    /// <summary>
     /// Initializes the pause button's image sprite.
     /// </summary>
     void Awake()
@@ -49,18 +24,43 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates the camera's position and adjusts its orthographic size based on the screen aspect ratio.
+    /// </summary>
+    void Update()
+    {
+        // Check if the Escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape) && PauseModalWindow.Instance == null)
+        {
+            TogglePause();
+        }
+    }
+
+    /// <summary>
+    /// Controls the camera's movement to follow a target with a specified offset.
+    /// </summary>
+    private void LateUpdate()
+    {
+        if (!PauseManager.IsPaused && target != null) // Add null check for target transform
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, target.position + posOffset, ref velocity, smooth);
+            // Add this line to adjust the camera's orthographic size based on the current screen aspect ratio
+            Camera.main.orthographicSize = defaultWidth / Camera.main.aspect;
+        }
+    }
+
+    /// <summary>
     /// Toggles the game's pause state.
     /// </summary>
     public void TogglePause()
     {
-        if (PauseManager.isPaused)
+        if (PauseManager.IsPaused)
         {
             ResumeGame();
             pauseButtonImage.sprite = pauseSprite; // Change button image to pause icon
         }
         else
         {
-            PauseModalWindow modalWindow = PauseModalWindow.Create()
+            PauseModalWindow.Create()
                 .SetHeader("Game is Paused")
                 .PauseMenu()
                 .Show();

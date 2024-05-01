@@ -34,7 +34,7 @@ public class RockFalling : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             timeSinceLastSpawn += Time.deltaTime;
 

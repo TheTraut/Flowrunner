@@ -41,7 +41,7 @@ public class ChangeSprite : MonoBehaviour
     public void Update()
     {
 
-        if (waterBuoyancyEffector != null && !PauseManager.isPaused)
+        if (waterBuoyancyEffector != null && !PauseManager.IsPaused)
         {
             waterSurfaceLevel = waterGameObject.transform.position.y + waterGameObject.transform.localScale.y / 2;
             if (transform.position.y < waterSurfaceLevel)
@@ -87,7 +87,7 @@ public class ChangeSprite : MonoBehaviour
     /// <param name="other">The Collider2D object the GameObject has collided with.</param>
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Water") && !PauseManager.isPaused)
+        if (other.CompareTag("Water") && !PauseManager.IsPaused)
         {
             // Set color to underwater and rotate
             if (spriteRenderer != null)
@@ -104,7 +104,7 @@ public class ChangeSprite : MonoBehaviour
     /// <param name="other">The Collider2D object the GameObject has exited.</param>
     public void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Water") && !PauseManager.isPaused)
+        if (other.CompareTag("Water") && !PauseManager.IsPaused)
         {
             // Reset color and rotation to original
             if (spriteRenderer != null)

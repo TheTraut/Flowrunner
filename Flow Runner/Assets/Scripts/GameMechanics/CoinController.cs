@@ -59,7 +59,7 @@ public class CoinController : MonoBehaviour
             return;
         }
 
-        CoinData data = new CoinData(totalCoins);
+        CoinData data = new(totalCoins);
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(totalCoinsFilePath, jsonData);
     }
@@ -94,7 +94,7 @@ public class CoinController : MonoBehaviour
     /// <summary>
     /// Adds a coin to the current count and updates total coins.
     /// </summary>
-    public void addCoin()
+    public void AddCoin()
     {
         currentCoins++;
         UpdateCoins();

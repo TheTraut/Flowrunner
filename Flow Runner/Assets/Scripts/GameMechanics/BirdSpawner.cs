@@ -6,8 +6,8 @@ public class BirdSpawner : MonoBehaviour
     public GameObject birdPrefab;
     public float minSpawnInterval = 3f; // Minimum interval between bird spawns
     public float maxSpawnInterval = 8f; // Maximum interval between bird spawns
-    public Vector2 spawnPositionRangeX = new Vector2(-10f, 10f);
-    public Vector2 spawnPositionRangeY = new Vector2(0f, 5f);
+    public Vector2 spawnPositionRangeX = new(-10f, 10f);
+    public Vector2 spawnPositionRangeY = new(0f, 5f);
     public float despawnTime = 20f; // Time after which the bird will be despawned
     public int maxBirds = 3; // Maximum number of birds at a time
 
@@ -24,7 +24,7 @@ public class BirdSpawner : MonoBehaviour
 
     void Update()
     {
-        if (!PauseManager.isPaused)
+        if (!PauseManager.IsPaused)
         {
             timeSinceLastSpawn += Time.deltaTime;
             if (timeSinceLastSpawn >= currentSpawnInterval && currentBirdCount < maxBirds)
@@ -38,7 +38,7 @@ public class BirdSpawner : MonoBehaviour
 
     void SpawnBird()
     {
-        Vector3 spawnPosition = new Vector3(
+        Vector3 spawnPosition = new(
             Random.Range(spawnPositionRangeX.x, spawnPositionRangeX.y),
             Random.Range(spawnPositionRangeY.x, spawnPositionRangeY.y),
             transform.position.z
@@ -53,7 +53,7 @@ public class BirdSpawner : MonoBehaviour
         float despawnTimer = delay;
         while (despawnTimer > 0f)
         {
-            if (!PauseManager.isPaused)
+            if (!PauseManager.IsPaused)
             {
                 despawnTimer -= Time.deltaTime;
             }

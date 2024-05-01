@@ -7,7 +7,7 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
     protected const string PREFABS_DIR_IN_RESOURCES = "Modal Windows/";
     protected const string BUTTONS_PATH = "Buttons/Button_";
 
-    [SerializeField] protected Animator animator;
+    [SerializeField] public Animator animator;
     [SerializeField] protected Text headerText;
     [SerializeField] protected Text bodyText;
 
@@ -91,8 +91,6 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
 
         return Instance;
     }
-
-
 
     public virtual T SetBody(string text)
     {

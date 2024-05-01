@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class SettingsManager : MonoBehaviour
                 instance = FindObjectOfType<SettingsManager>();
                 if (instance == null)
                 {
-                    GameObject obj = new GameObject();
-                    obj.name = "SettingsManager";
+                    GameObject obj = new()
+                    {
+                        name = "SettingsManager"
+                    };
                     instance = obj.AddComponent<SettingsManager>();
                     DontDestroyOnLoad(obj);
                 }
@@ -52,27 +55,42 @@ public class SettingsManager : MonoBehaviour
         LoadSettings();
     }
 
-    /// <summary>
-    /// Updates player settings with new values.
-    /// </summary>
-    /// <param name="newName">The new player name.</param>
-    /// <param name="newVolume">The new volume level.</param>
-    public void UpdateSettings(string newName, float newVolume, List<KeyCode> newUpShortcutKeys, List<KeyCode> newDownShortcutKeys, List<KeyCode> newShieldShortcutKeys)
+    // Setter for playerName
+    public void SetName(string newName)
     {
         playerName = newName;
+    }
+
+    // Setter for volume
+    public void SetVolume(float newVolume)
+    {
         volume = newVolume;
-        upShortcutKeys = newUpShortcutKeys;
-        downShortcutKeys = newDownShortcutKeys;
-        shieldShortcutKeys = newShieldShortcutKeys;
-        SaveSettings();
+    }
+
+    public void SetUpShortcut(List<KeyCode> shortcut)
+    {
+        UpShortcutKeys.Clear();
+        UpShortcutKeys.AddRange(shortcut);
+    }
+
+    public void SetDownShortcut(List<KeyCode> shortcut)
+    {
+        DownShortcutKeys.Clear();
+        DownShortcutKeys.AddRange(shortcut);
+    }
+
+    public void SetShieldShortcut(List<KeyCode> shortcut)
+    {
+        ShieldShortcutKeys.Clear();
+        ShieldShortcutKeys.AddRange(shortcut);
     }
 
     /// <summary>
     /// Saves current player settings to a file.
     /// </summary>
-    private void SaveSettings()
+    public void SaveSettings()
     {
-        SettingsData data = new SettingsData(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
+        SettingsData data = new(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(settingsFilePath, jsonData);
     }
@@ -114,7 +132,7 @@ public class SettingsManager : MonoBehaviour
 public static class SettingsManagerExtensions
 {
     // Helper method to check if all keys in the combination are pressed simultaneously
-    public static bool AreKeyCombinationsPressed(this SettingsManager settingsManager, List<KeyCode> keys)
+    public static bool AreKeyCombinationsPressed(List<KeyCode> keys)
     {
         foreach (KeyCode key in keys)
         {
@@ -124,6 +142,20 @@ public static class SettingsManagerExtensions
             }
         }
         return true; // Return true if all keys in the combination are pressed
+    }
+
+    public static List<KeyCode> StringToKeyCodeList(string input)
+    {
+        string[] keyStrings = input.Split('+');
+        List<KeyCode> keyCodes = new();
+        foreach (string keyString in keyStrings)
+        {
+            if (Enum.TryParse(keyString.Trim(), out KeyCode parsedKeyCode))
+            {
+                keyCodes.Add(parsedKeyCode);
+            }
+        }
+        return keyCodes;
     }
 }
 
