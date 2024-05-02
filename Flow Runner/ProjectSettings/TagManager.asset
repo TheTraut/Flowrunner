@@ -8,6 +8,8 @@ TagManager:
   - Water
   - Enemy
   - Rock
+  - Coin
+  - Shield
   layers:
   - Default
   - TransparentFX

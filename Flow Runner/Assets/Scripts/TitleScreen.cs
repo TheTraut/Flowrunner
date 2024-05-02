@@ -1,90 +1,118 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.IO;
 
+/// <summary>
+/// Manages interactions and UI elements on the title screen.
+/// </summary>
 public class TitleScreen : MonoBehaviour
 {
-    private string settingsFilePath;
-    private string guideFilePath;
-    void Awake()
-    {
-        settingsFilePath = Application.persistentDataPath + "/settings.json";
-        if (File.Exists(settingsFilePath))
-        {
-            LoadSettings();
-        }
-        else
-        {
-            Debug.LogWarning("Settings file not found!");
-        }
+    public Text playerNameLabel;
 
-        LoadGuide();
+    /// <summary>
+    /// Initializes the title screen by loading player settings.
+    /// </summary>
+    private void Awake()
+    {
+        SettingsManager.Instance.Load();
     }
 
-    string playerName;
-    int volume;
-    private void LoadSettings()
-    {
-        string jsonData = File.ReadAllText(settingsFilePath);
-        SettingsData data = JsonUtility.FromJson<SettingsData>(jsonData);
-
-        playerName = data.playerName;
-        volume = data.soundVolume;
-    }
-
-
+    /// <summary>
+    /// Loads the main game scene.
+    /// </summary>
     public void PlayGame()
     {
-
         SceneManager.LoadSceneAsync("Game");
     }
 
-    string line1;
-    private void LoadGuide()
+    /// <summary>
+    /// Updates UI elements with player name.
+    /// </summary>
+    void Update()
     {
-        //string jsonData = File.ReadAllText(guideFilePath);
-        //GuideData data = JsonUtility.FromJson<GuideData>(jsonData);
-
-        line1 = "data.line1";
-        //line2 = data.line2;
-        //line3 = data.line3;
-        //line4 = data.line4;
+        SetName();
+        DestroyInactiveModals<GuideModalWindow>();
+        DestroyInactiveModals<HighscoresModalWindow>();
+        DestroyInactiveModals<SettingsModalWindow>();
     }
 
+    /// <summary>
+    /// Loads the guide scene.
+    /// </summary>
     public void SeeGuide()
     {
         GuideModalWindow.Create()
-            .SetHeader("Guide")
-            .SetBody("Hello World.")
-            .Show();
+            .SetHeader("Guide") // Set the header text
+            .Guide() // Init
+            .Show(); // Show the modal window
     }
 
+    /// <summary>
+    /// Displays a message indicating that highscores feature is coming soon.
+    /// </summary>
     public void SeeHighScores()
     {
-        SceneManager.LoadSceneAsync("High Scores");
+        //ToastModalWindow.Create(ignorable: true)
+        //        .SetHeader("Coming Soon")
+        //        .SetBody("Highscores are being added, check back soon!")
+        //        .SetDelay(3f) // Set it to 0 to make popup persistent
+        //                      //.SetIcon(sprite) // Also you can set icon
+        //        .Show();
+
+        // Create and display the HighscoresModalWindow
+        HighscoresModalWindow.Create()
+            .SetHeader("High Scores") // Set the header text
+            .Highscores() // Populate the high scores
+            .Show(); // Show the modal window
     }
 
+    /// <summary>
+    /// Opens the settings modal window to allow players to adjust settings.
+    /// </summary>
     public void SeeSettings()
     {
         SettingsModalWindow.Create()
             .SetHeader("Settings")
-            .SetSettings((newName, newVolume) =>
-            {
-                playerName = newName;
-                volume = int.Parse(newVolume); // Convert the string volume input to an integer
-                SaveUpdatedSettings();
-            }, playerName, volume.ToString(), "Enter your name", "Enter between 1-100")
+            .SetSettings(
+            SettingsManager.Instance.PlayerName,
+            SettingsManager.Instance.Volume / 100f,
+            "Enter your name",
+            SettingsManager.Instance.UpShortcutKeys,
+            SettingsManager.Instance.DownShortcutKeys,
+            SettingsManager.Instance.ShieldShortcutKeys)
             .Show();
     }
 
-    void SaveUpdatedSettings()
+    /// <summary>
+    /// Sets the player name on the UI.
+    /// </summary>
+    private void SetName()
     {
-        // Get a reference to the SettingsManager instance
-        SettingsManager settingsManager = FindObjectOfType<SettingsManager>();
+        string playerName = SettingsManager.Instance.PlayerName;
+        playerNameLabel.text = playerName;
+    }
 
-        // Call the UpdateSettings method of the SettingsManager to save the updated settings
-        settingsManager.UpdateSettings(playerName, volume);
+    /// <summary>
+    /// Destroys any modal windows that are not visible.
+    /// </summary>
+    private void DestroyInactiveModals<T>() where T : ModalWindow<T>
+    {
+        // Find all active modal windows
+        T[] activeModals = FindObjectsOfType<T>();
+
+        foreach (T modal in activeModals)
+        {
+            // Check if the modal window is not visible and its close animation is not playing
+            if (!modal.Visible && IsClosingAnimationPlaying(modal))
+            {
+                Destroy(modal.gameObject);
+            }
+        }
+    }
+
+    private bool IsClosingAnimationPlaying<T>(T modal) where T : ModalWindow<T>
+    {
+        // Check if the modal's animation state is the closing animation
+        return modal.animator.GetCurrentAnimatorStateInfo(0).IsName("Close");
     }
 }
