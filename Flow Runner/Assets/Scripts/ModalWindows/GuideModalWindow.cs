@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public interface IGuideTextsPage
+public interface IGuidePage
 {
     void Hide();
     void Show();
@@ -15,18 +15,18 @@ public interface IGuideTextsPage
 public class GuideModalWindow : ModalWindow<GuideModalWindow>
 {
     [Serializable]
-    private class GuideTextsPageObject
+    private class GuidePageObject
     {
-        public IGuideTextsPage page;
+        public IGuidePage page;
 
-        public GuideTextsPageObject(IGuideTextsPage page)
+        public GuidePageObject(IGuidePage page)
         {
             this.page = page;
         }
     }
 
     [Serializable]
-    public class GuideTextsPage1 : IGuideTextsPage
+    public class GuideObjectsPage1 : IGuidePage
     {
         // kase, create copies for each page
         // we can iterate over these things easy
@@ -79,7 +79,7 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
     }
 
     [Serializable]
-    public class GuideTextsPage2 : IGuideTextsPage
+    public class GuideObjectsPage2 : IGuidePage
     {
         // kase, this is a blank one to setup whatever
         public GameObject pageParent;
@@ -100,15 +100,15 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
     }
 
     #pragma warning disable IDE0044 // Add readonly modifier
-    [SerializeField] private GuideTextsPage1 guideTextsPage1;
-    [SerializeField] private GuideTextsPage2 guideTextsPage2;
-    //[SerializeField] private GuideTextsPage3 guideTextsPage3;
+    [SerializeField] private GuideObjectsPage1 guideObjectsPage1;
+    [SerializeField] private GuideObjectsPage2 guideObjectsPage2;
+    //[SerializeField] private GuideObjectsPage3 guideObjectsPage3;
     // kase, etc.
     [SerializeField] private Button prevButton;
     [SerializeField] private Button nextButton;
     #pragma warning restore IDE0044 // Add readonly modifier
 
-    private GuideTextsPageObject[] guideTextsPages;
+    private GuidePageObject[] guidePages;
     private int currentPageIndex = 0;
     private readonly int TOTAL_PAGES = 2; // Update when more pages
 
@@ -127,8 +127,8 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
     private void Awake()
     {
         SettingsManager.Instance.Load();
-        InitializeGuideTextsPagesArray();
-        HideAllGuideTexts();
+        InitializeGuidePagesArray();
+        HideAllGuideObjects();
         UpdateButtonVisibility();
         prevButton.onClick.AddListener(PrevButton_OnClick);
         nextButton.onClick.AddListener(NextButton_OnClick);
@@ -136,13 +136,13 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
         ShowPage(currentPageIndex);
     }
 
-    private void InitializeGuideTextsPagesArray()
+    private void InitializeGuidePagesArray()
     {
-        guideTextsPages = new GuideTextsPageObject[]
+        guidePages = new GuidePageObject[]
         {
-            new(guideTextsPage1),
-            new(guideTextsPage2),
-            //new(guideTextsPage3),
+            new(guideObjectsPage1),
+            new(guideObjectsPage2),
+            //new(guideObjectsPage3),
             // kase, etc.
         };
     }
@@ -192,20 +192,20 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
         }
     }
 
-    private void HideAllGuideTexts()
+    private void HideAllGuideObjects()
     {
-        foreach (var pageObject in guideTextsPages)
+        foreach (var pageObject in guidePages)
         {
-            pageObject.page.Hide(); // Check if the page implements IGuideTextsPage and call Hide() method
+            pageObject.page.Hide(); // Check if the page implements IGuidePage and call Hide() method
         }
     }
 
     private void ShowPage(int pageIndex)
     {
-        if (pageIndex >= 0 && pageIndex < guideTextsPages.Length)
+        if (pageIndex >= 0 && pageIndex < guidePages.Length)
         {
-            HideAllGuideTexts();
-            guideTextsPages[pageIndex].page.Show(); // Check if the page implements IGuideTextsPage and call Show() method
+            HideAllGuideObjects();
+            guidePages[pageIndex].page.Show(); // Check if the page implements IGuidePage and call Show() method
         }
         else
         {
@@ -247,7 +247,7 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
 
     private void NextButton_OnClick()
     {
-        if (currentPageIndex < guideTextsPages.Length - 1)
+        if (currentPageIndex < guidePages.Length - 1)
         {
             currentPageIndex++;
             UpdateButtonVisibility();
