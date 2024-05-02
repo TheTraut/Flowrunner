@@ -24,7 +24,7 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     private void Awake()
     {
         Instance = this;
-        SettingsManager.Instance.LoadSettings();
+        SettingsManager.Instance.Load();
     }
 
     protected override void Update()

@@ -14,7 +14,7 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SettingsManager.Instance.LoadSettings();
+        SettingsManager.Instance.Load();
     }
 
     /// <summary>
@@ -31,8 +31,9 @@ public class TitleScreen : MonoBehaviour
     void Update()
     {
         SetName();
-        DestroyInactiveModals<SettingsModalWindow>();
+        DestroyInactiveModals<GuideModalWindow>();
         DestroyInactiveModals<HighscoresModalWindow>();
+        DestroyInactiveModals<SettingsModalWindow>();
     }
 
     /// <summary>
@@ -40,7 +41,10 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void SeeGuide()
     {
-        SceneManager.LoadSceneAsync("Guide1");
+        GuideModalWindow.Create()
+            .SetHeader("Guide") // Set the header text
+            .Guide() // Init
+            .Show(); // Show the modal window
     }
 
     /// <summary>

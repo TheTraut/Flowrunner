@@ -38,11 +38,11 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
     }
 
     /// <summary>
-    /// Loads settings when the object is awake.
+    /// Loads when the object is awake.
     /// </summary>
     private void Awake()
     {
-        HighscoresManager.Instance.LoadHighscores();
+        HighscoresManager.Instance.Load();
         UpdateUndoRedoButtonVisibility();
         undoButton.onClick.AddListener(() =>
         {
@@ -79,8 +79,7 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
 
     private void SetButtonVisibility(Button button, bool isVisible)
     {
-        CanvasGroup canvasGroup = button.GetComponent<CanvasGroup>();
-        if (canvasGroup != null)
+        if (button.TryGetComponent<CanvasGroup>(out var canvasGroup))
         {
             canvasGroup.alpha = isVisible ? 1f : 0f;
             canvasGroup.blocksRaycasts = isVisible;
@@ -88,7 +87,7 @@ public class HighscoresModalWindow : ModalWindow<HighscoresModalWindow>
     }
 
     /// <summary>
-    /// Closes the highscores modal.
+    /// Closes the modal.
     /// </summary>
     public void CloseHighscores()
     {

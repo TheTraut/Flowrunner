@@ -31,7 +31,7 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    enum KeyType
+    public enum KeyType
     {
         Up,
         Down,
@@ -59,13 +59,12 @@ public class SettingsManager : MonoBehaviour
     private void Awake()
     {
         settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
-        LoadSettings();
+        Load();
     }
 
     public string GetFormattedKeyShortcut(KeyType keyType)
     {
-        List<KeyCode> keyCodes = null;
-        keyCodes = GetShortcutKeysVar(keyType);
+        List<KeyCode> keyCodes = GetShortcutKeysVar(keyType);
         string formattedString = "None";
         if (keyCodes != null)
         {
@@ -84,21 +83,13 @@ public class SettingsManager : MonoBehaviour
 
     private List<KeyCode> GetShortcutKeysVar(KeyType keyType)
     {
-        switch (keyType)
+        return keyType switch
         {
-            case KeyType.Up:
-                return upShortcutKeys;
-                break;
-            case KeyType.Down:
-                return downShortcutKeys;
-                break;
-            case KeyType.Shield:
-                return shieldShortcutKeys;
-                break;
-            default:
-                return null;
-                break;
-        }
+            KeyType.Up => upShortcutKeys,
+            KeyType.Down => downShortcutKeys,
+            KeyType.Shield => shieldShortcutKeys,
+            _ => null,
+        };
     }
 
     public string KeyCodeListToString(List<KeyCode> keyCodes)
@@ -146,7 +137,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Saves current player settings to a file.
     /// </summary>
-    public void SaveSettings()
+    public void Save()
     {
         SettingsData data = new(playerName, volume, upShortcutKeys, downShortcutKeys, shieldShortcutKeys);
         string jsonData = JsonUtility.ToJson(data);
@@ -156,7 +147,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// Loads player settings from a file, or creates new settings with default values if no file exists.
     /// </summary>
-    public void LoadSettings()
+    public void Load()
     {
         settingsFilePath = Path.Combine(Application.persistentDataPath, settingsFileName);
         if (File.Exists(settingsFilePath))
@@ -182,7 +173,7 @@ public class SettingsManager : MonoBehaviour
             shieldShortcutKeys = new List<KeyCode>() { KeyCode.Space };
 
             // Create and save new settings file
-            SaveSettings();
+            Save();
         }
     }
 }

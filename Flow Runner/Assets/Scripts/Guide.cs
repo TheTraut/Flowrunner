@@ -1,27 +1,29 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class Guide : MonoBehaviour
 {
-    public void toTitleScreen()
+    [Serializable]
+    public class GuideTexts
     {
-        SceneManager.LoadSceneAsync("Title Screen");
+        public TMP_Text nameText;
+        public TMP_Text volumeText;
+        public TMP_Text[] keyTexts;
     }
 
-    public void toGuide1()
+    /// <summary>
+    /// Loads settings when the object is awake.
+    /// </summary>
+    private void Awake()
     {
-        SceneManager.LoadSceneAsync("Guide1");
+        SettingsManager.Instance.Load();
     }
-    public void toGuide2()
+
+    public void ToTitleScreen()
     {
-        SceneManager.LoadSceneAsync("Guide2");
-    }
-    public void toGuide3()
-    {
-        SceneManager.LoadSceneAsync("Guide3");
-    }
-    public void toGuide4()
-    {
-        SceneManager.LoadSceneAsync("Guide4");
+        SceneManager.LoadSceneAsync("Title Screen");
     }
 }

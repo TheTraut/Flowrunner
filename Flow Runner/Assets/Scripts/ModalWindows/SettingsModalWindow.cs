@@ -70,7 +70,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     {
         Instance = this;
 
-        SettingsManager.Instance.LoadSettings();
+        SettingsManager.Instance.Load();
         UpdateUndoRedoButtonVisibility();
 
         undoButton.onClick.AddListener(() =>
@@ -134,7 +134,7 @@ public class SettingsModalWindow : ModalWindow<SettingsModalWindow>
     private void CloseSettings()
     {
         History.Instance.DeleteInstance();
-        SettingsManager.Instance.LoadSettings();
+        SettingsManager.Instance.Load();
         Close();
     }
 

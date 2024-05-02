@@ -10,7 +10,7 @@ public class GameScreen : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        HighscoresManager.Instance.LoadHighscores();
+        HighscoresManager.Instance.Load();
     }
 
     private void update()

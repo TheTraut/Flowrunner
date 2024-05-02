@@ -43,7 +43,7 @@ public class HighscoresManager : MonoBehaviour
     private void Awake()
     {
         highscoresFilePath = Path.Combine(Application.persistentDataPath, highscoresFileName);
-        LoadHighscores();
+        Load();
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ public class HighscoresManager : MonoBehaviour
             highscores.RemoveAt(MAX_HIGHSCORES);
         }
 
-        SaveHighscores();
+        Save();
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public class HighscoresManager : MonoBehaviour
         if (indexToRemove != -1)
         {
             highscores.RemoveAt(indexToRemove);
-            SaveHighscores(); // Save the updated highscores list
+            Save(); // Save the updated highscores list
         }
         else
         {
@@ -122,7 +122,7 @@ public class HighscoresManager : MonoBehaviour
     /// <summary>
     /// Saves the current list of highscores to the persistent storage.
     /// </summary>
-    private void SaveHighscores()
+    private void Save()
     {
         HighscoresData data = new()
         {
@@ -136,7 +136,7 @@ public class HighscoresManager : MonoBehaviour
     /// Loads the highscores from the persistent storage.
     /// If the highscores file does not exist, creates a new one.
     /// </summary>
-    public void LoadHighscores()
+    public void Load()
     {
         highscoresFilePath = Path.Combine(Application.persistentDataPath, highscoresFileName);
         if (File.Exists(highscoresFilePath))
@@ -150,7 +150,7 @@ public class HighscoresManager : MonoBehaviour
             Debug.LogWarning("Highscores file not found. Creating new highscores file.");
             HighscoresData data = new();
             highscores = data.highscores;
-            SaveHighscores();
+            Save();
         }
     }
 }

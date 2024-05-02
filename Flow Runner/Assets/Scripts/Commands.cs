@@ -142,7 +142,7 @@ public class SetSettingsCommand : Command
         SettingsManager.Instance.SetUpShortcut(newUpKeys);
         SettingsManager.Instance.SetDownShortcut(newDownKeys);
         SettingsManager.Instance.SetShieldShortcut(newShieldKeys);
-        SettingsManager.Instance.SaveSettings();
+        SettingsManager.Instance.Save();
     }
 
     public override void Unexecute()
@@ -153,7 +153,7 @@ public class SetSettingsCommand : Command
         SettingsManager.Instance.SetUpShortcut(previousUpKeys);
         SettingsManager.Instance.SetDownShortcut(previousDownKeys);
         SettingsManager.Instance.SetShieldShortcut(previousShieldKeys);
-        SettingsManager.Instance.SaveSettings();
+        SettingsManager.Instance.Save();
     }
 }
 
