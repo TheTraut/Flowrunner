@@ -8,7 +8,7 @@
 
 **Team Members**: Cade VanHout, Kase Tadych, Ryan Traut, Zach Landquist
 
-<details><summary><b>Build Instructions</b>:</summary>
+<details><summary><b>Load project into Unity</b>:</summary>
 
 1. Clone this repo
 2. Download [Unity LTS Release 2022.3.19f1](https://unity.com/releases/editor/qa/lts-releases?version=2022.3#:~:text=Released%3A%20January%2031%2C%202024)
@@ -37,6 +37,20 @@
 13. Play the game
 </details>
 
+<details><summary><b>Build Instructions</b>:</summary>
+
+1. Go to File > Build Settings
+
+![Build Settings](https://imgur.com/mQCvK5N)
+
+2. Make sure all 3 Scences are added. If not, click the Add Open Scenes button and add them.
+
+![Add Scenes](https://imgur.com/1jPrXXH)
+
+3. Click Build at the bottom and selcet a location for the build to go. (This should be a folder for the game)
+
+![Build](https://imgur.com/KppY3AZ)
+</details>
 
 
 <details><summary><b>Library Information</b>:</summary>
