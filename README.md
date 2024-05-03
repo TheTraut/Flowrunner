@@ -45,7 +45,7 @@
 
 2. Make sure all 3 Scences are added. If not, click the Add Open Scenes button and add them.
 
-![Add Scenes](https://i.imgur.com/i2CnaBT.jpeg)
+![Add Scenes](https://i.imgur.com/FGfKMzo.jpeg)
 
 3. Click Build at the bottom and selcet a location for the build to go. (This should be a folder for the game)
 
