@@ -41,15 +41,14 @@
 
 1. Go to File > Build Settings
 
-![Build Settings](https://imgur.com/mQCvK5N)
+![Build Settings](https://i.imgur.com/lBujpoC.jpeg)
 
 2. Make sure all 3 Scences are added. If not, click the Add Open Scenes button and add them.
 
-![Add Scenes](https://imgur.com/1jPrXXH)
+![Add Scenes](https://i.imgur.com/i2CnaBT.jpeg)
 
 3. Click Build at the bottom and selcet a location for the build to go. (This should be a folder for the game)
 
-![Build](https://imgur.com/KppY3AZ)
 </details>
 
 
