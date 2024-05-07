@@ -51,6 +51,22 @@
 
 </details>
 
+<details><summary><b>Code Coverage Instructions</b>:</summary>
+
+Note: the last coverage report can be found without having to run a new report, skip to step 4 to open it.
+
+1. Go to Window > Analysis > Code Coverage
+
+2. Run test runner
+
+3. Click Generate Report
+
+4. Navigate to "src\Flow Runner\CodeCoverage\Report\index.htm" and open
+
+5. Website loads with the coverage report
+
+</details>
+
 <details><summary><b>Library Information</b>:</summary>
 Unity LTS Release 2022.3.19f1
 </details>
