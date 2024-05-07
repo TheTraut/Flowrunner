@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageReport scope="Summary">
+  <Summary>
+    <Generatedon>5/7/2024 - 1:08:17 PM</Generatedon>
+    <Parser>MultiReportParser (2x OpenCoverParser)</Parser>
+    <Assemblies>2</Assemblies>
+    <Classes>43</Classes>
+    <Files>35</Files>
+    <Coveredlines>167</Coveredlines>
+    <Uncoveredlines>1825</Uncoveredlines>
+    <Coverablelines>1992</Coverablelines>
+    <Totallines>3762</Totallines>
+    <Linecoverage>8.3</Linecoverage>
+    <Coveredbranches>0</Coveredbranches>
+    <Totalbranches>0</Totalbranches>
+    <Coveredmethods>27</Coveredmethods>
+    <Totalmethods>270</Totalmethods>
+    <Methodcoverage>10</Methodcoverage>
+  </Summary>
+  <Coverage>
+    <Assembly name="EditMode" classes="3" coverage="100" coveredlines="90" coverablelines="90" totallines="184" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="7" totalmethods="7" methodcoverage="100">
+      <Class name="AirMeterTests" coverage="100" coveredlines="11" coverablelines="11" totallines="30" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="1" totalmethods="1" methodcoverage="100" />
+      <Class name="ChangeSpriteTest" coverage="100" coveredlines="47" coverablelines="47" totallines="89" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="4" totalmethods="4" methodcoverage="100" />
+      <Class name="PlayerMovementTests" coverage="100" coveredlines="32" coverablelines="32" totallines="65" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="2" totalmethods="2" methodcoverage="100" />
+    </Assembly>
+    <Assembly name="ScriptsAssembly" classes="40" coverage="4" coveredlines="77" coverablelines="1902" totallines="5021" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="20" totalmethods="263" methodcoverage="7.6">
+      <Class name="AirMeter" coverage="18.1" coveredlines="8" coverablelines="44" totallines="82" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="2" totalmethods="3" methodcoverage="66.6" />
+      <Class name="BackgroundScroller" coverage="0" coveredlines="0" coverablelines="11" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="BirdMovement" coverage="0" coveredlines="0" coverablelines="43" totallines="71" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="BirdSpawner" coverage="0" coveredlines="0" coverablelines="45" totallines="70" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="CameraController" coverage="0" coveredlines="0" coverablelines="35" totallines="87" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="7" methodcoverage="0" />
+      <Class name="ChangeSprite" coverage="18.1" coveredlines="12" coverablelines="66" totallines="117" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="3" totalmethods="7" methodcoverage="42.8" />
+      <Class name="CoinCollector" coverage="0" coveredlines="0" coverablelines="9" totallines="27" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="CoinController" coverage="0" coveredlines="0" coverablelines="43" totallines="102" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
+      <Class name="CoinData" coverage="0" coveredlines="0" coverablelines="4" totallines="62" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="CoinDelete" coverage="0" coveredlines="0" coverablelines="6" totallines="17" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="DeleteHighscoreCommand" coverage="0" coveredlines="0" coverablelines="10" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="GameScreen" coverage="0" coveredlines="0" coverablelines="20" totallines="45" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="Guide" coverage="0" coveredlines="0" coverablelines="6" totallines="29" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="GuideModalWindow" coverage="0" coveredlines="0" coverablelines="130" totallines="257" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="20" methodcoverage="0" />
+      <Class name="HighscoreEntry" coverage="0" coveredlines="0" coverablelines="6" totallines="183" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="1" methodcoverage="0" />
+      <Class name="HighscoresManager" coverage="1.3" coveredlines="1" coverablelines="74" totallines="183" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="1" totalmethods="9" methodcoverage="11.1" />
+      <Class name="HighscoresModalWindow" coverage="0" coveredlines="0" coverablelines="131" totallines="219" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
+      <Class name="History" coverage="0" coveredlines="0" coverablelines="42" totallines="78" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="10" methodcoverage="0" />
+      <Class name="ModalWindow[T]" coverage="0" coveredlines="0" coverablelines="93" totallines="166" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="22" methodcoverage="0" />
+      <Class name="ModalWindowButton" coverage="0" coveredlines="0" coverablelines="10" totallines="35" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="PauseManager" coverage="15.3" coveredlines="6" coverablelines="39" totallines="78" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="2" totalmethods="4" methodcoverage="50" />
+      <Class name="PauseModalWindow" coverage="0" coveredlines="0" coverablelines="30" totallines="85" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="10" methodcoverage="0" />
+      <Class name="PlatformControllerLevel" coverage="0" coveredlines="0" coverablelines="49" totallines="101" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="PlayerMovement" coverage="20.9" coveredlines="32" coverablelines="153" totallines="268" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="7" totalmethods="13" methodcoverage="53.8" />
+      <Class name="RockFalling" coverage="0" coveredlines="0" coverablelines="49" totallines="92" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="RockKill" coverage="0" coveredlines="0" coverablelines="45" totallines="74" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="4" methodcoverage="0" />
+      <Class name="ScoreController" coverage="0" coveredlines="0" coverablelines="21" totallines="49" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="5" methodcoverage="0" />
+      <Class name="SetNameCommand" coverage="0" coveredlines="0" coverablelines="11" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SetSettingsCommand" coverage="0" coveredlines="0" coverablelines="29" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SetShortcutCommand" coverage="0" coveredlines="0" coverablelines="34" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SettingsData" coverage="0" coveredlines="0" coverablelines="16" totallines="241" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="SettingsManager" coverage="10" coveredlines="10" coverablelines="100" totallines="241" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="3" totalmethods="17" methodcoverage="17.6" />
+      <Class name="SettingsManagerExtensions" coverage="33.3" coveredlines="7" coverablelines="21" totallines="241" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="1" totalmethods="2" methodcoverage="50" />
+      <Class name="SettingsModalWindow" coverage="0" coveredlines="0" coverablelines="379" totallines="552" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="32" methodcoverage="0" />
+      <Class name="SetVolumeCommand" coverage="0" coveredlines="0" coverablelines="11" totallines="179" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="3" methodcoverage="0" />
+      <Class name="SideToSideMovement" coverage="0" coveredlines="0" coverablelines="9" totallines="19" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+      <Class name="TitleScreen" coverage="0" coveredlines="0" coverablelines="38" totallines="118" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="9" methodcoverage="0" />
+      <Class name="ToastModalWindow" coverage="0" coveredlines="0" coverablelines="14" totallines="28" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="6" methodcoverage="0" />
+      <Class name="TotalCoinController" coverage="5.2" coveredlines="1" coverablelines="19" totallines="62" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="1" totalmethods="5" methodcoverage="20" />
+      <Class name="WaterRise" coverage="0" coveredlines="0" coverablelines="7" totallines="18" branchcoverage="" coveredbranches="0" totalbranches="0" coveredmethods="0" totalmethods="2" methodcoverage="0" />
+    </Assembly>
+  </Coverage>
+</CoverageReport>
