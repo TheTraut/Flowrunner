@@ -1,19 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class CoinController : MonoBehaviour
 {
     public int currentCoins = 0;
     public int totalCoins = 0;
     private string textCoin;
-    private string totalCoinsFilePath;
-    Text coin;
+    public string totalCoinsFilePath;
+    public Text coin;
 
     /// <summary>
     /// Manages the collection and display of coins in the game.
     /// </summary
-    void Awake()
+    public void Awake()
     {
         totalCoinsFilePath = Application.persistentDataPath + "/totalCoins.json";
         //Debug.Log("File path set to: " + totalCoinsFilePath);
@@ -22,7 +23,7 @@ public class CoinController : MonoBehaviour
     /// <summary>
     /// Loads initial coin data and sets up text display.
     /// </summary>
-    void Start()
+    public void Start()
     {
         LoadCoins();
         coin = GetComponent<Text>();
@@ -41,7 +42,7 @@ public class CoinController : MonoBehaviour
     /// <summary>
     /// Updates the text display of the current coins.
     /// </summary>
-    void Update()
+    public void Update()
     {
         textCoin = TextCoin(currentCoins);
         coin.text = textCoin;
@@ -67,7 +68,7 @@ public class CoinController : MonoBehaviour
     /// <summary>
     /// Loads the total coins from a JSON file.
     /// </summary>
-    void LoadCoins()
+    public void LoadCoins()
     {
         //Debug.Log("Loading coins from: " + totalCoinsFilePath);
         if (!File.Exists(totalCoinsFilePath))
@@ -99,4 +100,5 @@ public class CoinController : MonoBehaviour
         currentCoins++;
         UpdateCoins();
     }
+    
 }

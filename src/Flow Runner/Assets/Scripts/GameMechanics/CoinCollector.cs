@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CoinCollector : MonoBehaviour
@@ -8,7 +9,7 @@ public class CoinCollector : MonoBehaviour
     /// <summary>
     /// Handles the collection of coins by the player.
     /// </summary>
-    private void Start()
+    public void Start()
     {
         coinController = Coins.GetComponent<CoinController>();
     }
@@ -24,4 +25,5 @@ public class CoinCollector : MonoBehaviour
             coinController.AddCoin();
         }
     }
+    
 }

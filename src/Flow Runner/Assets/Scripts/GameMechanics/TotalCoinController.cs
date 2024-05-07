@@ -5,14 +5,14 @@ using System.IO;
 public class TotalCoinController : MonoBehaviour
 {
     private string textCoin;
-    Text coin;
+    public Text coin;
     public int totalCoins = 0;
-    private string totalCoinsFilePath;
+    public string totalCoinsFilePath;
 
     /// <summary>
     /// Controls the display of the total number of coins collected.
     /// </summary>
-    void Awake()
+    public void Awake()
     {
         totalCoinsFilePath = Application.persistentDataPath + "/totalCoins.json";
         UpdateCoins();
@@ -21,7 +21,7 @@ public class TotalCoinController : MonoBehaviour
     /// <summary>
     /// Initializes the total coin count and updates the text display.
     /// </summary>
-    void Start()
+    public void Start()
     {
         UpdateCoins();
     }
@@ -39,7 +39,7 @@ public class TotalCoinController : MonoBehaviour
     /// <summary>
     /// Updates the total coin count and the text display.
     /// </summary>
-    void UpdateCoins()
+    public void UpdateCoins()
     {
         string jsonData = File.ReadAllText(totalCoinsFilePath);
         CoinData data = JsonUtility.FromJson<CoinData>(jsonData);

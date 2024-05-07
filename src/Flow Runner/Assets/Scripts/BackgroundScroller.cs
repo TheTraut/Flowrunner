@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BackgroundScroller : MonoBehaviour
@@ -7,10 +8,15 @@ public class BackgroundScroller : MonoBehaviour
     private float offset;
     private Material mat;
 
+    public float GetOffset()
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Scrolls the background texture horizontally.
     /// </summary>
-    void Start()
+    public void Start()
     {
         mat = GetComponent<Renderer>().material;
     }
@@ -18,7 +24,7 @@ public class BackgroundScroller : MonoBehaviour
     /// <summary>
     /// Updates the offset of the background texture to create scrolling effect.
     /// </summary>
-    void Update()
+    public void Update()
     {
         if (!PauseManager.IsPaused)
         {

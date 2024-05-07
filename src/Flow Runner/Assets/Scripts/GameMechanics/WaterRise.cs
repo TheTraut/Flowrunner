@@ -2,17 +2,31 @@ using UnityEngine;
 
 public class WaterRise : MonoBehaviour
 {
-    public float riseSpeed = 0.1f; // Speed at which the water rises
+    public float amplitude = 4.0f; // The maximum distance the water moves up or down from its start position.
+    public float frequency = 0.02f; // Speed of the oscillation.
+
+    public float originalY; // Original y-position of the water.
 
     /// <summary>
-    /// Controls the rising movement of water.
+    /// Initializes the original y-position of the water.
     /// </summary>
-    void Update()
+    public void Start()
+    {
+        originalY = transform.position.y;
+    }
+
+    /// <summary>
+    /// Controls the oscillating movement of water.
+    /// </summary>
+    public void Update()
     {
         if (!PauseManager.IsPaused)
         {
-            // Move the water object upwards at the specified rise speed
-            transform.position += new Vector3(0, riseSpeed * Time.deltaTime, 0);
+            // Calculate the new y position using the sine of time.
+            float newY = originalY + Mathf.Sin(Time.time * frequency) * amplitude;
+
+            // Update the water's position with the new y value while keeping x and z the same.
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
         }
     }
 }

@@ -11,16 +11,16 @@ public class RockFalling : MonoBehaviour
     public float despawnDistance = 20f;
     public int maxRocksDropped = 5; // Maximum number of rocks the bird can drop before despawning
 
-    private float timeSinceLastSpawn;
-    private float currentMinSpawnInterval;
-    private float currentMaxSpawnInterval;
-    private float currentSpawnInterval;
-    private int rocksDropped;
+    public float timeSinceLastSpawn;
+    public float currentMinSpawnInterval;
+    public float currentMaxSpawnInterval;
+    public float currentSpawnInterval;
+    public int rocksDropped;
 
     /// <summary>
     /// Controls the falling of rocks from a bird.
     /// </summary>
-    void Start()
+    public void Start()
     {
         timeSinceLastSpawn = 0f;
         rocksDropped = 0;
@@ -32,7 +32,7 @@ public class RockFalling : MonoBehaviour
     /// <summary>
     /// Updates rock spawning and despawning.
     /// </summary>
-    void Update()
+    public void Update()
     {
         if (!PauseManager.IsPaused)
         {
@@ -62,7 +62,7 @@ public class RockFalling : MonoBehaviour
     /// <summary>
     /// Spawns a rock.
     /// </summary>
-    void SpawnRock()
+    public void SpawnRock()
     {
         Instantiate(rockPrefab, birdTransform.position, Quaternion.identity);
     }
@@ -70,7 +70,7 @@ public class RockFalling : MonoBehaviour
     /// <summary>
     /// Despawns rocks that are too far from the bird.
     /// </summary>
-    void DespawnDistantRocks()
+    public void DespawnDistantRocks()
     {
         GameObject[] rocks = GameObject.FindGameObjectsWithTag("Rock");
         foreach (GameObject rock in rocks)
@@ -85,7 +85,7 @@ public class RockFalling : MonoBehaviour
     /// <summary>
     /// Sets a random spawn interval within the current range.
     /// </summary>
-    void SetRandomSpawnInterval()
+    public void SetRandomSpawnInterval()
     {
         currentSpawnInterval = Random.Range(currentMinSpawnInterval, currentMaxSpawnInterval);
     }

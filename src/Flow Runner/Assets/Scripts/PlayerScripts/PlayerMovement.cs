@@ -26,13 +26,13 @@ public class PlayerMovement : MonoBehaviour
     public bool shielded; // Flag to track if the player is shielded
     public float shieldTime = 5f; // Duration of the shield
     readonly float shieldCooldownTime = 10f;
-    bool canUseShield = true; // Flag to track if the shield can be used
+    public bool canUseShield = true; // Flag to track if the shield can be used
     Coroutine shieldCooldownCoroutine; // Coroutine reference for shield cooldown
     float remainingShieldTime;
     float pausedTimeRemainingShield; // Store the remaining shield time when paused
     Coroutine shieldCoroutine;
     #pragma warning disable IDE0044 // Add readonly modifier
-    [SerializeField] private GameObject shield; // Reference to the shield GameObject
+    [SerializeField] public GameObject shield; // Reference to the shield GameObject
     #pragma warning restore IDE0044 // Add readonly modifier
 
     /// <summary>
@@ -158,64 +158,72 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles player movement including jumping, gravity adjustments, and swimming controls.
+    /// Calls player movement funcitons 
     /// </summary>
-    void HandleMovement()
+    public void HandleMovement()
     {
-        // Check if the jump button is pressed and player is grounded
+        HandleJumping();
+        HandleFalling();
+        HandleSwimming();
+    }
+    /// <summary>
+    /// Handles player movement including jumping controls.
+    /// </summary>
+    private void HandleJumping()
+
+    {
         if (SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys) && IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower); // Apply vertical jump velocity
-            isJumping = true; // Set jumping flag to true
-            jumpCounter = 0; // Reset jump counter
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            isJumping = true;
+            jumpCounter = 0;
         }
-
-        // Check if the jump button is released
+    
         if (!SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys) && isJumping)
         {
-            isJumping = false; // Set jumping flag to false
-            jumpCounter = 0; // Reset jump counter
-
-            if (rb.velocity.y > 0) // Check if the player is moving upwards
+            isJumping = false;
+            jumpCounter = 0;
+    
+            if (rb.velocity.y > 0)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); // Reduce vertical velocity
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }
         }
-
-        // Check if the player is moving upwards and jumping
+    
         if (rb.velocity.y > 0 && isJumping)
         {
-            jumpCounter += Time.deltaTime; // Increment jump counter
-            if (jumpCounter > jumpTime) isJumping = false; // Disable jumping if jump time exceeds limit
-
-            float tCal = jumpCounter / jumpTime; // Calculate normalized time for jump
-            float currentJumpM = jumpMultiplier; // Initialize current jump multiplier
-
-            if (tCal > 0.6f) // Adjust jump multiplier based on time
-            {
+            jumpCounter += Time.deltaTime;
+            if (jumpCounter > jumpTime)
+                isJumping = false;
+    
+            float tCal = jumpCounter / jumpTime;
+            float currentJumpM = jumpMultiplier;
+    
+            if (tCal > 0.6f)
                 currentJumpM = jumpMultiplier * (1 - tCal);
-            }
-
-            rb.velocity += vecGravity * currentJumpM * Time.deltaTime; // Apply gravity with adjusted multiplier
+    
+            rb.velocity += vecGravity * currentJumpM * Time.deltaTime;
         }
-
-        // Check if the player is moving downwards
+    }
+    /// <summary>
+    /// Handles player movement including Falling controls.
+    /// </summary>
+    private void HandleFalling()
+    {
         if (rb.velocity.y < 0)
+            rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
+    }
+    /// <summary>
+    /// Handles player movement including swimming controls.
+    /// </summary>
+    private void HandleSwimming()
+    {
+        if (isInWater)
         {
-            rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime; // Apply increased gravity when falling
-        }
-
-        // Swimming controls
-        if (isInWater) // Check if the player is in water
-        {
-            if (SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys))  // Swim up
-            {
-                rb.AddForce(new Vector2(0, waterSwimPower), ForceMode2D.Force); // Apply upward force for swimming
-            }
-            else if (SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.DownShortcutKeys))  // Swim down
-            {
-                rb.AddForce(new Vector2(0, -waterSwimPower), ForceMode2D.Force); // Apply downward force for swimming
-            }
+            if (SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.UpShortcutKeys))
+                rb.AddForce(new Vector2(0, waterSwimPower), ForceMode2D.Force);
+            else if (SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.DownShortcutKeys))
+                rb.AddForce(new Vector2(0, -waterSwimPower), ForceMode2D.Force);
         }
     }
 
