@@ -5,12 +5,12 @@ public class RockKill : MonoBehaviour
 {
     public float shieldTime = 2f; // Duration of the shield
 
-    private PlayerMovement playerMovement; // Reference to the PlayerMovement script attached to the player
+    public PlayerMovement playerMovement; // Reference to the PlayerMovement script attached to the player
 
     /// <summary>
     /// Handles collisions with rocks and player's shield.
     /// </summary>
-    private void Start()
+    public void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -27,7 +27,7 @@ public class RockKill : MonoBehaviour
         }
     }
 
-    private bool lastShieldedState;
+    public bool lastShieldedState;
     public void Update()
     {
         if (playerMovement != null)

@@ -2018,7 +2018,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844cd8c32d4bd4ef78431f40b7eabd61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  riseSpeed: 0.1
+  amplitude: 4
+  frequency: 0.02
 --- !u!253 &1905650263
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0
