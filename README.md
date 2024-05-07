@@ -8,7 +8,7 @@
 
 **Team Members**: Cade VanHout, Kase Tadych, Ryan Traut, Zach Landquist
 
-<details><summary><b>Load project into Unity</b>:</summary>
+<details><summary><b>Setting Up Unity Instructions</b>:</summary>
 
 1. Clone this repo
 2. Download [Unity LTS Release 2022.3.19f1](https://unity.com/releases/editor/qa/lts-releases?version=2022.3#:~:text=Released%3A%20January%2031%2C%202024)
@@ -51,7 +51,9 @@
 
 </details>
 
-
 <details><summary><b>Library Information</b>:</summary>
 Unity LTS Release 2022.3.19f1
 </details>
+
+Known bugs:
+- Platforms can sometimes spawn back-to-back forcing to player to potentially drown.
