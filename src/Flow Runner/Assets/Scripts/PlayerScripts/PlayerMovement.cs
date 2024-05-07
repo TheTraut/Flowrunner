@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
                 StopCoroutine(shieldCoroutine);
             }
             shieldCoroutine = StartCoroutine(NoShieldCoroutine(remainingShieldTime));
+            shielded = true;
         }
     }
 

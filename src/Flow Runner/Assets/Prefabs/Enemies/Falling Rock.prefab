@@ -228,8 +228,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df59499c9c8c4c2429e7299ad3e7a566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 7890034449239961469, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
-  Coins: {fileID: 8258684847119338552, guid: a7c66df9379cd45be87d7a67a96247b5, type: 3}
-  script: {fileID: 0}
-  isShielded: 0
+  player: {fileID: 5949353039791555515, guid: d9ebaaf706e7407488f7e4de93c05ef3, type: 3}
   shieldTime: 2

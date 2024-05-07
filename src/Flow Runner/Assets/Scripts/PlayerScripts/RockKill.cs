@@ -3,24 +3,44 @@ using UnityEngine.SceneManagement;
 
 public class RockKill : MonoBehaviour
 {
-    public PlayerMovement playerMovement; // Reference to the PlayerMovement script attached to the player
     public float shieldTime = 2f; // Duration of the shield
+
+    private PlayerMovement playerMovement; // Reference to the PlayerMovement script attached to the player
 
     /// <summary>
     /// Handles collisions with rocks and player's shield.
     /// </summary>
     private void Start()
     {
-        // Find the player GameObject by tag
-        GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerGameObject != null)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
-            // Get the PlayerMovement component from the player GameObject
-            playerMovement = playerGameObject.GetComponent<PlayerMovement>();
+            playerMovement = player.GetComponent<PlayerMovement>();
+            if (playerMovement == null)
+            {
+                Debug.LogError("PlayerMovement component not found on Player GameObject.");
+            }
         }
         else
         {
-            Debug.LogError("Player GameObject not found!");
+            Debug.LogError("Player GameObject not found.");
+        }
+    }
+
+    private bool lastShieldedState;
+    public void Update()
+    {
+        if (playerMovement != null)
+        {
+            if (playerMovement.shielded != lastShieldedState)
+            {
+                Debug.Log("Shielded state changed: " + playerMovement.shielded);
+                lastShieldedState = playerMovement.shielded;
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerMovement reference not set.");
         }
     }
 
