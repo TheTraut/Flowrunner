@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class TitleScreen : MonoBehaviour
 {
     public Text playerNameLabel;
+    [SerializeField] private AudioClip selectSoundClip;
 
     /// <summary>
     /// Initializes the title screen by loading player settings.
@@ -22,6 +23,7 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void PlayGame()
     {
+        SoundFXManager.instance.PlaySoundFXClip(selectSoundClip, transform);
         SceneManager.LoadSceneAsync("Game");
     }
 
@@ -41,6 +43,7 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void SeeGuide()
     {
+        SoundFXManager.instance.PlaySoundFXClip(selectSoundClip, transform);
         GuideModalWindow.Create()
             .SetHeader("Guide") // Set the header text
             .Guide() // Init
@@ -52,6 +55,7 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void SeeHighScores()
     {
+        SoundFXManager.instance.PlaySoundFXClip(selectSoundClip, transform);
         //ToastModalWindow.Create(ignorable: true)
         //        .SetHeader("Coming Soon")
         //        .SetBody("Highscores are being added, check back soon!")
@@ -71,6 +75,7 @@ public class TitleScreen : MonoBehaviour
     /// </summary>
     public void SeeSettings()
     {
+        SoundFXManager.instance.PlaySoundFXClip(selectSoundClip, transform);
         SettingsModalWindow.Create()
             .SetHeader("Settings")
             .SetSettings(
