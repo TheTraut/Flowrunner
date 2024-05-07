@@ -71,5 +71,9 @@ Note: the last coverage report can be found without having to run a new report, 
 Unity LTS Release 2022.3.19f1
 </details>
 
-Known bugs:
+Known Bugs:
 - Platforms can sometimes spawn back-to-back forcing to player to potentially drown.
+
+Design Deficiencies:
+- Certain controllers have a lack of modularity and aren't implementing the MVC pattern correctly.
+- Certain UI components are directly doing data and logic operations, it would be better to separate the UI code from data handling.
