@@ -64,7 +64,7 @@ public class GuideModalWindow : ModalWindow<GuideModalWindow>
             // Set volume text
             if (volumeText != null)
             {
-                int volumePercentage = Mathf.RoundToInt(SettingsManager.Instance.Volume);
+                int volumePercentage = Mathf.RoundToInt(SettingsManager.Instance.Volume * 100f);
                 volumeText.text = volumePercentage.ToString() + "%";
             }
 
