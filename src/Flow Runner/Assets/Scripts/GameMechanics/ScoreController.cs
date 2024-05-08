@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public float currentScore = 0f;
     [SerializeField] private Text scoreText;
 
     /// <summary>
@@ -11,17 +11,7 @@ public class ScoreController : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        HighscoresManager.Instance.AddHighscore(SettingsManager.Instance.PlayerName, (int)currentScore);
-    }
-
-    /// <summary>
-    /// Sets the score text GameObject to update the displayed score.
-    /// </summary>
-    /// <param name="scoreText">The Text component responsible for displaying the score.</param>
-    public void SetScoreText(Text scoreText)
-    {
-        this.scoreText = scoreText;
-        UpdateScoreText();
+        HighscoresManager.Instance.AddHighscore(SettingsManager.Instance.PlayerName, ScoreManager.CurrentScore);
     }
 
     /// <summary>
@@ -31,7 +21,7 @@ public class ScoreController : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = Mathf.RoundToInt(currentScore).ToString();
+            scoreText.text = ScoreManager.CurrentScore.ToString();
         }
     }
 
@@ -40,15 +30,10 @@ public class ScoreController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (!PauseManager.IsPaused)
+        if (!PauseManager.IsPaused && SceneManager.GetActiveScene().name == "Game")
         {
-            currentScore += (Time.deltaTime * 100); // Score calculation 
+            ScoreManager.AddScore(Mathf.RoundToInt(Time.deltaTime * 100));
             UpdateScoreText();
         }
-    }
-
-     public void getCurrentScore()
-    {
-
     }
 }

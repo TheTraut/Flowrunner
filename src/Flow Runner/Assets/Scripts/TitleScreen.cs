@@ -16,6 +16,7 @@ public class TitleScreen : MonoBehaviour
     private void Awake()
     {
         SettingsManager.Instance.Load();
+        ScoreManager.ResetScore();
     }
 
     /// <summary>

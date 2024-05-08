@@ -11,25 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/Guide/Guide1.unity
-    guid: 951d6e2120baec74f9d3dc22a51d5ff4
-  - enabled: 0
-    path: Assets/Scenes/Settings/Settings.unity
-    guid: 9158b2416d03d9d4a89a0a85945e7624
-  - enabled: 0
-    path: Assets/Scenes/Guide/Guide2.unity
-    guid: 77418bfff95f00c4381ae71b8bb09e1b
-  - enabled: 0
-    path: Assets/Scenes/Guide/Guide3.unity
-    guid: 805df9f261b9b4641991b0a42949d76d
-  - enabled: 0
-    path: Assets/Scenes/Guide/Guide4.unity
-    guid: b406d07f7647b5c45b88e22ff98e4d25
   - enabled: 1
-    path: Assets/Scenes/High Scores/High Scores.unity
-    guid: 85bd69c9904f40741ab3f7c10265627d
-  - enabled: 1
-    path: Assets/Scenes/GameOverScreen/GameOverScreen.unity
-    guid: 8a7c697daaf82b54eb18e93a041d879c
+    path: Assets/Scenes/Game Over/Game Over.unity
+    guid: 8f5d47d016041fc489cf2214844980f3
   m_configObjects: {}

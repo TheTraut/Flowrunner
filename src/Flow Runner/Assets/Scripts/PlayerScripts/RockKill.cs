@@ -53,7 +53,7 @@ public class RockKill : MonoBehaviour
             if (!playerMovement.shielded) // Check if the player is not shielded
             {
                 // Handle player death here (e.g., restart the level, reduce player health, etc.)
-                SceneManager.LoadSceneAsync("GameOverScreen"); // Load the title screen
+                SceneManager.LoadSceneAsync("Game Over"); // Load the title screen
 
                 // Destroy the rock after hitting the player
                 Destroy(gameObject); // Destroy the rock GameObject

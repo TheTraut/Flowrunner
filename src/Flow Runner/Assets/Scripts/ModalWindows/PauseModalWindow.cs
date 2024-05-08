@@ -79,7 +79,7 @@ public class PauseModalWindow : ModalWindow<PauseModalWindow>
     /// </summary>
     public void UI_QuitButton()
     {
-        PauseManager.Resume();
         SceneManager.LoadSceneAsync("Title Screen");
+        PauseManager.Resume();
     }
 }
