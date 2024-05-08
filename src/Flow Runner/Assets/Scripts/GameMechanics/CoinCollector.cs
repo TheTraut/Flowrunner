@@ -26,6 +26,7 @@ public class CoinCollector : MonoBehaviour
         {
             SoundFXManager.instance.PlaySoundFXClip(coinSoundClip, transform);
             coinController.AddCoin();
+            ScoreManager.AddScore(300);
         }
     }
     
