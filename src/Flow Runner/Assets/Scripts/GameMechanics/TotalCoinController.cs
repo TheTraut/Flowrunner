@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections.Generic;
 
 public class TotalCoinController : MonoBehaviour
 {
@@ -9,13 +10,34 @@ public class TotalCoinController : MonoBehaviour
     public int totalCoins = 0;
     public string totalCoinsFilePath;
 
+    private readonly string totalCoinsFileName = "totalCoins.json";
+
     /// <summary>
     /// Controls the display of the total number of coins collected.
     /// </summary>
     public void Awake()
     {
-        totalCoinsFilePath = Application.persistentDataPath + "/totalCoins.json";
-        UpdateCoins();
+        totalCoinsFilePath = Path.Combine(Application.persistentDataPath, totalCoinsFileName);
+        Load();
+    }
+
+    public void Load()
+    {
+        totalCoinsFilePath = Path.Combine(Application.persistentDataPath, totalCoinsFileName);
+        if (File.Exists(totalCoinsFilePath))
+        {
+            string jsonData = File.ReadAllText(totalCoinsFilePath);
+            CoinData data = JsonUtility.FromJson<CoinData>(jsonData);
+            totalCoins = data.totalCoins;
+        }
+        else
+        {
+            Debug.LogWarning("Total coins file not found. Creating new total coins file.");
+            totalCoins = 0;
+
+            // Create and save new total coins file
+            Save();
+        }
     }
 
     /// <summary>
@@ -48,6 +70,16 @@ public class TotalCoinController : MonoBehaviour
         textCoin = TextCoin(totalCoins);
         coin.text = textCoin;
     }
+
+    /// <summary>
+    /// Saves current total coins to a file.
+    /// </summary>
+    public void Save()
+    {
+        CoinData data = new(totalCoins);
+        string jsonData = JsonUtility.ToJson(data);
+        File.WriteAllText(totalCoinsFilePath, jsonData);
+    }
 }
 
 [System.Serializable]
@@ -58,5 +90,11 @@ public class CoinData
     public CoinData(int totalCoins)
     {
         this.totalCoins = totalCoins;
+    }
+
+    // Default constructor
+    public CoinData()
+    {
+        totalCoins = 0;
     }
 }
