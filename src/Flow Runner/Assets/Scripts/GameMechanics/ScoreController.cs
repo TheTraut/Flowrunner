@@ -46,4 +46,9 @@ public class ScoreController : MonoBehaviour
             UpdateScoreText();
         }
     }
+
+     public void getCurrentScore()
+    {
+
+    }
 }

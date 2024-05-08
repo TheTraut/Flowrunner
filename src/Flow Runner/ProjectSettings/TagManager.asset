@@ -10,6 +10,7 @@ TagManager:
   - Rock
   - Coin
   - Shield
+  - GameOver
   layers:
   - Default
   - TransparentFX
