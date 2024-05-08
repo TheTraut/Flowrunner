@@ -28,19 +28,6 @@ public class TotalCoinControllerTest
     }
 
     /// <summary>
-    /// Delete after use
-    /// </summary>
-    [TearDown]
-    public void Teardown()
-    {
-        Object.DestroyImmediate(gameObject);
-        if (File.Exists(filePath))
-        {
-            File.Delete(filePath);
-        }
-    }
-
-    /// <summary>
     /// Test for updating coins
     /// </summary>
     [UnityTest]
