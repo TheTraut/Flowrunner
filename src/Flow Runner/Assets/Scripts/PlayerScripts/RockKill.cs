@@ -34,7 +34,6 @@ public class RockKill : MonoBehaviour
         {
             if (playerMovement.shielded != lastShieldedState)
             {
-                Debug.Log("Shielded state changed: " + playerMovement.shielded);
                 lastShieldedState = playerMovement.shielded;
             }
         }
