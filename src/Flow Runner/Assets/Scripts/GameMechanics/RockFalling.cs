@@ -17,6 +17,8 @@ public class RockFalling : MonoBehaviour
     public float currentSpawnInterval;
     public int rocksDropped;
 
+    [SerializeField] private AudioClip birdSoundClip;
+
     /// <summary>
     /// Controls the falling of rocks from a bird.
     /// </summary>
@@ -64,6 +66,7 @@ public class RockFalling : MonoBehaviour
     /// </summary>
     public void SpawnRock()
     {
+        SoundFXManager.instance.PlaySoundFXClip(birdSoundClip, transform);
         Instantiate(rockPrefab, birdTransform.position, Quaternion.identity);
     }
 
