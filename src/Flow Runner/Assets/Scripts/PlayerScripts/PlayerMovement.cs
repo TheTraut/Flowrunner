@@ -5,6 +5,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb; // Rigidbody2D component for player movement
 
+    [SerializeField] private AudioClip splashSoundClip;
+    [SerializeField] private AudioClip shieldSoundClip;
+    [SerializeField] private AudioClip jumpSoundClip;
+
     [Header("Jump System")]
     public float jumpTime; // Time the player can hold the jump button
     public float jumpPower; // Initial jump velocity
@@ -70,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         // Check if the game is not paused, and the shield key combination is pressed, and the shield is not active
         if (!PauseManager.IsPaused && SettingsManagerExtensions.AreKeyCombinationsPressed(SettingsManager.Instance.ShieldShortcutKeys) && !shielded && canUseShield)
         {
+            SoundFXManager.instance.PlaySoundFXClip(shieldSoundClip, transform);
             shield.SetActive(true); // Activate the shield
             StartShieldCooldown(); // Start the shield cooldown coroutine
             if (remainingShieldTime <= 0f)
@@ -248,6 +253,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Water")) // Check if the collider is tagged as water
         {
+            SoundFXManager.instance.PlaySoundFXClip(splashSoundClip, transform);
             // Set the flag to indicate the player is in water
             isInWater = true;
         }

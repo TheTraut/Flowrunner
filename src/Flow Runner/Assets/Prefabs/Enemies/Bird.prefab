@@ -123,3 +123,4 @@ MonoBehaviour:
   intervalReductionRate: 0.1
   despawnDistance: 20
   maxRocksDropped: 5
+  birdSoundClip: {fileID: 8300000, guid: 4518d4b1f4dcdc544bde098c7a441cfa, type: 3}

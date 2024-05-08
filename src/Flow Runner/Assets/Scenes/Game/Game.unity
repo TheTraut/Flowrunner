@@ -1492,6 +1492,51 @@ MonoBehaviour:
   spawnPositionRangeY: {x: 5, y: 10}
   despawnTime: 20
   maxBirds: 3
+--- !u!1 &1303926939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1303926941}
+  - component: {fileID: 1303926940}
+  m_Layer: 0
+  m_Name: SoundFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1303926940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303926939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd948084ed9e0d745b18019d06195e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundFXObject: {fileID: 620383268584122694, guid: 7e5d01fbcc6eb0240a263e9e1efa6420, type: 3}
+--- !u!4 &1303926941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303926939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376713693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2340,6 +2385,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1757878146958565800}
     - target: {fileID: 3258295397582187365, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+      propertyPath: coinSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 50f4c8b311bd53c4bb94c38c7fa8cadb, type: 3}
+    - target: {fileID: 3258295397582187365, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
       propertyPath: coinController
       value: 
       objectReference: {fileID: 947759998}
@@ -2363,6 +2412,18 @@ PrefabInstance:
       propertyPath: shieldTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4307225743648943030, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+      propertyPath: jumpSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e6e1816859d43bf42b4da0b5f98ba159, type: 3}
+    - target: {fileID: 4307225743648943030, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+      propertyPath: shieldSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: db09d35842120754b872383ec1b25c53, type: 3}
+    - target: {fileID: 4307225743648943030, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
+      propertyPath: splashSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8609a481b8d29fb4cad23992d1617f2c, type: 3}
     - target: {fileID: 7890034449239961469, guid: 64cdf7d27d5f4490a89816406973f59b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2445,3 +2506,4 @@ SceneRoots:
   - {fileID: 267924547}
   - {fileID: 27132657}
   - {fileID: 872514700}
+  - {fileID: 1303926941}

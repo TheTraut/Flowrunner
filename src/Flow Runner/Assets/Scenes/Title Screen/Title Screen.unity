@@ -1948,7 +1948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameLabel: {fileID: 278281321}
-  selectSoundClip: {fileID: 0}
+  selectSoundClip: {fileID: 8300000, guid: 9efc9c384def8714592bd747a3593c8e, type: 3}
 --- !u!114 &1600646092
 MonoBehaviour:
   m_ObjectHideFlags: 0

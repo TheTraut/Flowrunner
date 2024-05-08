@@ -5,6 +5,8 @@ public class CoinCollector : MonoBehaviour
     public GameObject Coins;
     private CoinController coinController;
 
+    [SerializeField] private AudioClip coinSoundClip;
+
     /// <summary>
     /// Handles the collection of coins by the player.
     /// </summary>
@@ -21,6 +23,7 @@ public class CoinCollector : MonoBehaviour
     {
         if (other.CompareTag("Coin"))
         {
+            SoundFXManager.instance.PlaySoundFXClip(coinSoundClip, transform);
             coinController.AddCoin();
         }
     }
